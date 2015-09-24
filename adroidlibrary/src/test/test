@@ -1,0 +1,12 @@
+import org.junit.Before;
+
+public class ProfileTest{
+
+    Profile testUser1;
+
+    @Before
+    punlic void setup(){
+        testUser1 = new Profile()
+    }
+
+}
