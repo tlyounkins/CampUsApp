@@ -1,22 +1,19 @@
 /**
  * Created by Mike on 9/18/2015.
  *
- * Contains all information stored in a users Profile
+ * Contains all information stored in a users User
  */
-public class Profile {
+public class User {
    private String username, email, password, location, school;
     private String[] clubs, friends;
    private int age, dob, friend_count, club_count;
 
     // TODO: Walls, posts, messages
-
-    // Add to lists
-    // TODO: Change to other classes when implemented String Club->Club/Group
-    public Profile(){
+    public User(){
 
     }
 
-    public Profile(String username, String email, String password, String location, String school, String[] clubs, String[] friends, int age, int dob, int friend_count, int club_count){
+    public User(String username, String email, String password, String location, String school, String[] clubs, String[] friends, int age, int dob, int friend_count, int club_count){
         this.username = username;
         this.email = email;
         this.password = password;
@@ -26,18 +23,29 @@ public class Profile {
         this.friends = friends;
         this.age = age;
         this.dob = dob;
+
         this.friend_count = friend_count;
         this.club_count = club_count;
     }
 
-    public void addFriend(String friend){
-        this.friends[friend_count] = friend;
-        this.friend_count++;
+    // Send a Message to specified recipient(s)
+    public void sendMessage(){
+
     }
 
-    public void addClub(String club){
-        this.clubs[club_count] = club;
-        this.club_count++;
+    // Send a request to a Group for membership
+    public void groupRequest(){
+
+    }
+
+    // Send a friend request to another user
+    public void sendFriendRequest(){
+
+    }
+
+    // Post a message to wall
+    public void post(){
+
     }
 
     // Getters/Setters
