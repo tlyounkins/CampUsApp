@@ -1,4 +1,5 @@
-public class Event{
+
+public class Event {
     private long start_time, end_time, date ;
     private String location, description, participants;
 
@@ -6,7 +7,7 @@ public class Event{
 
     }
 
-    public Event(long start_time, long end_time, long date,Sting location, String description, String participants){
+    public Event(long start_time, long end_time, long date,String location, String description, String participants){
         this.start_time = start_time;
         this.end_time = end_time;
         this.date = date;

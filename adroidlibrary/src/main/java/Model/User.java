@@ -3,6 +3,7 @@
  *
  * Contains all information stored in a users User
  */
+
 public class User {
    private String username, email, password, location, school;
     private String[] clubs, friends;
