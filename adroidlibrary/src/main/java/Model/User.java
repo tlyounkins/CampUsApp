@@ -3,7 +3,7 @@
  *
  * Contains all information stored in a users User
  */
-
+package main.java.Model;
 public class User {
    private String username, email, password, location, school;
     private String[] clubs, friends;
