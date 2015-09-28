@@ -1,4 +1,4 @@
-
+package Model;
 public class Event {
     private long start_time, end_time, date ;
     private String location, description, participants;
