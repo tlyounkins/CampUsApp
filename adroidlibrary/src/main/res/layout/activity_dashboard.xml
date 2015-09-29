@@ -11,7 +11,7 @@
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imageButton"
+        android:id="@+id/optionButton"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -29,7 +29,7 @@
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imageButton3"
+        android:id="@+id/calendarButton"
         android:layout_alignParentBottom="true"
         android:layout_toRightOf="@+id/imageButton2"
         android:layout_toEndOf="@+id/imageButton2"
@@ -38,56 +38,56 @@
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imageButton4"
+        android:id="@+id/messageButton"
         android:src="@android:drawable/sym_action_chat"
         android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/imageButton3"
-        android:layout_toEndOf="@+id/imageButton3" />
+        android:layout_toRightOf="@+id/calendarButton"
+        android:layout_toEndOf="@+id/calendarButton" />
 
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imageButton5"
+        android:id="@+id/notificationButton"
         android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/imageButton4"
-        android:layout_toEndOf="@+id/imageButton4"
+        android:layout_toRightOf="@+id/messageButton"
+        android:layout_toEndOf="@+id/messageButton"
         android:src="@android:drawable/ic_popup_reminder" />
 
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imageButton6"
+        android:id="@+id/profileButton"
         android:layout_alignParentBottom="true"
         android:src="@android:drawable/sym_def_app_icon"
-        android:layout_alignTop="@+id/imageButton5"
-        android:layout_toRightOf="@+id/imageButton5"
-        android:layout_toEndOf="@+id/imageButton5" />
+        android:layout_alignTop="@+id/notificationButton"
+        android:layout_toRightOf="@+id/notificationButton"
+        android:layout_toEndOf="@+id/notificationButton" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Dashboard"
-        android:id="@+id/button"
-        android:layout_alignTop="@+id/imageButton"
-        android:layout_toRightOf="@+id/imageButton"
-        android:layout_toEndOf="@+id/imageButton" />
+        android:id="@+id/dashboardButton"
+        android:layout_alignTop="@+id/optionButton"
+        android:layout_toRightOf="@+id/optionButton"
+        android:layout_toEndOf="@+id/optionButton" />
 
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imageButton7"
-        android:layout_alignBottom="@+id/imageButton"
-        android:layout_toRightOf="@+id/button"
-        android:layout_toEndOf="@+id/button"
+        android:id="@+id/searchButton"
+        android:layout_alignBottom="@+id/optionButton"
+        android:layout_toRightOf="@+id/dashboardButton"
+        android:layout_toEndOf="@+id/dashboardButton"
         android:src="@android:drawable/ic_menu_search" />
 
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imageButton8"
-        android:layout_alignBottom="@+id/imageButton7"
-        android:layout_toRightOf="@+id/imageButton7"
-        android:layout_toEndOf="@+id/imageButton7"
+        android:id="@+id/postButton"
+        android:layout_alignBottom="@+id/searchButton"
+        android:layout_toRightOf="@+id/searchButton"
+        android:layout_toEndOf="@+id/searchButton"
         android:src="@android:drawable/ic_menu_edit" />
 
 </RelativeLayout>
