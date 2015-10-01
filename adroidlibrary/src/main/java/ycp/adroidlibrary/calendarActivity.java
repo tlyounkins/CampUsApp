@@ -16,14 +16,6 @@ public class calendarActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
-
-        ImageButton dashboard_button = (ImageButton)findViewById(R.id.dashboardButton);
-
-        dashboard_button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                startActivity(new Intent(calendarActivity.this, Dashboard.class));
-            }
-        });
     }
 
     @Override
@@ -46,5 +38,11 @@ public class calendarActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onDashboardPress(View v){
+        Intent intent = new Intent(calendarActivity.this, Dashboard.class);
+        startActivity(intent);
+        finish();
     }
 }

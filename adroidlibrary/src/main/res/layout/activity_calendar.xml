@@ -7,13 +7,20 @@
     tools:context="ycp.adroidlibrary.calendarActivity"
     android:background="#4eb8ff">
 
-    <CalendarView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/calendarView"
+    <FrameLayout
+        android:layout_width="250dp"
+        android:layout_height="250dp"
         android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_toRightOf="@+id/dashboardButton"
+        android:layout_toEndOf="@+id/dashboardButton">
+
+        <CalendarView
+            android:id="@+id/calendar_view"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
+    </FrameLayout>
 
     <ImageButton
         android:layout_width="wrap_content"
@@ -22,5 +29,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:onClick="onDashboardPress"
         android:src="@android:drawable/ic_input_get" />
+
 </RelativeLayout>

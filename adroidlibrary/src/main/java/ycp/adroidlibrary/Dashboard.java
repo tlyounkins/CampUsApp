@@ -11,20 +11,10 @@ import android.widget.ImageButton;
 
 public class Dashboard extends AppCompatActivity {
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
-
-        ImageButton calendar_button = (ImageButton)findViewById(R.id.calendarButton);
-
-        calendar_button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                startActivity(new Intent(Dashboard.this, calendarActivity.class));
-            }
-        });
     }
 
     @Override
@@ -47,5 +37,11 @@ public class Dashboard extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onCalendarPress(View v){
+        Intent intent = new Intent(Dashboard.this, calendarActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

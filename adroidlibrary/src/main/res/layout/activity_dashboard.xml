@@ -33,6 +33,7 @@
         android:layout_alignParentBottom="true"
         android:layout_toRightOf="@+id/imageButton2"
         android:layout_toEndOf="@+id/imageButton2"
+        android:onClick="onCalendarPress"
         android:src="@android:drawable/ic_menu_my_calendar" />
 
     <ImageButton
