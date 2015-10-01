@@ -12,7 +12,8 @@
         android:layout_height="250dp"
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/dashboardButton"
-        android:layout_toEndOf="@+id/dashboardButton">
+        android:layout_toEndOf="@+id/dashboardButton"
+        android:id="@+id/frameLayout">
 
         <CalendarView
             android:id="@+id/calendar_view"
@@ -31,5 +32,41 @@
         android:layout_alignParentStart="true"
         android:onClick="onDashboardPress"
         android:src="@android:drawable/ic_input_get" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageButton"
+        android:src="@android:drawable/ic_menu_my_calendar"
+        android:layout_alignTop="@+id/dashboardButton"
+        android:layout_toRightOf="@+id/dashboardButton"
+        android:layout_toEndOf="@+id/dashboardButton" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageButton3"
+        android:src="@android:drawable/sym_action_chat"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/imageButton4"
+        android:layout_toEndOf="@+id/imageButton4" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageButton4"
+        android:src="@android:drawable/ic_popup_reminder"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/imageButton"
+        android:layout_toEndOf="@+id/imageButton" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageButton5"
+        android:src="@android:drawable/sym_def_app_icon"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/frameLayout"
+        android:layout_alignEnd="@+id/frameLayout" />
 
 </RelativeLayout>
