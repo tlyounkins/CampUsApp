@@ -8,7 +8,7 @@
         android:label="CampUs"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="View.Dashboard"
+            android:name=".Dashboard"
             android:label="CampUs" >
                 <intent-filter>
                     <action android:name="android.intent.action.MAIN" />
@@ -16,7 +16,7 @@
                 </intent-filter>
         </activity>
         <activity
-            android:name="View.calendarActivity"
+            android:name=".calendarActivity"
             android:label="Calendar" >
         </activity>
     </application>

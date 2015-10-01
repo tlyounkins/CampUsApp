@@ -1,28 +1,24 @@
-package View;
+package ycp.adroidlibrary;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-
-import ycp.adroidlibrary.R;
-
-public class calendarActivity extends AppCompatActivity {
+import android.content.Intent;
 
 
-
+public class Dashboard extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_calendar);
+        setContentView(R.layout.activity_dashboard);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_calendar, menu);
+        getMenuInflater().inflate(R.menu.menu_dashboard, menu);
         return true;
     }
 
@@ -41,8 +37,8 @@ public class calendarActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void onDashboardPress(View v){
-        Intent intent = new Intent(calendarActivity.this, Dashboard.class);
+    public void onCalendarPress(View v){
+        Intent intent = new Intent(Dashboard.this, calendarActivity.class);
         startActivity(intent);
         finish();
     }
