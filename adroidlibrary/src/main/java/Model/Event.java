@@ -1,5 +1,6 @@
-package Model;
-public class Event {
+package main.java.Model;
+
+public class Event{
     private long start_time, end_time, date ;
     private String location, description, participants;
 
@@ -64,4 +65,5 @@ public class Event {
     public void setParticipants(String participants) {
         this.participants = participants;
     }
+
 }
