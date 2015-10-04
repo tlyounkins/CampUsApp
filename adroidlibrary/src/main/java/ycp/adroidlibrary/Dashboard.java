@@ -42,4 +42,10 @@ public class Dashboard extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
+    public void onProfilePress(View v){
+        Intent intent = new Intent(Dashboard.this, ProfileActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }

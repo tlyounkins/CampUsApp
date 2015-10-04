@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:showIn="@layout/activity_profile" tools:context="ycp.adroidlibrary.ProfileActivity">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/profilePicture"
+        android:src="@android:drawable/sym_def_app_icon"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="First Name"
+        android:id="@+id/firstNameView"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/profilePicture"
+        android:layout_toEndOf="@+id/profilePicture" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Last Name"
+        android:id="@+id/lastNameView"
+        android:layout_below="@+id/firstNameView"
+        android:layout_toRightOf="@+id/profilePicture"
+        android:layout_toEndOf="@+id/profilePicture" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/friendButton"
+        android:layout_alignBottom="@+id/lastNameView"
+        android:layout_centerHorizontal="true"
+        android:src="@android:drawable/ic_input_add" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/messageButton"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/friendButton"
+        android:layout_toEndOf="@+id/friendButton"
+        android:src="@android:drawable/ic_dialog_email" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/flagButton"
+        android:layout_alignBottom="@+id/lastNameView"
+        android:layout_toRightOf="@+id/messageButton"
+        android:layout_toEndOf="@+id/messageButton"
+        android:src="@android:drawable/ic_dialog_alert" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Bio Text"
+        android:id="@+id/bioView"
+        android:layout_below="@+id/profilePicture"
+        android:layout_toRightOf="@+id/profilePicture"
+        android:layout_toEndOf="@+id/profilePicture" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/dashButtonProfile"
+        android:src="@android:drawable/ic_input_get"
+        android:onClick="dashPressProfile"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="34dp" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/calendarButtonProfile"
+        android:onClick="calendarPressProfile"
+        android:src="@android:drawable/ic_menu_my_calendar"
+        android:layout_alignTop="@+id/dashButtonProfile"
+        android:layout_toRightOf="@+id/dashButtonProfile" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/chatButtonProfile"
+        android:src="@android:drawable/sym_action_chat"
+        android:layout_alignTop="@+id/calendarButtonProfile"
+        android:layout_toRightOf="@+id/calendarButtonProfile"
+        android:layout_toEndOf="@+id/lastNameView" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/reminderButtonProfile"
+        android:src="@android:drawable/ic_popup_reminder"
+        android:layout_alignTop="@+id/chatButtonProfile"
+        android:layout_toRightOf="@+id/chatButtonProfile" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/profileButtonProfile"
+        android:src="@android:drawable/sym_def_app_icon"
+        android:layout_alignBottom="@+id/reminderButtonProfile"
+        android:layout_toRightOf="@+id/reminderButtonProfile"
+        android:layout_toEndOf="@+id/messageButton" />
+
+</RelativeLayout>
