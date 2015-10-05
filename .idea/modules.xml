@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/CampUsApp.iml" filepath="$PROJECT_DIR$/CampUsApp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/CampUsApp.iml" filepath="$PROJECT_DIR$/CampUsApp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/adroidlibrary/adroidlibrary.iml" filepath="$PROJECT_DIR$/adroidlibrary/adroidlibrary.iml" />
+    </modules>
+  </component>
+</project>

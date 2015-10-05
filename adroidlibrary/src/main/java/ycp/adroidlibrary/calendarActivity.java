@@ -44,4 +44,10 @@ public class calendarActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
+    public void onProfilePressCalendar(View v){
+        Intent intent = new Intent(calendarActivity.this, ProfileActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }
