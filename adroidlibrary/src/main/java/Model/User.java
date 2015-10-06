@@ -4,19 +4,19 @@
  * Contains all information stored in a users User
  */
 
-package main.java.Model;
+package Model;
 
 public class User {
    private String username, email, password, location, school;
     private String[] clubs, friends;
-   private int age, dob, friend_count, club_count;
+   private int age, month, day, year, friend_count, club_count;
 
     // TODO: Walls, posts, messages
     public User(){
 
     }
 
-    public User(String username, String email, String password, String location, String school, String[] clubs, String[] friends, int age, int dob, int friend_count, int club_count){
+    public User(String username, String email, String password, String location, String school, String[] clubs, String[] friends, int age, int month, int day, int year, int friend_count, int club_count){
         this.username = username;
         this.email = email;
         this.password = password;
@@ -25,7 +25,9 @@ public class User {
         this.clubs = clubs;
         this.friends = friends;
         this.age = age;
-        this.dob = dob;
+        this.day = day;
+        this.month = month;
+        this.year = year;
 
         this.friend_count = friend_count;
         this.club_count = club_count;
@@ -101,12 +103,22 @@ public class User {
         this.age = age;
     }
 
-    public int getDob(){
-        return dob;
+    public int getDobYear(){
+        return year;
     }
 
-    public void setDob(int dob){
-        this.dob = dob;
+    public int getDobMonth(){
+        return month;
+    }
+
+    public int getDobDay(){
+        return day;
+    }
+
+    public void setDob(int month, int day, int year){
+        this.month = month;
+        this.day = day;
+        this.year = year;
     }
 
     public String[] getClubs() {
