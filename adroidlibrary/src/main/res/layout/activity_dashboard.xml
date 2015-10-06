@@ -11,15 +11,6 @@
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/optionButton"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:src="@drawable/abc_ic_menu_moreoverflow_mtrl_alpha" />
-
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/dashButton"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
@@ -64,32 +55,5 @@
         android:layout_alignTop="@+id/notificationButton"
         android:layout_toRightOf="@+id/notificationButton"
         android:layout_toEndOf="@+id/notificationButton" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Dashboard"
-        android:id="@+id/dashboardButtonCalendar"
-        android:layout_alignTop="@+id/optionButton"
-        android:layout_toRightOf="@+id/optionButton"
-        android:layout_toEndOf="@+id/optionButton" />
-
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/searchButton"
-        android:layout_alignBottom="@+id/optionButton"
-        android:layout_toRightOf="@+id/dashboardButtonCalendar"
-        android:layout_toEndOf="@+id/dashboardButtonCalendar"
-        android:src="@android:drawable/ic_menu_search" />
-
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/postButton"
-        android:layout_alignBottom="@+id/searchButton"
-        android:layout_toRightOf="@+id/searchButton"
-        android:layout_toEndOf="@+id/searchButton"
-        android:src="@android:drawable/ic_menu_edit" />
 
 </RelativeLayout>
