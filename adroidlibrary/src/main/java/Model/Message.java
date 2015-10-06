@@ -1,6 +1,6 @@
 package Model;
 
-import java.util.Date;
+import java.util.Calendar;
 
 /**
  * Created by Mike on 9/27/2015.
@@ -12,7 +12,8 @@ import java.util.Date;
 public class Message {
 
     private String sender, recipient, body;
-    Date date;
+    Calendar date;
+    String time;
 
     public Message(){
 
@@ -46,10 +47,11 @@ public class Message {
         this.body = body;
     }
 
-    public Date getDate(){
-        return date;
+    public String getTime(){
+        return time;
     }
 
-    public void setDate(){
+    public void setTime(){
+       time = date.get(Calendar.HOUR_OF_DAY) + ":" + date.get(Calendar.MINUTE);
     }
 }
