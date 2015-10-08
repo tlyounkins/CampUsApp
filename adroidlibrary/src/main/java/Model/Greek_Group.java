@@ -5,7 +5,4 @@ package Model;
  */
 public class Greek_Group extends Group {
 
-    public Greek_Group(String groupname, int num_groupmembers) {
-        super(groupname, num_groupmembers);
-    }
 }
