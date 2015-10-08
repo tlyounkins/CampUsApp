@@ -12,7 +12,7 @@ public class GroupTest extends TestCase {
 
     @Before
     public void setUp(){
-        grouptester = new Group();
+         grouptester = new Group();
     }
 
     public void testAdd_member() throws Exception {
