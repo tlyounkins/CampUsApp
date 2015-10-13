@@ -4,7 +4,8 @@ package Model;
  * Created by Tyler on 9/27/15.
  */
 public class Group {
-
+    private int id;
+    private User moderator[];
     private String admin;
     private String boardmember;
     private String bio;
@@ -15,8 +16,10 @@ public class Group {
 
     }
 
-    public Group(String groupname, String admin, String boardmember, String bio, String member,
+    public Group(int id,User moderator[], String groupname, String admin, String boardmember, String bio, String member,
                  int num_groupmembers) {
+        this.moderator = moderator;
+        this.id = id;
         this.admin = admin;
         this.boardmember = boardmember;
         this.bio = bio;
@@ -47,6 +50,22 @@ public class Group {
     }
 
     // Getters and Setters
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId(int id) {
+        return id;
+    }
+
+    public void setModerator(User moderator[]) {
+        this.moderator = moderator;
+    }
+
+    public User getModerator(User moderator) {
+        return moderator;
+    }
+
     public String getGroupname() {
         return groupname;
     }

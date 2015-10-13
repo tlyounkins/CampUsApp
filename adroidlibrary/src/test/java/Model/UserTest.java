@@ -19,14 +19,20 @@ public class UserTest extends TestCase {
 
     public void testGettersSetters(){
 
+        tester.setId(0);
         tester.setUsername("User");
         tester.setAge(20);
         tester.setEmail("User@gmail.com");
-        tester.setLocation("York");
+        tester.setHometown("York");
         tester.setPassword("hunter2");
         tester.setSchool("York College");
         tester.setDob(1, 2, 1985);
+        tester.setMajor("Comp SCI");
+        tester.setBio("Test Bio");
+        tester.setGender("Male");
 
+        // id
+        assertEquals("id must be 0", 0, tester.getId());
         // Username
         assertEquals("Username must be User", "User", tester.getUsername());
         // Age
@@ -34,7 +40,7 @@ public class UserTest extends TestCase {
         // Email
         assertEquals("Email must be User@gmail.com", "User@gmail.com", tester.getEmail());
         // Location
-        assertEquals("Location must be York", "York", tester.getLocation());
+        assertEquals("Location must be York", "York", tester.getHometown());
         // Password
         assertEquals("Password must be hunter2", "hunter2", tester.getPassword());
         // School
@@ -45,5 +51,11 @@ public class UserTest extends TestCase {
         assertEquals("Day must be 02", 2, tester.getDobDay());
         // Year
         assertEquals("Year must be 1985", 1985, tester.getDobYear());
+        // Major
+        assertEquals("Major must be Comp SCI ", "Comp SCI", tester.getMajor());
+        // Major
+        assertEquals("Major must be Test Bio ", "Test Bio", tester.getBio());
+        // Gender
+        assertEquals("Gender must be Male ", "Male", tester.getGender());
     }
 }

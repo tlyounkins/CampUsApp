@@ -1,6 +1,7 @@
 package Model;
 
 public class Event{
+    private int id;
     private long start_time, end_time, date ;
     private String location, description, participants;
 
@@ -8,14 +9,22 @@ public class Event{
 
     }
 
-    public Event(long start_time, long end_time, long date,String location, String description, String participants){
+    public Event(int id,long start_time, long end_time, long date,String location, String description, String participants){
+        this.id = id;
         this.start_time = start_time;
         this.end_time = end_time;
         this.date = date;
         this.location = location;
         this.description = description;
         this.participants = participants;
+    }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public long getStart_time() {

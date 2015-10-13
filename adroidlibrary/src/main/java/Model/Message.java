@@ -11,6 +11,7 @@ import java.util.Calendar;
  */
 public class Message {
 
+    private int id;
     private String sender, recipient, body;
     Calendar date;
     String time;
@@ -21,6 +22,14 @@ public class Message {
 
     public void Create_Notification(){
 
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getSender(){

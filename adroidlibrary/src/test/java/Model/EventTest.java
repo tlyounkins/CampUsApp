@@ -16,7 +16,7 @@ public class EventTest extends TestCase {
     }
 
     public void testGettersSetters(){
-
+        eventTest.setId(0);
         eventTest.setStart_time(1000);
         eventTest.setEnd_time(1200);
         eventTest.setDate(101166);
@@ -25,6 +25,7 @@ public class EventTest extends TestCase {
         eventTest.setParticipants("bob");
 
         // Event
+        assertEquals("id should be 0", 0 ,eventTest.getId());
         assertEquals("Event starts at 1000", 1000, eventTest.getStart_time());
         assertEquals("Event ends at 1000", 1200, eventTest.getEnd_time());
         assertEquals("Event should be on 101166", 101166, eventTest.getDate());

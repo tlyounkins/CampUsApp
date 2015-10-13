@@ -7,20 +7,23 @@
 package Model;
 
 public class User {
-   private String username, email, password, location, school;
+    private int id;
+    private String username, email, password, hometown, school, major, bio, gender;
     private String[] clubs, friends;
-   private int age, month, day, year, friend_count, club_count;
+    private int age, month, day, year, friend_count, club_count;
 
     // TODO: Walls, posts, messages
-    public User(){
+    public User() {
 
     }
 
-    public User(String username, String email, String password, String location, String school, String[] clubs, String[] friends, int age, int month, int day, int year, int friend_count, int club_count){
+    public User(int id, String username, String email, String password, String hometown, String school, String[] clubs, String[] friends, int age, int month, int day,
+                int year, int friend_count, int club_count, String major, String bio, String gender) {
+        this.id = id;
         this.username = username;
         this.email = email;
         this.password = password;
-        this.location = location;
+        this.hometown = hometown;
         this.school = school;
         this.clubs = clubs;
         this.friends = friends;
@@ -31,29 +34,39 @@ public class User {
 
         this.friend_count = friend_count;
         this.club_count = club_count;
+        this.major = major;
+        this.bio = bio;
+        this.gender = gender;
     }
 
     // Send a Message to specified recipient(s)
-    public void sendMessage(){
+    public void sendMessage() {
 
     }
 
     // Send a request to a Group for membership
-    public void groupRequest(){
+    public void groupRequest() {
 
     }
 
     // Send a friend request to another user
-    public void sendFriendRequest(){
+    public void sendFriendRequest() {
 
     }
 
     // Post a message to wall
-    public void post(){
+    public void post() {
 
     }
 
     // Getters/Setters
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
 
     public String getUsername() {
         return username;
@@ -75,23 +88,23 @@ public class User {
         return password;
     }
 
-    public void setPassword(String password){
+    public void setPassword(String password) {
         this.password = password;
     }
 
-    public String getLocation() {
-        return location;
+    public String getHometown() {
+        return hometown;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setHometown(String hometown) {
+        this.hometown = hometown;
     }
 
     public String getSchool() {
         return school;
     }
 
-    public void setSchool(String school){
+    public void setSchool(String school) {
         this.school = school;
     }
 
@@ -99,23 +112,23 @@ public class User {
         return age;
     }
 
-    public void setAge(int age){
+    public void setAge(int age) {
         this.age = age;
     }
 
-    public int getDobYear(){
+    public int getDobYear() {
         return year;
     }
 
-    public int getDobMonth(){
+    public int getDobMonth() {
         return month;
     }
 
-    public int getDobDay(){
+    public int getDobDay() {
         return day;
     }
 
-    public void setDob(int month, int day, int year){
+    public void setDob(int month, int day, int year) {
         this.month = month;
         this.day = day;
         this.year = year;
@@ -129,13 +142,35 @@ public class User {
         this.clubs = clubs;
     }
 
-    public String[] getFriends(){
+    public String[] getFriends() {
         return friends;
     }
 
-    public void setFriends(String[] friends){
+    public void setFriends(String[] friends) {
         this.friends = friends;
     }
 
-}
+    public void setMajor(String major) {
+        this.major = major;
+    }
 
+    public String getMajor() {
+        return major;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+}
