@@ -21,6 +21,7 @@ public class MessageTest extends TestCase{
     }
 
     public void testGetterSetters(){
+        tester.setId(1);
         tester.setSender("User");
         tester.setRecipient("User2");
         tester.setBody("I'm a message! Hello!");
@@ -35,6 +36,8 @@ public class MessageTest extends TestCase{
         assertEquals("Body does not match", "I'm a message! Hello!", tester.getBody());
         // Time
         assertEquals("Time is not the same", current_time, tester.getTime());
+        // id
+        assertEquals("id does not match", 1, tester.getId());
     }
 
 }

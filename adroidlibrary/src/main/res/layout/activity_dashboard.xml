@@ -56,4 +56,14 @@
         android:layout_toRightOf="@+id/notificationButton"
         android:layout_toEndOf="@+id/notificationButton" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Login"
+        android:id="@+id/tempLogin"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="81dp"
+        android:onClick="onDashLoginPress"/>
+
 </RelativeLayout>

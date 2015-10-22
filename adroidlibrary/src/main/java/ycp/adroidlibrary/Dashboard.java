@@ -48,4 +48,10 @@ public class Dashboard extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
+    public void onDashLoginPress(View v){
+        Intent intent = new Intent(Dashboard.this, LoginActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }
