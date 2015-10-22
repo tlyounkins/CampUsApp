@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import com.android.volley.toolbox.Volley;
+
 public class ProfileActivity extends AppCompatActivity {
 
     @Override
