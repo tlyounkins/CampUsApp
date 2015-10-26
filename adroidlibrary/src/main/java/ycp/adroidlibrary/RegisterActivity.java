@@ -19,7 +19,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 
 public class RegisterActivity extends AppCompatActivity {
-    String url = "http://192.168.172.165:3000";
+    String url = "http://192.168.172.90:3000";
     EditText pass;
     EditText email;
     EditText confirm;
@@ -41,7 +41,7 @@ public class RegisterActivity extends AppCompatActivity {
         HashMap<String, String> params = new HashMap<>();
         params.put("email", email.getText().toString());
         params.put("password", pass.getText().toString());
-        params.put("name", username.getText().toString());
+        params.put("username", username.getText().toString());
         params.put("password_confirmation", confirm.getText().toString());
 
         // Send JSON request to server to add to database

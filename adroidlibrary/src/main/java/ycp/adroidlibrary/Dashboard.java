@@ -20,13 +20,15 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+
 
 public class Dashboard extends AppCompatActivity {
     int id = 0;
     String username = "";
     Button loginButton;
     TextView welcomeText;
-    String url = "http://192.168.172.165:3000";
+    String url = "http://192.168.172.90:3000";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,7 +94,11 @@ public class Dashboard extends AppCompatActivity {
         }
         // A user is logged in, log them out
         else {
-            JsonObjectRequest passRequest = new JsonObjectRequest(Request.Method.DELETE, url+"/logout.json",null, new Response.Listener<JSONObject>(){
+            // Pass User Id to server
+            HashMap<String, String> params = new HashMap<>();
+            params.put("user_id", Integer.toString(id));
+
+            JsonObjectRequest passRequest = new JsonObjectRequest(Request.Method.DELETE, url+"/logout.json",new JSONObject(params), new Response.Listener<JSONObject>(){
                 @Override
                 public void onResponse(JSONObject response){
                     try{
