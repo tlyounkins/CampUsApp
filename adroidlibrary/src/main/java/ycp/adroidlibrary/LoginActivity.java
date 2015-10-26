@@ -195,7 +195,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 @Override
                 public void onResponse(JSONObject response){
                     try{
-                        if(response.get("success")==true){
+                        if(response.get("success").toString().equals("true")){
                             // Display Successful message
                             Toast toast = Toast.makeText(getApplicationContext(), "Successful log in!", Toast.LENGTH_LONG);
                             toast.setGravity(Gravity.CENTER, 0, 0);

@@ -103,7 +103,7 @@ public class Dashboard extends AppCompatActivity {
                 public void onResponse(JSONObject response){
                     try{
                         // Successful Logout
-                        if(response.get("success") == true){
+                        if(response.get("success").toString().equals("true")){
                             // Show success message
                             Toast toast = Toast.makeText(getApplicationContext(), "Log Out Successful", Toast.LENGTH_LONG);
                             toast.setGravity(Gravity.CENTER, 0, 0);

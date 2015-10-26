@@ -5,7 +5,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="ycp.adroidlibrary.RegisterActivity">
+    tools:context="ycp.adroidlibrary.RegisterActivity"
+    android:scrollIndicators="top|bottom">
 
     <EditText
         android:layout_width="wrap_content"
@@ -46,7 +47,7 @@
         android:text="Register"
         android:id="@+id/registerDoneButton"
         android:onClick="onRegisterClick"
-        android:layout_centerVertical="true"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
 
     <EditText
@@ -59,5 +60,71 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:text="password" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/registerFirstName"
+        android:layout_below="@+id/registerEmail"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/registerEmail"
+        android:layout_alignEnd="@+id/registerEmail"
+        android:text="First name" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/registerLastName"
+        android:layout_below="@+id/registerFirstName"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/registerFirstName"
+        android:layout_alignEnd="@+id/registerFirstName"
+        android:text="Last name" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/registerBio"
+        android:text="Bio"
+        android:layout_below="@+id/registerLastName"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/registerLastName"
+        android:layout_alignEnd="@+id/registerLastName" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/registerHometown"
+        android:text="Hometown"
+        android:layout_above="@+id/registerGender"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/registerMajor"
+        android:layout_alignEnd="@+id/registerMajor" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/registerGender"
+        android:text="Gender"
+        android:layout_above="@+id/registerDoneButton"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/registerHometown"
+        android:layout_alignEnd="@+id/registerHometown" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/registerMajor"
+        android:layout_above="@+id/registerHometown"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/registerBio"
+        android:layout_alignEnd="@+id/registerBio"
+        android:text="Major" />
 
 </RelativeLayout>

@@ -24,6 +24,12 @@ public class RegisterActivity extends AppCompatActivity {
     EditText email;
     EditText confirm;
     EditText username;
+    EditText firstname;
+    EditText lastname;
+    EditText bio;
+    EditText major;
+    EditText hometown;
+    EditText gender;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +40,14 @@ public class RegisterActivity extends AppCompatActivity {
         confirm = (EditText) findViewById(R.id.registerConfirm);
         email = (EditText) findViewById(R.id.registerEmail);
         username = (EditText) findViewById(R.id.registerUserName);
+        firstname = (EditText) findViewById(R.id.registerFirstName);
+        lastname = (EditText) findViewById(R.id.registerLastName);
+        bio = (EditText) findViewById(R.id.registerBio);
+        major = (EditText) findViewById(R.id.registerMajor);
+        hometown = (EditText) findViewById(R.id.registerHometown);
+        gender = (EditText) findViewById(R.id.registerGender);
+
+
     }
 
     public void onRegisterClick(View v){
@@ -43,13 +57,19 @@ public class RegisterActivity extends AppCompatActivity {
         params.put("password", pass.getText().toString());
         params.put("username", username.getText().toString());
         params.put("password_confirmation", confirm.getText().toString());
+        params.put("firstname",firstname.getText().toString());
+        params.put("lastname",lastname.getText().toString());
+        params.put("bio",bio.getText().toString());
+        params.put("major",major.getText().toString());
+        params.put("hometown",hometown.getText().toString());
+        params.put("gender",gender.getText().toString());
 
         // Send JSON request to server to add to database
         JsonObjectRequest passRequest = new JsonObjectRequest(url+"/users/new.json", new JSONObject(params), new Response.Listener<JSONObject>(){
             @Override
             public void onResponse(JSONObject response){
                 try{
-                    if(response.get("success")==true){
+                    if(response.get("success").toString().equals("true")){
                         // Display Successful message
                         Toast toast = Toast.makeText(getApplicationContext(), "Successful Registration.", Toast.LENGTH_LONG);
                         toast.setGravity(Gravity.CENTER, 0, 0);
