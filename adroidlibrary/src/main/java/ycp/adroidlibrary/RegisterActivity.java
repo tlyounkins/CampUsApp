@@ -64,6 +64,19 @@ public class RegisterActivity extends AppCompatActivity {
             cancel = true;
         }
 
+        // Check Email
+        if(TextUtils.isEmpty(email.getText().toString())){
+            email.setError("This field is required");
+            focusView = findViewById(R.id.registerEmail);
+            cancel = true;
+        }
+        if(!email.getText().toString().contains("@")){
+            email.setError("Please enter a valid email address");
+            focusView = findViewById(R.id.registerEmail);
+            cancel = true;
+        }
+
+
         // Check Password
         if(TextUtils.isEmpty(pass.getText().toString())){
             pass.setError("This field is required");
@@ -85,18 +98,6 @@ public class RegisterActivity extends AppCompatActivity {
         if(!confirm.getText().toString().equals(pass.getText().toString())){
             confirm.setError("Fields do not match");
             focusView = findViewById(R.id.registerConfirm);
-            cancel = true;
-        }
-
-        // Check Email
-        if(TextUtils.isEmpty(email.getText().toString())){
-            email.setError("This field is required");
-            focusView = findViewById(R.id.registerEmail);
-            cancel = true;
-        }
-        if(!email.getText().toString().contains("@")){
-            email.setError("Please enter a valid email address");
-            focusView = findViewById(R.id.registerEmail);
             cancel = true;
         }
 
