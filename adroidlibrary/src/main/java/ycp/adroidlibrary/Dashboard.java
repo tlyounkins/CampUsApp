@@ -28,7 +28,7 @@ public class Dashboard extends AppCompatActivity {
     String username = "";
     Button loginButton;
     TextView welcomeText;
-    String url = "http://192.168.172.90:3000";
+    String url = "http://192.168.172.84:3000";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +47,10 @@ public class Dashboard extends AppCompatActivity {
 
         // If user is logged in, change button to log out/display name
         if(id != 0){
-            loginButton.setText("Log Out");
-            welcomeText.setText("Hello, " + username +"!");
+            String log = "Log Out";
+            String hello = "Hello, ";
+            loginButton.setText(log);
+            welcomeText.setText(hello + username);
         }
     }
 
@@ -75,15 +77,15 @@ public class Dashboard extends AppCompatActivity {
     }
 
     public void onCalendarPress(View v){
+        // Change view to Calendar
         Intent intent = new Intent(Dashboard.this, calendarActivity.class);
         startActivity(intent);
-        finish();
     }
 
     public void onProfilePress(View v){
+        // Change view to Profile
         Intent intent = new Intent(Dashboard.this, ProfileActivity.class);
         startActivity(intent);
-        finish();
     }
 
     public void onDashLoginPress(View v){
