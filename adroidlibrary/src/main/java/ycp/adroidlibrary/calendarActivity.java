@@ -40,14 +40,14 @@ public class calendarActivity extends AppCompatActivity {
     }
 
     public void onDashboardPress(View v){
+        // Change view to Dashboard
         Intent intent = new Intent(calendarActivity.this, Dashboard.class);
         startActivity(intent);
-        finish();
     }
 
     public void onProfilePressCalendar(View v){
+        // Change view to Profile
         Intent intent = new Intent(calendarActivity.this, ProfileActivity.class);
         startActivity(intent);
-        finish();
     }
 }

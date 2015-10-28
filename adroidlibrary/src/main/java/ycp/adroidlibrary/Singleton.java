@@ -7,7 +7,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 
 /**
- * Class to handle all aerver requests
+ * Class to handle all server requests
  * Created by Mike on 10/23/2015.
  */
 public class Singleton {
