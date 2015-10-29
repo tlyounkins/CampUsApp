@@ -21,7 +21,7 @@ import org.w3c.dom.Text;
 import java.util.HashMap;
 
 public class RegisterActivity extends AppCompatActivity {
-    String url = "http://192.168.172.84:3000";
+    String url = "http://192.168.172.185:3000";
     EditText pass;
     EditText email;
     EditText confirm;
