@@ -1,10 +1,15 @@
 package ycp.adroidlibrary;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.annotation.TargetApi;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +30,7 @@ public class EditActivity extends AppCompatActivity {
     String url = "http://192.168.172.185:3000";
     int id;
     EditText hometown, major, bio, gender, firstname, lastname;
+    View editView, progressView;
     TextView username;
 
     @Override
@@ -40,13 +46,17 @@ public class EditActivity extends AppCompatActivity {
         firstname = (EditText) findViewById(R.id.editFirst);
         lastname = (EditText) findViewById(R.id.editLast);
         username = (TextView) findViewById(R.id.editUserText);
+        editView = findViewById(R.id.editUserForm);
+        progressView = findViewById(R.id.loadUserProgress);
 
         // Check for extras
         Bundle extras = getIntent().getExtras();
         if (extras != null){
             id = extras.getInt("id");
-            username.setText(extras.getString("username"));
         }
+
+        // Show a progress spinner
+        showProgress(true);
 
         // Send JsonRequest to get fields
         JsonObjectRequest fieldsRequest = new JsonObjectRequest(Request.Method.GET, url+"/users/"+Integer.toString(id)+".json", null, new Response.Listener<JSONObject>(){
@@ -54,12 +64,14 @@ public class EditActivity extends AppCompatActivity {
             public void onResponse(JSONObject response){
                 try {
                     // Set the Text Fields to Acquired Information
-                    hometown.setText(response.getString("hometown"));
-                    major.setText(response.getString("major"));
-                    bio.setText(response.getString("bio"));
-                    gender.setText(response.getString("gender"));
-                    firstname.setText(response.getString("firstname"));
-                    lastname.setText(response.getString("lastname"));
+                    //username.setText(response.get("username").toString());
+                    hometown.setText(response.get("hometown").toString());
+                    major.setText(response.get("major").toString());
+                    bio.setText(response.get("bio").toString());
+                    gender.setText(response.get("gender").toString());
+                    firstname.setText(response.get("firstname").toString());
+                    lastname.setText(response.get("lastname").toString());
+                    showProgress(false);
                 } catch (JSONException e){
                     // There was an error, print it
                     e.printStackTrace();
@@ -80,15 +92,20 @@ public class EditActivity extends AppCompatActivity {
     public void onConfirmPress(View v){
         // Place Entries into a Hash to be sent to server
         HashMap<String, String> params = new HashMap<>();
+        params.put("id", Integer.toString(id));
         params.put("hometown", hometown.getText().toString());
         params.put("major", major.getText().toString());
         params.put("bio", bio.getText().toString());
         params.put("gender", gender.getText().toString());
         params.put("firstname", firstname.getText().toString());
-        params.put("lasname", lastname.getText().toString());
+        params.put("lastname", lastname.getText().toString());
+
+        Toast.makeText(getApplicationContext(), "Starting Send", Toast.LENGTH_LONG).show();
+
+        showProgress(true);
 
         // Send changes to server
-        JsonObjectRequest changesRequest = new JsonObjectRequest(Request.Method.PATCH, url+"/users/"+Integer.toString(id)+".json", new JSONObject(params), new Response.Listener<JSONObject>(){
+        JsonObjectRequest changesRequest = new JsonObjectRequest(Request.Method.PUT, url+"/users/"+Integer.toString(id)+".json", new JSONObject(params), new Response.Listener<JSONObject>(){
             @Override
             public void onResponse(JSONObject response){
                 try{
@@ -105,6 +122,7 @@ public class EditActivity extends AppCompatActivity {
                         Toast toast = Toast.makeText(getApplicationContext(), "Profile updated failed, try again", Toast.LENGTH_LONG);
                         toast.setGravity(Gravity.CENTER, 0, 0);
                         toast.show();
+                        showProgress(false);
                     }
                 } catch (JSONException e){
                     // Print JSONError
@@ -118,5 +136,45 @@ public class EditActivity extends AppCompatActivity {
                 VolleyLog.e("Error: " + e.getMessage());
             }
         });
+
+        // Add Request to Queue
+        Singleton.getInstance(this).addToRequestQueue(changesRequest);
     }
+
+    /**
+     * Shows the progress UI and hides the edit form.
+     */
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
+    private void showProgress(final boolean show) {
+        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
+        // for very easy animations. If available, use these APIs to fade-in
+        // the progress spinner.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
+            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
+
+            editView.setVisibility(show ? View.GONE : View.VISIBLE);
+            editView.animate().setDuration(shortAnimTime).alpha(
+                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    editView.setVisibility(show ? View.GONE : View.VISIBLE);
+                }
+            });
+
+            progressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            progressView.animate().setDuration(shortAnimTime).alpha(
+                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    progressView.setVisibility(show ? View.VISIBLE : View.GONE);
+                }
+            });
+        } else {
+            // The ViewPropertyAnimator APIs are not available, so simply show
+            // and hide the relevant UI components.
+            progressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            editView.setVisibility(show ? View.GONE : View.VISIBLE);
+        }
+    }
+
 }

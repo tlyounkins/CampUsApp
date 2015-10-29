@@ -21,6 +21,7 @@ import org.w3c.dom.Text;
 import java.util.HashMap;
 
 public class RegisterActivity extends AppCompatActivity {
+    int id;
     String url = "http://192.168.172.185:3000";
     EditText pass;
     EditText email;
@@ -48,8 +49,6 @@ public class RegisterActivity extends AppCompatActivity {
         major = (EditText) findViewById(R.id.registerMajor);
         hometown = (EditText) findViewById(R.id.registerHometown);
         gender = (EditText) findViewById(R.id.registerGender);
-
-
     }
 
     public void onRegisterClick(View v){
@@ -164,4 +163,5 @@ public class RegisterActivity extends AppCompatActivity {
             Singleton.getInstance(this).addToRequestQueue(passRequest);
         }
     }
+
 }

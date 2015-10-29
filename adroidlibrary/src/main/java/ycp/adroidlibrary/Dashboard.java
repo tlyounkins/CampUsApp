@@ -85,6 +85,7 @@ public class Dashboard extends AppCompatActivity {
     public void onProfilePress(View v){
         // Change view to Profile
         Intent intent = new Intent(Dashboard.this, ProfileActivity.class);
+        intent.putExtra("id", id);
         startActivity(intent);
     }
 
