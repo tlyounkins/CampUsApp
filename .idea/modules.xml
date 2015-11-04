@@ -4,7 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/CampUsApp.iml" filepath="$PROJECT_DIR$/CampUsApp.iml" />
       <module fileurl="file://$PROJECT_DIR$/adroidlibrary/adroidlibrary.iml" filepath="$PROJECT_DIR$/adroidlibrary/adroidlibrary.iml" />
-      <module fileurl="file://$PROJECT_DIR$/volley/volley.iml" filepath="$PROJECT_DIR$/volley/volley.iml" />
     </modules>
   </component>
 </project>

@@ -22,7 +22,7 @@ import java.util.HashMap;
 
 public class RegisterActivity extends AppCompatActivity {
     int id;
-    String url = "http://192.168.172.185:3000";
+    String url = "http://192.168.172.48:3000";
     EditText pass;
     EditText email;
     EditText confirm;
