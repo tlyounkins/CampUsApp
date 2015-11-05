@@ -68,8 +68,10 @@ public class Dashboard extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_Clubs){
+            // Start Group Activity
+            Intent intent = new Intent(Dashboard.this, GroupActivity.class);
+            startActivity(intent);
             return true;
         }
 
