@@ -1,6 +1,5 @@
 package ycp.adroidlibrary;
 
-
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -30,8 +29,6 @@ public class Dashboard extends AppCompatActivity {
     Button loginButton;
     TextView welcomeText;
     String url = "http://192.168.172.234:3000";
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,11 +66,12 @@ public class Dashboard extends AppCompatActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        int item_id = item.getItemId();
 
-        if (id == R.id.action_Clubs){
+        if (item_id == R.id.action_Clubs){
             // Start Group Activity
             Intent intent = new Intent(Dashboard.this, GroupActivity.class);
+            intent.putExtra("id", id);
             startActivity(intent);
             return true;
         }

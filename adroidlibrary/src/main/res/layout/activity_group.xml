@@ -30,6 +30,30 @@
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="Description"
                 android:id="@+id/groupGroupDescription1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Members:"
+                android:id="@+id/groupMemberText" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Member1"
+                android:id="@+id/groupMember1" />
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="78dp"
+                android:layout_height="31dp"
+                android:text="Join Group"
+                android:onClick="onJoinPress"
+                android:id="@+id/groupJoinbutton"
+                android:textSize="10dp" />
+
         </LinearLayout>
 
         <Button
