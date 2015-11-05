@@ -1,6 +1,11 @@
 package ycp.adroidlibrary;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
+import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -16,13 +21,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class GroupActivity extends AppCompatActivity {
-    String url = "http://192.168.172.48:3000";
+    String url = "http://192.168.172.234:3000";
     TextView groupName, groupDescription;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group);
+
 
         groupName = (TextView) findViewById(R.id.groupGroupName1);
         groupDescription = (TextView) findViewById(R.id.groupGroupDescription1);
@@ -35,6 +41,7 @@ public class GroupActivity extends AppCompatActivity {
                     // Set the Text Fields to Acquired Information
                     groupName.setText(response.get("groupName").toString());
                     groupDescription.setText(response.get("description").toString());
+
                 } catch (JSONException e){
                     // There was an error, print it
                     e.printStackTrace();

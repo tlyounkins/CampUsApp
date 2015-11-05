@@ -17,11 +17,10 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Method;
 import java.util.HashMap;
 
 public class GroupRegisterActivity extends AppCompatActivity {
-    String url = "http://192.168.172.48:3000";
+    String url = "http://192.168.172.234:3000";
     EditText name, description;
 
     @Override
@@ -51,6 +50,8 @@ public class GroupRegisterActivity extends AppCompatActivity {
                         Toast toast = Toast.makeText(getApplicationContext(), "Successful Registration.", Toast.LENGTH_LONG);
                         toast.setGravity(Gravity.CENTER, 0, 0);
                         toast.show();
+
+                        Notify.notify(GroupRegisterActivity.this, "Group" + name.getText().toString() + " created.", 1);
 
                         // Bring user back to Dashboard
                         Intent intent = new Intent(GroupRegisterActivity.this, Dashboard.class);

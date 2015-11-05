@@ -16,13 +16,12 @@ import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.util.HashMap;
 
 public class RegisterActivity extends AppCompatActivity {
     int id;
-    String url = "http://192.168.172.48:3000";
+    String url = "http://192.168.172.234:3000";
     EditText pass;
     EditText email;
     EditText confirm;
@@ -106,6 +105,8 @@ public class RegisterActivity extends AppCompatActivity {
         } else {
             // Go through with request
 
+
+
             // Place information entered by User into HashMap
             HashMap<String, String> params = new HashMap<>();
             params.put("email", email.getText().toString());
@@ -130,6 +131,7 @@ public class RegisterActivity extends AppCompatActivity {
                             toast.setGravity(Gravity.CENTER, 0, 0);
                             toast.show();
 
+                            Notify.notify(RegisterActivity.this, "User " + username.getText().toString() + " created.", 1);
                             // Bring user back to Dashboard
                             Intent intent = new Intent(RegisterActivity.this, Dashboard.class);
                             startActivity(intent);

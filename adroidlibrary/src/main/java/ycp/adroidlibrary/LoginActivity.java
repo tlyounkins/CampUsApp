@@ -19,6 +19,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.v7.app.NotificationCompat;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -63,7 +64,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
-    String url = "http://192.168.172.48:3000";
+    String url = "http://192.168.172.234:3000";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,6 +148,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * If there are form errors (invalid email, missing fields, etc.), the
      * errors are presented and no actual login attempt is made.
      */
+
     private void attemptLogin() {
         // Reset errors.
         mEmailView.setError(null);
