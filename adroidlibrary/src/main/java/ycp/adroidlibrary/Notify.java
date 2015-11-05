@@ -63,7 +63,7 @@ public class Notify {
 
                         // Set required fields, including the small icon, the
                         // notification title, and text.
-                .setSmallIcon(R.drawable.notification)
+                .setSmallIcon(R.drawable.example_picture)
                 .setContentTitle(title)
                 .setContentText(text)
 
