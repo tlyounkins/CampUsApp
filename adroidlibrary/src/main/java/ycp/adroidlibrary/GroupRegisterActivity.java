@@ -20,7 +20,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 
 public class GroupRegisterActivity extends AppCompatActivity {
-    String url = "http://192.168.172.234:3000";
+    String url = "http://192.168.172.47:3000";
     EditText name, description;
 
     @Override
