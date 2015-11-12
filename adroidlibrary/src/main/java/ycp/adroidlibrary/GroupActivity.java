@@ -25,7 +25,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 
 public class GroupActivity extends AppCompatActivity {
-    String url = "http://192.168.172.47:3000";
+    String url = "http://192.168.172.42:3000";
     TextView groupName1, groupName2, groupName3, groupName4, groupName5;
     TextView groupDescription1, groupDescription2, groupDescription3, groupDescription4, groupDescription5;
     int id, count;
