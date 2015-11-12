@@ -64,7 +64,7 @@ public class EditActivity extends AppCompatActivity {
             public void onResponse(JSONObject response){
                 try {
                     // Set the Text Fields to Acquired Information
-                    //username.setText(response.get("username").toString());
+                    username.setText(response.get("username").toString());
                     hometown.setText(response.get("hometown").toString());
                     major.setText(response.get("major").toString());
                     bio.setText(response.get("bio").toString());
