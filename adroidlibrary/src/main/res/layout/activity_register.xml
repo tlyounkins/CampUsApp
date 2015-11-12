@@ -8,7 +8,7 @@
     tools:context="ycp.adroidlibrary.RegisterActivity"
     android:scrollIndicators="top|bottom"
     android:fillViewport="true"
-    android:background="#2558b5">
+    android:background="#727cbe">
 
         <LinearLayout
             android:orientation="vertical"

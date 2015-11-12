@@ -27,7 +27,7 @@ import java.util.HashMap;
 import Model.User;
 
 public class EditActivity extends AppCompatActivity {
-    String url = "http://192.168.172.42:3000";
+    String url = "http://192.168.172.255:3000";
     int id;
     EditText hometown, major, bio, gender, firstname, lastname;
     View editView, progressView;

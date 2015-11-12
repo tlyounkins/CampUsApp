@@ -19,7 +19,7 @@ import org.json.JSONObject;
 public class GroupProfileActivity extends AppCompatActivity {
     int id, group_id;
     TextView groupName, groupDescription;
-    String url = "http://192.168.172.42:3000";
+    String url = "http://192.168.172.255:3000";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

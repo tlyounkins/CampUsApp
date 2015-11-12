@@ -17,7 +17,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class ProfileActivity extends AppCompatActivity {
-    String url = "http://192.168.172.42:3000";
+    String url = "http://192.168.172.255:3000";
     int id = 0;
 
     TextView username;
