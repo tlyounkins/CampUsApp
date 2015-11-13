@@ -218,7 +218,7 @@ public class GroupActivity extends AppCompatActivity {
         // Add Request to Queue
         Singleton.getInstance(this).addToRequestQueue(fieldsRequest4);
 
-        // Fith group
+        // Fifth group
         JsonObjectRequest fieldsRequest5 = new JsonObjectRequest(Request.Method.GET, url+"/groups/"+Integer.toString(5 + count)+".json", null, new Response.Listener<JSONObject>(){
             @Override
             public void onResponse(JSONObject response){
