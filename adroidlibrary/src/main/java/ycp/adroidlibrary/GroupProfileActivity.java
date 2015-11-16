@@ -37,7 +37,6 @@ public class GroupProfileActivity extends AppCompatActivity {
             group_id = extras.getInt("group_id");
             username = extras.getString("username");
         }
-
         // Send JsonRequest to get fields
         JsonObjectRequest fieldsRequest = new JsonObjectRequest(Request.Method.GET, url+"/groups/"+Integer.toString(group_id)+".json", null, new Response.Listener<JSONObject>(){
             @Override
