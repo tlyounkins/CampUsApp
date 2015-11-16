@@ -65,11 +65,17 @@ public class GroupActivity extends AppCompatActivity {
         groupList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // Get group id at position, start profile activity
-                Intent intent = new Intent(GroupActivity.this, GroupProfileActivity.class);
-                intent.putExtra("id", user_id);
-                intent.putExtra("group_id", position+1);
-                startActivity(intent);
+                if(user_id != 0) {
+                    // Get group id at position, start profile activity
+                    Intent intent = new Intent(GroupActivity.this, GroupProfileActivity.class);
+                    intent.putExtra("id", user_id);
+                    intent.putExtra("group_id", position + 1);
+                    startActivity(intent);
+                }else{
+                    Toast toast = Toast.makeText(getApplicationContext(), "You must log in to view a group profile", Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.show();
+                }
             }
         });
 
@@ -78,8 +84,14 @@ public class GroupActivity extends AppCompatActivity {
     }
 
     public void onGroupCreatePress(View v){
-        Intent intent = new Intent(GroupActivity.this, GroupRegisterActivity.class);
-        startActivity(intent);
+        if(user_id != 0) {
+            Intent intent = new Intent(GroupActivity.this, GroupRegisterActivity.class);
+            startActivity(intent);
+        } else{
+            Toast toast = Toast.makeText(getApplicationContext(), "You must log in to create a group", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.show();
+        }
     }
 
 
