@@ -281,8 +281,6 @@ public class ProfileActivity extends AppCompatActivity {
 
             // Add Request to Queue
             Singleton.getInstance(this).addToRequestQueue(groupRequest);
-
-
         }
     }
 

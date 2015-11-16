@@ -72,6 +72,7 @@ public class Dashboard extends AppCompatActivity {
             // Start Group Activity
             Intent intent = new Intent(Dashboard.this, GroupActivity.class);
             intent.putExtra("id", id);
+            intent.putExtra("username", username);
             startActivity(intent);
             return true;
         }

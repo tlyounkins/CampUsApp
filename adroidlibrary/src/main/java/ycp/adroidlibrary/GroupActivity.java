@@ -86,6 +86,8 @@ public class GroupActivity extends AppCompatActivity {
     public void onGroupCreatePress(View v){
         if(user_id != 0) {
             Intent intent = new Intent(GroupActivity.this, GroupRegisterActivity.class);
+            intent.putExtra("id", user_id);
+            intent.putExtra("username", username);
             startActivity(intent);
         } else{
             Toast toast = Toast.makeText(getApplicationContext(), "You must log in to create a group", Toast.LENGTH_LONG);
