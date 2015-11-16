@@ -6,7 +6,9 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,7 +31,7 @@ import java.util.List;
 public class ProfileActivity extends AppCompatActivity {
     String url = "http://192.168.172.59:3000";
     int id = 0;
-    int count = 0;
+    int other_id = 0;
 
     //user text views
     TextView username, firstname, lastname, age, gender, major, hometown, bio;
@@ -41,6 +43,8 @@ public class ProfileActivity extends AppCompatActivity {
 
     //profile text views
     TextView profileCreateText;
+    Button profilePostButton;
+    ImageButton profileEditButton;
     EditText profileCreatePostText;
 
     @Override
@@ -57,6 +61,8 @@ public class ProfileActivity extends AppCompatActivity {
         major = (TextView) findViewById(R.id.profileMajor);
         hometown = (TextView) findViewById(R.id.profileHometown);
         bio = (TextView) findViewById(R.id.profileBio);
+        profilePostButton = (Button) findViewById(R.id.profilePostButton);
+        profileEditButton = (ImageButton) findViewById(R.id.profileEditButton);
 
 
         profileCreateText = (TextView) findViewById(R.id.profileCreateText);
@@ -71,41 +77,83 @@ public class ProfileActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             id = extras.getInt("id");
+            other_id = extras.getInt("other_id");
+        }
+
+        // Hide create post if viewing other profile
+        if(other_id != 0 && other_id != id){
+            profileCreatePostText.setVisibility(View.GONE);
+            profileCreateText.setVisibility(View.GONE);
+            profilePostButton.setVisibility(View.GONE);
+            profileEditButton.setVisibility(View.GONE);
         }
 
         //send JSON request for 3 posts
         getPostList();
 
         if (id != 0) {
-            // Send JsonRequest to get fields
-            JsonObjectRequest fieldsRequest = new JsonObjectRequest(Request.Method.GET, url + "/users/" + Integer.toString(id) + ".json", null, new Response.Listener<JSONObject>() {
-                @Override
-                public void onResponse(JSONObject response) {
-                    try {
-                        // Set the Text Fields to Acquired Information
-                        username.setText(response.get("username").toString());
-                        firstname.setText(response.get("firstname").toString());
-                        lastname.setText(response.get("lastname").toString());
-                        age.setText(response.get("age").toString());
-                        gender.setText(response.get("gender").toString());
-                        major.setText(response.get("major").toString());
-                        hometown.setText(response.get("hometown").toString());
-                        bio.setText(response.get("bio").toString());
-                    } catch (JSONException e) {
-                        // There was an error, print it
-                        e.printStackTrace();
+            if(other_id != 0 && other_id != id) {
+                // Send JsonRequest to get fields
+                JsonObjectRequest fieldsRequest = new JsonObjectRequest(Request.Method.GET, url + "/users/" + Integer.toString(other_id) + ".json", null, new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            // Set the Text Fields to Acquired Information
+                            username.setText(response.get("username").toString());
+                            firstname.setText(response.get("firstname").toString());
+                            lastname.setText(response.get("lastname").toString());
+                            age.setText(response.get("age").toString());
+                            gender.setText(response.get("gender").toString());
+                            major.setText(response.get("major").toString());
+                            hometown.setText(response.get("hometown").toString());
+                            bio.setText(response.get("bio").toString());
+                        } catch (JSONException e) {
+                            // There was an error, print it
+                            e.printStackTrace();
+                        }
                     }
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError e) {
-                    // Error communicating with server, print it
-                    VolleyLog.e("Error: " + e.getMessage());
-                }
-            });
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError e) {
+                        // Error communicating with server, print it
+                        VolleyLog.e("Error: " + e.getMessage());
+                    }
+                });
 
-            // Add Request to Queue
-            Singleton.getInstance(this).addToRequestQueue(fieldsRequest);
+                // Add Request to Queue
+                Singleton.getInstance(this).addToRequestQueue(fieldsRequest);
+            }
+            else {
+                // Send JsonRequest to get fields
+                JsonObjectRequest fieldsRequest = new JsonObjectRequest(Request.Method.GET, url + "/users/" + Integer.toString(id) + ".json", null, new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            // Set the Text Fields to Acquired Information
+                            username.setText(response.get("username").toString());
+                            firstname.setText(response.get("firstname").toString());
+                            lastname.setText(response.get("lastname").toString());
+                            age.setText(response.get("age").toString());
+                            gender.setText(response.get("gender").toString());
+                            major.setText(response.get("major").toString());
+                            hometown.setText(response.get("hometown").toString());
+                            bio.setText(response.get("bio").toString());
+                        } catch (JSONException e) {
+                            // There was an error, print it
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError e) {
+                        // Error communicating with server, print it
+                        VolleyLog.e("Error: " + e.getMessage());
+                    }
+                });
+
+                // Add Request to Queue
+                Singleton.getInstance(this).addToRequestQueue(fieldsRequest);
+            }
         }
 
     }
@@ -128,32 +176,61 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     public void getPostList(){
-        // Get Array of Posts
-        JsonArrayRequest postsRequest = new JsonArrayRequest(url+"/microposts/"+Integer.toString(id)+"/posts.json",new Response.Listener<JSONArray>(){
-            @Override
-            public void onResponse(JSONArray response){
+        if(other_id != 0 && other_id != id) {
+            // Get Array of Posts
+            JsonArrayRequest postsRequest = new JsonArrayRequest(url + "/microposts/" + Integer.toString(other_id) + "/posts.json", new Response.Listener<JSONArray>() {
+                @Override
+                public void onResponse(JSONArray response) {
 
                     // Set the Text Fields to Acquired Information
-                   for (int i = 0; i < response.length(); i++){
-                       try{
-                           JSONObject obj = response.getJSONObject(i);
-                           posts.add(obj.get("content").toString());
-                       } catch(JSONException e){
-                           e.printStackTrace();
-                       }
-                   }
-                postAdapter.notifyDataSetChanged();
-            }
-        },new Response.ErrorListener(){
-            @Override
-            public void onErrorResponse(VolleyError e){
-                // Error communicating with server, print it
-                VolleyLog.e("Error: " + e.getMessage());
-            }
-        });
+                    for (int i = 0; i < response.length(); i++) {
+                        try {
+                            JSONObject obj = response.getJSONObject(i);
+                            posts.add(obj.get("content").toString());
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    postAdapter.notifyDataSetChanged();
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError e) {
+                    // Error communicating with server, print it
+                    VolleyLog.e("Error: " + e.getMessage());
+                }
+            });
 
-        // Add Request to Queue
-        Singleton.getInstance(this).addToRequestQueue(postsRequest);
+            // Add Request to Queue
+            Singleton.getInstance(this).addToRequestQueue(postsRequest);
+        } else{
+            // Get Array of Posts
+            JsonArrayRequest postsRequest = new JsonArrayRequest(url + "/microposts/" + Integer.toString(id) + "/posts.json", new Response.Listener<JSONArray>() {
+                @Override
+                public void onResponse(JSONArray response) {
+
+                    // Set the Text Fields to Acquired Information
+                    for (int i = 0; i < response.length(); i++) {
+                        try {
+                            JSONObject obj = response.getJSONObject(i);
+                            posts.add(obj.get("content").toString());
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    postAdapter.notifyDataSetChanged();
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError e) {
+                    // Error communicating with server, print it
+                    VolleyLog.e("Error: " + e.getMessage());
+                }
+            });
+
+            // Add Request to Queue
+            Singleton.getInstance(this).addToRequestQueue(postsRequest);
+        }
 
     }
 

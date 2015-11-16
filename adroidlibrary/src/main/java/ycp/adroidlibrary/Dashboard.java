@@ -76,6 +76,14 @@ public class Dashboard extends AppCompatActivity {
             return true;
         }
 
+        if(item_id == R.id.action_search){
+            //start list of all users
+            Intent intent = new Intent(Dashboard.this, FriendActivity.class);
+            intent.putExtra("id", id);
+            startActivity(intent);
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
