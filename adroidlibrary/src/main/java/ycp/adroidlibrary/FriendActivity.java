@@ -93,5 +93,4 @@ public class FriendActivity extends AppCompatActivity {
         Singleton.getInstance(this).addToRequestQueue(postsRequest);
 
     }
-
 }
