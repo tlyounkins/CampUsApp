@@ -19,7 +19,8 @@ import org.json.JSONObject;
 public class GroupProfileActivity extends AppCompatActivity {
     int id, group_id;
     TextView groupName, groupDescription;
-    String url = "http://192.168.172.255:3000";
+    String url = "http://192.168.172.59:3000";
+    String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +35,7 @@ public class GroupProfileActivity extends AppCompatActivity {
         if (extras != null) {
             id = extras.getInt("id");
             group_id = extras.getInt("group_id");
+            username = extras.getString("username");
         }
 
         // Send JsonRequest to get fields
@@ -43,6 +45,7 @@ public class GroupProfileActivity extends AppCompatActivity {
                 try {
                     // Set the Text Fields to Acquired Information
                     groupName.setText(response.get("groupName").toString());
+
                     groupDescription.setText(response.get("description").toString());
                     //groupMember.setText(response.get("username").toString());
                 } catch (JSONException e){

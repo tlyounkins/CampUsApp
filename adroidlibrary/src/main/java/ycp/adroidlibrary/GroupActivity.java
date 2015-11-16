@@ -25,10 +25,11 @@ import org.json.JSONObject;
 import java.util.HashMap;
 
 public class GroupActivity extends AppCompatActivity {
-    String url = "http://192.168.172.255:3000";
+    String url = "http://192.168.172.59:3000";
     TextView groupName1, groupName2, groupName3, groupName4, groupName5;
     TextView groupDescription1, groupDescription2, groupDescription3, groupDescription4, groupDescription5;
     int id, count;
+    String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +61,7 @@ public class GroupActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             id = extras.getInt("id");
+            username = extras.getString("username");
         }
     }
 
@@ -72,6 +74,7 @@ public class GroupActivity extends AppCompatActivity {
         // Start Group Activity
         Intent intent = new Intent(GroupActivity.this, GroupProfileActivity.class);
         intent.putExtra("id", id);
+        intent.putExtra("username", username);
         intent.putExtra("group_id", 1);
         startActivity(intent);
     }
@@ -80,6 +83,7 @@ public class GroupActivity extends AppCompatActivity {
         // Start Group Activity
         Intent intent = new Intent(GroupActivity.this, GroupProfileActivity.class);
         intent.putExtra("id", id);
+        intent.putExtra("username", username);
         intent.putExtra("group_id", 2 + count);
         startActivity(intent);
     }
@@ -88,6 +92,7 @@ public class GroupActivity extends AppCompatActivity {
         // Start Group Activity
         Intent intent = new Intent(GroupActivity.this, GroupProfileActivity.class);
         intent.putExtra("id", id);
+        intent.putExtra("username", username);
         intent.putExtra("group_id", 3 + count);
         startActivity(intent);
     }
@@ -104,6 +109,7 @@ public class GroupActivity extends AppCompatActivity {
         // Start Group Activity
         Intent intent = new Intent(GroupActivity.this, GroupProfileActivity.class);
         intent.putExtra("id", id);
+        intent.putExtra("username", username);
         intent.putExtra("group_id", 5 + count);
         startActivity(intent);
     }

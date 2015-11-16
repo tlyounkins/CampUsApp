@@ -3,6 +3,7 @@ package ycp.adroidlibrary;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -27,7 +28,7 @@ import java.util.HashMap;
 import Model.User;
 
 public class EditActivity extends AppCompatActivity {
-    String url = "http://192.168.172.255:3000";
+    String url = "http://192.168.172.59:3000";
     int id;
     EditText hometown, major, bio, gender, firstname, lastname;
     View editView, progressView;
@@ -116,6 +117,9 @@ public class EditActivity extends AppCompatActivity {
                         toast.show();
 
                         // Close activity
+                        Intent intent = new Intent(EditActivity.this, ProfileActivity.class);
+                        intent.putExtra("id", id);
+                        startActivity(intent);
                         finish();
                     } else {
                         // Profile updated failed, show failure message

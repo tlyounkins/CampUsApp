@@ -3,30 +3,46 @@ package ycp.adroidlibrary;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 public class ProfileActivity extends AppCompatActivity {
-    String url = "http://192.168.172.255:3000";
+    String url = "http://192.168.172.59:3000";
     int id = 0;
     int count = 0;
 
     //user text views
     TextView username, firstname, lastname, age, gender, major, hometown, bio;
 
+    // Posts
+    List<String> posts = new ArrayList<>();
+    ArrayAdapter<String> postAdapter;
+    ListView postList;
+
     //profile text views
-    TextView profilePost1, profilePost2, profilePost3;
-    TextView profilePost1Description, profilePost2Description, profilePost3Description;
+    TextView profileCreateText;
+    EditText profileCreatePostText;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,24 +58,24 @@ public class ProfileActivity extends AppCompatActivity {
         hometown = (TextView) findViewById(R.id.profileHometown);
         bio = (TextView) findViewById(R.id.profileBio);
 
-        //user posts and post descriptions
-        profilePost1 = (TextView) findViewById(R.id.profilePost1);
-        profilePost1Description = (TextView) findViewById(R.id.profilePost1Description);
 
-        profilePost2 = (TextView) findViewById(R.id.profilePost2);
-        profilePost2Description = (TextView) findViewById(R.id.profilePost2Description);
+        profileCreateText = (TextView) findViewById(R.id.profileCreateText);
+        profileCreatePostText = (EditText) findViewById(R.id.profileCreatePostText);
 
-        profilePost3 = (TextView) findViewById(R.id.profilePost3);
-        profilePost3Description = (TextView) findViewById(R.id.profilePost3Description);
-
-        //send JSON request for 3 posts
-        getPostList();
+        // Post List
+        postList = (ListView) findViewById(R.id.profilePostList);
+        postAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, posts);
+        postList.setAdapter(postAdapter);
 
         // Check for extras
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             id = extras.getInt("id");
         }
+
+        //send JSON request for 3 posts
+        getPostList();
+
         if (id != 0) {
             // Send JsonRequest to get fields
             JsonObjectRequest fieldsRequest = new JsonObjectRequest(Request.Method.GET, url + "/users/" + Integer.toString(id) + ".json", null, new Response.Listener<JSONObject>() {
@@ -96,6 +112,8 @@ public class ProfileActivity extends AppCompatActivity {
 
     public void onDashboardPressProfile(View v){
         Intent intent = new Intent(ProfileActivity.this,Dashboard.class);
+        intent.putExtra("id", id);
+        intent.putExtra("username", username.getText());
         startActivity(intent);
     }
 
@@ -109,26 +127,21 @@ public class ProfileActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void getPostList(){
-        // Send JsonRequest to get 3 posts
-        // First post
-        //TODO change url "/profile/"
-        JsonObjectRequest fieldsRequest1 = new JsonObjectRequest(Request.Method.GET, url+"/profile/"+Integer.toString(1 + count)+".json", null, new Response.Listener<JSONObject>(){
+    public void getPostList(){
+        // Get Array of Posts
+        JsonArrayRequest postsRequest = new JsonArrayRequest(url+"/microposts/"+Integer.toString(id)+"/posts.json",new Response.Listener<JSONArray>(){
             @Override
-            public void onResponse(JSONObject response){
-                try {
-                    //TODO change "groupname"
-                    //TODO change "description"
+            public void onResponse(JSONArray response){
+
                     // Set the Text Fields to Acquired Information
-                    profilePost1.setText(response.get("groupName").toString());
-                    profilePost1Description.setText(response.get("description").toString());
-                } catch (JSONException e){
-                    // There was an error, print it
-                    e.printStackTrace();
-                    // Do not display text if error is thrown
-                    profilePost1.setText("");
-                    profilePost1Description.setText("");
-                }
+                   for (int i = 0; i < response.length(); i++){
+                       try{
+                           JSONObject obj = response.getJSONObject(i);
+                           posts.add(obj.get("content").toString());
+                       } catch(JSONException e){
+                           e.printStackTrace();
+                       }
+                   }
             }
         },new Response.ErrorListener(){
             @Override
@@ -139,67 +152,56 @@ public class ProfileActivity extends AppCompatActivity {
         });
 
         // Add Request to Queue
-        Singleton.getInstance(this).addToRequestQueue(fieldsRequest1);
+        Singleton.getInstance(this).addToRequestQueue(postsRequest);
 
-        // Second Post
-        //TODO change url "/profile/"
-        JsonObjectRequest fieldsRequest2 = new JsonObjectRequest(Request.Method.GET, url+"/profile/"+Integer.toString(2 + count)+".json", null, new Response.Listener<JSONObject>(){
-            @Override
-            public void onResponse(JSONObject response){
-                try {
-                    // Set the Text Fields to Acquired Information
-                    //TODO change "groupname"
-                    //TODO change "description"
-                    profilePost2.setText(response.get("groupName").toString());
-                    profilePost2Description.setText(response.get("description").toString());
-                } catch (JSONException e){
-                    // There was an error, print it
-                    e.printStackTrace();
+    }
+
+    public void onSubmitRequest(View v){
+
+        if(id != 0){
+            HashMap<String,String>  params = new HashMap<>();
+            params.put("content",profileCreatePostText.getText().toString());
+
+            JsonObjectRequest groupRequest = new JsonObjectRequest(Request.Method.POST, url + "/microposts/"+ Integer.toString(id)+ ".json", new JSONObject(params), new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    try {
+                        if (response.get("success").toString().equals("true")) {
+                            // Display Successful message
+                            Toast toast = Toast.makeText(getApplicationContext(), "Post post: Post posted", Toast.LENGTH_LONG);
+                            toast.setGravity(Gravity.CENTER, 0, 0);
+                            toast.show();
+
+                            Notify.notify(ProfileActivity.this, username.getText().toString() + " created a post", 1);
+
+                            Intent intent = new Intent(ProfileActivity.this, ProfileActivity.class);
+                            intent.putExtra("id", id);
+                            startActivity(intent);
+                        } else {
+                            // Failure to Register User
+                            Toast toast = Toast.makeText(getApplicationContext(), "Error Registering.", Toast.LENGTH_LONG);
+                            toast.setGravity(Gravity.CENTER, 0, 0);
+                            toast.show();
+                        }
+
+                    } catch (JSONException e) {
+                        // There was an Error, print it
+                        e.printStackTrace();
+                    }
                 }
-            }
-        },new Response.ErrorListener(){
-            @Override
-            public void onErrorResponse(VolleyError e){
-                // Error communicating with server, print it
-                VolleyLog.e("Error: " + e.getMessage());
-                // Do not display text if error is thrown
-                profilePost2.setText("");
-                profilePost2Description.setText("");
-            }
-        });
-
-        // Add Request to Queue
-        Singleton.getInstance(this).addToRequestQueue(fieldsRequest2);
-
-        // Third Post
-        //TODO change url "/profile/"
-        JsonObjectRequest fieldsRequest3 = new JsonObjectRequest(Request.Method.GET, url+"/profile/"+Integer.toString(3 + count)+".json", null, new Response.Listener<JSONObject>(){
-            @Override
-            public void onResponse(JSONObject response){
-                try {
-                    // Set the Text Fields to Acquired Information
-                    //TODO change "groupname"
-                    //TODO change "description"
-                    profilePost3.setText(response.get("groupName").toString());
-                    profilePost3Description.setText(response.get("description").toString());
-                } catch (JSONException e){
-                    // There was an error, print it
-                    e.printStackTrace();
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    //error!
+                    VolleyLog.e("Error: " + error.getMessage());
                 }
-            }
-        },new Response.ErrorListener(){
-            @Override
-            public void onErrorResponse(VolleyError e){
-                // Error communicating with server, print it
-                VolleyLog.e("Error: " + e.getMessage());
-                // Do not display text if error is thrown
-                profilePost3.setText("");
-                profilePost3Description.setText("");
-            }
-        });
+            });
 
-        // Add Request to Queue
-        Singleton.getInstance(this).addToRequestQueue(fieldsRequest3);
+            // Add Request to Queue
+            Singleton.getInstance(this).addToRequestQueue(groupRequest);
+
+
+        }
     }
 
 }
