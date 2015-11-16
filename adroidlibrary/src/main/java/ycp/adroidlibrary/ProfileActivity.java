@@ -88,8 +88,7 @@ public class ProfileActivity extends AppCompatActivity {
             profileEditButton.setVisibility(View.GONE);
         }
 
-        //send JSON request for 3 posts
-        getPostList();
+
 
         if (id != 0) {
             if(other_id != 0 && other_id != id) {
@@ -154,6 +153,9 @@ public class ProfileActivity extends AppCompatActivity {
                 // Add Request to Queue
                 Singleton.getInstance(this).addToRequestQueue(fieldsRequest);
             }
+
+            //send JSON request for 3 posts
+            getPostList();
         }
 
     }

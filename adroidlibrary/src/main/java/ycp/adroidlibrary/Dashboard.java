@@ -94,11 +94,17 @@ public class Dashboard extends AppCompatActivity {
     }
 
     public void onProfilePress(View v){
-        // Change view to Profile
-        Intent intent = new Intent(Dashboard.this, ProfileActivity.class);
-        intent.putExtra("id", id);
-        intent.putExtra("username", username);
-        startActivity(intent);
+        if(id !=0) {
+            // Change view to Profile
+            Intent intent = new Intent(Dashboard.this, ProfileActivity.class);
+            intent.putExtra("id", id);
+            intent.putExtra("username", username);
+            startActivity(intent);
+        } else{
+            Toast toast = Toast.makeText(getApplicationContext(), "You must log in to view a profile", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.show();
+        }
     }
 
     public void onDashLoginPress(View v){
