@@ -64,6 +64,8 @@ public class ProfileActivity extends AppCompatActivity {
         profilePostButton = (Button) findViewById(R.id.profilePostButton);
         profileEditButton = (ImageButton) findViewById(R.id.profileEditButton);
 
+        age.setVisibility(View.INVISIBLE);
+
 
         profileCreateText = (TextView) findViewById(R.id.profileCreateText);
         profileCreatePostText = (EditText) findViewById(R.id.profileCreatePostText);
