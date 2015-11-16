@@ -62,7 +62,6 @@ public class FriendActivity extends AppCompatActivity {
                 }
             }
         });
-
         getUserList();
     }
     public void getUserList(){
