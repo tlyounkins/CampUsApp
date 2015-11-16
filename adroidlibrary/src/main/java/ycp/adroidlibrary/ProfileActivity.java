@@ -142,6 +142,7 @@ public class ProfileActivity extends AppCompatActivity {
                            e.printStackTrace();
                        }
                    }
+                postAdapter.notifyDataSetChanged();
             }
         },new Response.ErrorListener(){
             @Override
