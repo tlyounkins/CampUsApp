@@ -30,6 +30,7 @@ import Model.User;
 public class EditActivity extends AppCompatActivity {
     String url = "http://192.168.172.246:3000";
     int id;
+    String logged_in_user;
     EditText hometown, major, bio, gender, firstname, lastname;
     View editView, progressView;
     TextView username;
@@ -54,6 +55,7 @@ public class EditActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null){
             id = extras.getInt("id");
+            logged_in_user = extras.getString("username");
         }
 
         // Show a progress spinner
@@ -119,6 +121,7 @@ public class EditActivity extends AppCompatActivity {
                         // Close activity
                         Intent intent = new Intent(EditActivity.this, ProfileActivity.class);
                         intent.putExtra("id", id);
+                        intent.putExtra("username", logged_in_user);
                         startActivity(intent);
                         finish();
                     } else {

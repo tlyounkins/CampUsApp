@@ -31,6 +31,7 @@ import java.util.List;
 public class ProfileActivity extends AppCompatActivity {
     String url = "http://192.168.172.246:3000";
     int id = 0;
+    String logged_in_user;
     int other_id = 0;
 
     //user text views
@@ -80,6 +81,7 @@ public class ProfileActivity extends AppCompatActivity {
         if (extras != null) {
             id = extras.getInt("id");
             other_id = extras.getInt("other_id");
+            logged_in_user = extras.getString("username");
         }
 
         // Hide create post if viewing other profile
@@ -165,17 +167,20 @@ public class ProfileActivity extends AppCompatActivity {
     public void onDashboardPressProfile(View v){
         Intent intent = new Intent(ProfileActivity.this,Dashboard.class);
         intent.putExtra("id", id);
-        intent.putExtra("username", username.getText());
+        intent.putExtra("username", logged_in_user);
         startActivity(intent);
     }
 
     public void onCalenderPressProfile(View v){
         Intent intent = new Intent(ProfileActivity.this,calendarActivity.class);
+        intent.putExtra("id", id);
+        intent.putExtra("username", logged_in_user);
         startActivity(intent);
     }
     public void onProfileEditPress(View v){
         Intent intent = new Intent(ProfileActivity.this, EditActivity.class);
         intent.putExtra("id", id);
+        intent.putExtra("username", logged_in_user);
         startActivity(intent);
     }
 

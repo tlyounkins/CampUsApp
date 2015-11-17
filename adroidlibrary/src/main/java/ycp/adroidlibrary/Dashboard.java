@@ -81,6 +81,7 @@ public class Dashboard extends AppCompatActivity {
             //start list of all users
             Intent intent = new Intent(Dashboard.this, FriendActivity.class);
             intent.putExtra("id", id);
+            intent.putExtra("username", username);
             startActivity(intent);
             return true;
         }
@@ -91,6 +92,8 @@ public class Dashboard extends AppCompatActivity {
     public void onCalendarPress(View v){
         // Change view to Calendar
         Intent intent = new Intent(Dashboard.this, calendarActivity.class);
+        intent.putExtra("id", id);
+        intent.putExtra("username", username);
         startActivity(intent);
     }
 

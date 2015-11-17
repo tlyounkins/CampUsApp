@@ -24,6 +24,7 @@ import java.util.List;
 
 public class FriendActivity extends AppCompatActivity {
     String url = "http://192.168.172.246:3000";
+    String username;
     int user_id = 0;
 
     // Posts
@@ -45,6 +46,7 @@ public class FriendActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             user_id = extras.getInt("id");
+            username = extras.getString("username");
         }
         userList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -54,6 +56,7 @@ public class FriendActivity extends AppCompatActivity {
                     Intent intent = new Intent(FriendActivity.this, ProfileActivity.class);
                     intent.putExtra("id", user_id);
                     intent.putExtra("other_id", position + 1);
+                    intent.putExtra("username", username);
                     startActivity(intent);
                 }else{
                     Toast toast = Toast.makeText(getApplicationContext(), "You must log in to view a profile", Toast.LENGTH_LONG);
