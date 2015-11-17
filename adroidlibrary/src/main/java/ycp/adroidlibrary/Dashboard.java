@@ -115,6 +115,7 @@ public class Dashboard extends AppCompatActivity {
         // No User is logged in, take them to log in screen
         if(id == 0) {
             Intent intent = new Intent(Dashboard.this, LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         }
         // A user is logged in, log them out
