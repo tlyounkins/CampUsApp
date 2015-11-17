@@ -28,7 +28,7 @@ public class Dashboard extends AppCompatActivity {
     String username = "";
     Button loginButton;
     TextView welcomeText;
-    String url = "http://192.168.172.224:3000";
+    String url = "http://192.168.172.246:3000";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +72,16 @@ public class Dashboard extends AppCompatActivity {
             // Start Group Activity
             Intent intent = new Intent(Dashboard.this, GroupActivity.class);
             intent.putExtra("id", id);
+            intent.putExtra("username", username);
+            startActivity(intent);
+            return true;
+        }
+
+        if(item_id == R.id.action_search){
+            //start list of all users
+            Intent intent = new Intent(Dashboard.this, FriendActivity.class);
+            intent.putExtra("id", id);
+            intent.putExtra("username", username);
             startActivity(intent);
             return true;
         }
@@ -82,20 +92,30 @@ public class Dashboard extends AppCompatActivity {
     public void onCalendarPress(View v){
         // Change view to Calendar
         Intent intent = new Intent(Dashboard.this, calendarActivity.class);
+        intent.putExtra("id", id);
+        intent.putExtra("username", username);
         startActivity(intent);
     }
 
     public void onProfilePress(View v){
-        // Change view to Profile
-        Intent intent = new Intent(Dashboard.this, ProfileActivity.class);
-        intent.putExtra("id", id);
-        startActivity(intent);
+        if(id !=0) {
+            // Change view to Profile
+            Intent intent = new Intent(Dashboard.this, ProfileActivity.class);
+            intent.putExtra("id", id);
+            intent.putExtra("username", username);
+            startActivity(intent);
+        } else{
+            Toast toast = Toast.makeText(getApplicationContext(), "You must log in to view a profile", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.show();
+        }
     }
 
     public void onDashLoginPress(View v){
         // No User is logged in, take them to log in screen
         if(id == 0) {
             Intent intent = new Intent(Dashboard.this, LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         }
         // A user is logged in, log them out

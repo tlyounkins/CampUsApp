@@ -4,6 +4,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -11,15 +14,24 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GroupProfileActivity extends AppCompatActivity {
     int id, group_id;
     TextView groupName, groupDescription;
-    String url = "http://192.168.172.224:3000";
+    List<String> members = new ArrayList<>();
+    ArrayAdapter<String> memberAdapter;
+    ListView memberList;
+    String url = "http://192.168.172.246:3000";
+    String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,13 +40,46 @@ public class GroupProfileActivity extends AppCompatActivity {
 
         groupName = (TextView) findViewById(R.id.gProfileGroupName);
         groupDescription = (TextView) findViewById(R.id.gProfileGroupDescription);
+        memberList = (ListView) findViewById(R.id.gMemberView);
+        memberAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, members);
+        memberList.setAdapter(memberAdapter);
 
         // Check for extras
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             id = extras.getInt("id");
             group_id = extras.getInt("group_id");
+            username = extras.getString("username");
         }
+
+       /** // When an item is clicked, take the user to that profile
+        memberList.setOnClickListener(new OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View v, int position, long id){
+               String name =  memberList.getItemAtPosition(position).toString();
+                if (name != null) {
+                    // Get ID from server
+                    JsonObjectRequest idRequest = new JsonObjectRequest(Request.Method.GET, url+"/users/"+name+".json", null, new Response.Listener<JSONObject>(){
+                        @Override
+                        public void onResponse(JSONObject response){
+                            try {
+                                int userId = Integer.parseInt(response.get("id").toString());
+                                Intent intent = new Intent(GroupProfileActivity.this, ProfileActivity.class);
+                                intent.putExtra("profileId", userId);
+                                startActivity(intent);
+
+                            } catch (JSONException e){
+                                e.printStackTrace();
+                            }
+                        }
+                    }, new Response.ErrorListener(){
+                        @Override
+                        public void onErrorResponse(VolleyError e){
+                            VolleyLog.e("Error: " + e.getMessage());
+                        }
+                    });
+                }
+            }
+        });**/
 
         // Send JsonRequest to get fields
         JsonObjectRequest fieldsRequest = new JsonObjectRequest(Request.Method.GET, url+"/groups/"+Integer.toString(group_id)+".json", null, new Response.Listener<JSONObject>(){
@@ -60,6 +105,30 @@ public class GroupProfileActivity extends AppCompatActivity {
 
         // Add Request to Queue
         Singleton.getInstance(this).addToRequestQueue(fieldsRequest);
+
+        // Send request to get list of members
+        JsonArrayRequest memberRequest = new JsonArrayRequest(url + "/groups/" + Integer.toString(group_id) + "/members.json", new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                for (int i = 0; i < response.length(); i++) {
+                    try {
+                        JSONObject obj = response.getJSONObject(i);
+                        members.add(obj.get("username").toString());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                memberAdapter.notifyDataSetChanged();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.e(error.getMessage());
+            }
+        });
+
+        // Add Request to Queue
+        Singleton.getInstance(this).addToRequestQueue(memberRequest);
     }
 
     public void onApplyPress(View v){
