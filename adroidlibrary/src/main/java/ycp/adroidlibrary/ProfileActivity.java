@@ -249,7 +249,7 @@ public class ProfileActivity extends AppCompatActivity {
             HashMap<String,String>  params = new HashMap<>();
             params.put("content",profileCreatePostText.getText().toString());
 
-            JsonObjectRequest groupRequest = new JsonObjectRequest(Request.Method.POST, url + "/microposts/"+ Integer.toString(id)+ ".json", new JSONObject(params), new Response.Listener<JSONObject>() {
+            JsonObjectRequest postRequest = new JsonObjectRequest(Request.Method.POST, url + "/microposts/"+ Integer.toString(id)+ ".json", new JSONObject(params), new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
                     try {
@@ -285,7 +285,7 @@ public class ProfileActivity extends AppCompatActivity {
             });
 
             // Add Request to Queue
-            Singleton.getInstance(this).addToRequestQueue(groupRequest);
+            Singleton.getInstance(this).addToRequestQueue(postRequest);
         }
     }
 
