@@ -10,10 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,60 +17,50 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class GroupActivity extends AppCompatActivity {
-    String url = "http://192.168.172.59:3000";
-
-    int user_id;
-    String username;
-
-    // Posts
-    List<Map<String, String>>groups = new ArrayList<>();
-    SimpleAdapter groupAdapter;
-    ListView groupList;
+    String url = "http://192.168.172.224:3000";
+    TextView groupName1, groupName2, groupName3, groupName4, groupName5;
+    TextView groupDescription1, groupDescription2, groupDescription3, groupDescription4, groupDescription5;
+    int id, count;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group);
 
-        groupList = (ListView) findViewById(R.id.groupList);
-        groupAdapter= new SimpleAdapter(this, groups, android.R.layout.simple_list_item_2,
-                new String[] {"Name", "Description"},
-                new int[] {android.R.id.text1, android.R.id.text2});
-        groupList.setAdapter(groupAdapter);
+        // For future use
+        // Count number of pages
+        count = 0;
+
+        groupName1 = (TextView) findViewById(R.id.groupGroupName1);
+        groupDescription1 = (TextView) findViewById(R.id.groupGroupDescription1);
+
+        groupName2 = (TextView) findViewById(R.id.groupGroupName2);
+        groupDescription2 = (TextView) findViewById(R.id.groupGroupDescription2);
+
+        groupName3 = (TextView) findViewById(R.id.groupGroupName3);
+        groupDescription3 = (TextView) findViewById(R.id.groupGroupDescription3);
+
+        groupName4 = (TextView) findViewById(R.id.groupGroupName4);
+        groupDescription4 = (TextView) findViewById(R.id.groupGroupDescription4);
+
+        groupName5 = (TextView) findViewById(R.id.groupGroupName5);
+        groupDescription5 = (TextView) findViewById(R.id.groupGroupDescription5);
+
+        getGroupList();
 
         // Check for extras
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            user_id = extras.getInt("id");
-            username = extras.getString("username");
+            id = extras.getInt("id");
         }
-
-        groupList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // Get group id at position, start profile activity
-                Intent intent = new Intent(GroupActivity.this, GroupProfileActivity.class);
-                intent.putExtra("id", user_id);
-                intent.putExtra("group_id", position+1);
-                startActivity(intent);
-            }
-        });
-
-
-        getGroupList();
     }
 
     public void onGroupCreatePress(View v){
@@ -82,25 +68,63 @@ public class GroupActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void onGroup1Press(View v){
+        // Start Group Activity
+        Intent intent = new Intent(GroupActivity.this, GroupProfileActivity.class);
+        intent.putExtra("id", id);
+        intent.putExtra("group_id", 1);
+        startActivity(intent);
+    }
+
+    public void onGroup2Press(View v){
+        // Start Group Activity
+        Intent intent = new Intent(GroupActivity.this, GroupProfileActivity.class);
+        intent.putExtra("id", id);
+        intent.putExtra("group_id", 2 + count);
+        startActivity(intent);
+    }
+
+    public void onGroup3Press(View v){
+        // Start Group Activity
+        Intent intent = new Intent(GroupActivity.this, GroupProfileActivity.class);
+        intent.putExtra("id", id);
+        intent.putExtra("group_id", 3 + count);
+        startActivity(intent);
+    }
+
+    public void onGroup4Press(View v){
+        // Start Group Activity
+        Intent intent = new Intent(GroupActivity.this, GroupProfileActivity.class);
+        intent.putExtra("id", id);
+        intent.putExtra("group_id", 4 + count);
+        startActivity(intent);
+    }
+
+    public void onGroup5Press(View v){
+        // Start Group Activity
+        Intent intent = new Intent(GroupActivity.this, GroupProfileActivity.class);
+        intent.putExtra("id", id);
+        intent.putExtra("group_id", 5 + count);
+        startActivity(intent);
+    }
 
     private void getGroupList(){
-        // Get list of all groups
-        JsonArrayRequest fieldsRequest1 = new JsonArrayRequest(url+"/groups/getAll.json", new Response.Listener<JSONArray>(){
+        // Send JsonRequest to get 5 groups
+        // First group
+        JsonObjectRequest fieldsRequest1 = new JsonObjectRequest(Request.Method.GET, url+"/groups/"+Integer.toString(1 + count)+".json", null, new Response.Listener<JSONObject>(){
             @Override
-            public void onResponse(JSONArray response){
-                // Set the Text Fields to Acquired Information
-                for (int i = 0; i < response.length(); i++){
-                    try{
-                        JSONObject obj = response.getJSONObject(i);
-                        Map<String, String> datum = new HashMap<>(2);
-                        datum.put("Name", obj.get("groupname").toString());
-                        datum.put("Description", obj.get("description").toString());
-                        groups.add(datum);
-                    } catch(JSONException e){
-                        e.printStackTrace();
-                    }
+            public void onResponse(JSONObject response){
+                try {
+                    // Set the Text Fields to Acquired Information
+                    groupName1.setText(response.get("groupName").toString());
+                    groupDescription1.setText(response.get("description").toString());
+                } catch (JSONException e){
+                    // There was an error, print it
+                    e.printStackTrace();
+                    // Do not display text if error is thrown
+                    groupName1.setText("");
+                    groupDescription1.setText("");
                 }
-                groupAdapter.notifyDataSetChanged();
             }
         },new Response.ErrorListener(){
             @Override
@@ -113,6 +137,113 @@ public class GroupActivity extends AppCompatActivity {
         // Add Request to Queue
         Singleton.getInstance(this).addToRequestQueue(fieldsRequest1);
 
+        // Second group
+        JsonObjectRequest fieldsRequest2 = new JsonObjectRequest(Request.Method.GET, url+"/groups/"+Integer.toString(2 + count)+".json", null, new Response.Listener<JSONObject>(){
+            @Override
+            public void onResponse(JSONObject response){
+                try {
+                    // Set the Text Fields to Acquired Information
+                    groupName2.setText(response.get("groupName").toString());
+                    groupDescription2.setText(response.get("description").toString());
+                } catch (JSONException e){
+                    // There was an error, print it
+                    e.printStackTrace();
+                }
+            }
+        },new Response.ErrorListener(){
+            @Override
+            public void onErrorResponse(VolleyError e){
+                // Error communicating with server, print it
+                VolleyLog.e("Error: " + e.getMessage());
+                // Do not display text if error is thrown
+                groupName2.setText("");
+                groupDescription2.setText("");
+            }
+        });
+
+        // Add Request to Queue
+        Singleton.getInstance(this).addToRequestQueue(fieldsRequest2);
+
+        // Third group
+        JsonObjectRequest fieldsRequest3 = new JsonObjectRequest(Request.Method.GET, url+"/groups/"+Integer.toString(3 + count)+".json", null, new Response.Listener<JSONObject>(){
+            @Override
+            public void onResponse(JSONObject response){
+                try {
+                    // Set the Text Fields to Acquired Information
+                    groupName3.setText(response.get("groupName").toString());
+                    groupDescription3.setText(response.get("description").toString());
+                } catch (JSONException e){
+                    // There was an error, print it
+                    e.printStackTrace();
+                }
+            }
+        },new Response.ErrorListener(){
+            @Override
+            public void onErrorResponse(VolleyError e){
+                // Error communicating with server, print it
+                VolleyLog.e("Error: " + e.getMessage());
+                // Do not display text if error is thrown
+                groupName3.setText("");
+                groupDescription3.setText("");
+            }
+        });
+
+        // Add Request to Queue
+        Singleton.getInstance(this).addToRequestQueue(fieldsRequest3);
+
+        // Fourth group
+        JsonObjectRequest fieldsRequest4 = new JsonObjectRequest(Request.Method.GET, url+"/groups/"+Integer.toString(4 + count)+".json", null, new Response.Listener<JSONObject>(){
+            @Override
+            public void onResponse(JSONObject response){
+                try {
+                    // Set the Text Fields to Acquired Information
+                    groupName4.setText(response.get("groupName").toString());
+                    groupDescription4.setText(response.get("description").toString());
+                } catch (JSONException e){
+                    // There was an error, print it
+                    e.printStackTrace();
+                }
+            }
+        },new Response.ErrorListener(){
+            @Override
+            public void onErrorResponse(VolleyError e){
+                // Error communicating with server, print it
+                VolleyLog.e("Error: " + e.getMessage());
+                // Do not display text if error is thrown
+                groupName4.setText("");
+                groupDescription4.setText("");
+            }
+        });
+
+        // Add Request to Queue
+        Singleton.getInstance(this).addToRequestQueue(fieldsRequest4);
+
+        // Fith group
+        JsonObjectRequest fieldsRequest5 = new JsonObjectRequest(Request.Method.GET, url+"/groups/"+Integer.toString(5 + count)+".json", null, new Response.Listener<JSONObject>(){
+            @Override
+            public void onResponse(JSONObject response){
+                try {
+                    // Set the Text Fields to Acquired Information
+                    groupName5.setText(response.get("groupName").toString());
+                    groupDescription5.setText(response.get("description").toString());
+                } catch (JSONException e){
+                    // There was an error, print it
+                    e.printStackTrace();
+                }
+            }
+        },new Response.ErrorListener(){
+            @Override
+            public void onErrorResponse(VolleyError e){
+                // Error communicating with server, print it
+                VolleyLog.e("Error: " + e.getMessage());
+                // Do not display text if error is thrown
+                groupName5.setText("");
+                groupDescription5.setText("");
+            }
+        });
+
+        // Add Request to Queue
+        Singleton.getInstance(this).addToRequestQueue(fieldsRequest5);
     }
 
 }

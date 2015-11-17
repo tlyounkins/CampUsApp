@@ -20,10 +20,8 @@ import org.json.JSONObject;
 import java.util.HashMap;
 
 public class GroupRegisterActivity extends AppCompatActivity {
-    String url = "http://192.168.172.59:3000";
+    String url = "http://192.168.172.224:3000";
     EditText name, description;
-    int id;
-    String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,13 +30,6 @@ public class GroupRegisterActivity extends AppCompatActivity {
 
         name = (EditText) findViewById(R.id.gregisterName);
         description = (EditText) findViewById(R.id.gregisterDescription);
-
-        // Check for extras
-        Bundle extras = getIntent().getExtras();
-        if (extras != null){
-            id = extras.getInt("id");
-            username = extras.getString("username");
-        }
     }
 
     public void onGroupRegisterPress(View v){
@@ -64,8 +55,6 @@ public class GroupRegisterActivity extends AppCompatActivity {
 
                         // Bring user back to Dashboard
                         Intent intent = new Intent(GroupRegisterActivity.this, Dashboard.class);
-                        intent.putExtra("id", id);
-                        intent.putExtra("username", username);
                         startActivity(intent);
                         finish();
                     } else {

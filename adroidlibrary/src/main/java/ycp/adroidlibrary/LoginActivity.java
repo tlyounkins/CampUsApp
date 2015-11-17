@@ -64,7 +64,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
-    String url = "http://192.168.172.59:3000";
+    String url = "http://192.168.172.224:3000";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -213,7 +213,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                             finish();
                         } else{
                             // Display Error Message
-                            Toast toast = Toast.makeText(getApplicationContext(), "Invalid email/password combination", Toast.LENGTH_LONG);
+                            Toast toast = Toast.makeText(getApplicationContext(), "Invaild email/password combination", Toast.LENGTH_LONG);
                             toast.setGravity(Gravity.CENTER, 0, 0);
                             toast.show();
 

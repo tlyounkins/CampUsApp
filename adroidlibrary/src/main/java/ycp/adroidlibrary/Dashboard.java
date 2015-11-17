@@ -28,7 +28,7 @@ public class Dashboard extends AppCompatActivity {
     String username = "";
     Button loginButton;
     TextView welcomeText;
-    String url = "http://192.168.172.59:3000";
+    String url = "http://192.168.172.224:3000";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,7 +89,6 @@ public class Dashboard extends AppCompatActivity {
         // Change view to Profile
         Intent intent = new Intent(Dashboard.this, ProfileActivity.class);
         intent.putExtra("id", id);
-        intent.putExtra("username", username);
         startActivity(intent);
     }
 
