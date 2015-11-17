@@ -30,7 +30,7 @@ public class GroupProfileActivity extends AppCompatActivity {
     List<String> members = new ArrayList<>();
     ArrayAdapter<String> memberAdapter;
     ListView memberList;
-    String url = "http://192.168.172.59:3000";
+    String url = "http://192.168.172.246:3000";
     String username;
 
     @Override

@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FriendActivity extends AppCompatActivity {
-    String url = "http://192.168.172.59:3000";
+    String url = "http://192.168.172.246:3000";
     int user_id = 0;
 
     // Posts

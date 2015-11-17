@@ -29,7 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class ProfileActivity extends AppCompatActivity {
-    String url = "http://192.168.172.59:3000";
+    String url = "http://192.168.172.246:3000";
     int id = 0;
     int other_id = 0;
 

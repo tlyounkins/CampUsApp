@@ -8,13 +8,21 @@ import android.view.MenuItem;
 import android.view.View;
 
 public class calendarActivity extends AppCompatActivity {
-
+    int id = 0;
+    String username;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
+
+        // Check for extras
+        Bundle extras = getIntent().getExtras();
+        if (extras != null){
+            id = extras.getInt("id");
+            username = extras.getString("username");
+        }
     }
 
     @Override
@@ -42,12 +50,16 @@ public class calendarActivity extends AppCompatActivity {
     public void onDashboardPress(View v){
         // Change view to Dashboard
         Intent intent = new Intent(calendarActivity.this, Dashboard.class);
+        intent.putExtra("id", id);
+        intent.putExtra("username", username);
         startActivity(intent);
     }
 
     public void onProfilePressCalendar(View v){
         // Change view to Profile
         Intent intent = new Intent(calendarActivity.this, ProfileActivity.class);
+        intent.putExtra("id", id);
+        intent.putExtra("username", username);
         startActivity(intent);
     }
 }
