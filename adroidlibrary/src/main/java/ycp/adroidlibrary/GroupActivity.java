@@ -39,7 +39,7 @@ public class GroupActivity extends AppCompatActivity {
     int user_id;
     String username;
 
-    // Posts
+    // Groups
     List<Map<String, String>>groups = new ArrayList<>();
     SimpleAdapter groupAdapter;
     ListView groupList;
