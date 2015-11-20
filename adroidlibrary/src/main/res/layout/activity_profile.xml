@@ -111,6 +111,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/profileAddButton"
+                    android:onClick="onAddPress"
                     android:src="@android:drawable/ic_input_add" />
 
                 <ImageButton
@@ -130,7 +131,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/profileEditButton"
                     android:onClick="onProfileEditPress"
-                    android:src="@android:drawable/ic_menu_edit" />
+                    android:src="@android:drawable/ic_menu_preferences" />
             </LinearLayout>
         </LinearLayout>
 
@@ -160,37 +161,7 @@
         android:layout_height="179dp"
         android:id="@+id/profilePostList"
         android:choiceMode="none"
-        android:layout_weight="0.45" />
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/profileCreatePostContainer">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Create Post"
-            android:id="@+id/profileCreateText"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="textMultiLine"
-            android:ems="10"
-            android:id="@+id/profileCreatePostText"
-            android:text="Type Post" />
-
-    </LinearLayout>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/profilePostButton"
-        android:text="Submit Post"
-        android:onClick="onSubmitRequest"/>
+        android:layout_weight="0.94" />
 
     <LinearLayout
         android:orientation="vertical"

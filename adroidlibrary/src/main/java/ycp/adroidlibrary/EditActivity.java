@@ -103,8 +103,6 @@ public class EditActivity extends AppCompatActivity {
         params.put("firstname", firstname.getText().toString());
         params.put("lastname", lastname.getText().toString());
 
-        Toast.makeText(getApplicationContext(), "Starting Send", Toast.LENGTH_LONG).show();
-
         showProgress(true);
 
         // Send changes to server
@@ -114,7 +112,7 @@ public class EditActivity extends AppCompatActivity {
                 try{
                     if(response.get("success").toString().equals("true")){
                         // Profile updated successfully, show success message
-                        Toast toast = Toast.makeText(getApplicationContext(), "Profile updated successfully", Toast.LENGTH_LONG);
+                        Toast toast = Toast.makeText(getApplicationContext(), "Profile updated successfully", Toast.LENGTH_SHORT);
                         toast.setGravity(Gravity.CENTER, 0, 0);
                         toast.show();
 

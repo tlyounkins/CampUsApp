@@ -1,5 +1,6 @@
 package ycp.adroidlibrary;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -29,7 +30,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class ProfileActivity extends AppCompatActivity {
-    String url = "http://192.168.172.246:3000";
+    String url = "http://192.168.172.219:3000";
     int id = 0;
     String logged_in_user;
     int other_id = 0;
@@ -43,10 +44,7 @@ public class ProfileActivity extends AppCompatActivity {
     ListView postList;
 
     //profile text views
-    TextView profileCreateText;
-    Button profilePostButton;
-    ImageButton profileEditButton;
-    EditText profileCreatePostText;
+    ImageButton profileEditButton, addButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,14 +60,10 @@ public class ProfileActivity extends AppCompatActivity {
         major = (TextView) findViewById(R.id.profileMajor);
         hometown = (TextView) findViewById(R.id.profileHometown);
         bio = (TextView) findViewById(R.id.profileBio);
-        profilePostButton = (Button) findViewById(R.id.profilePostButton);
         profileEditButton = (ImageButton) findViewById(R.id.profileEditButton);
+        addButton = (ImageButton) findViewById(R.id.profileAddButton);
 
         age.setVisibility(View.INVISIBLE);
-
-
-        profileCreateText = (TextView) findViewById(R.id.profileCreateText);
-        profileCreatePostText = (EditText) findViewById(R.id.profileCreatePostText);
 
         // Post List
         postList = (ListView) findViewById(R.id.profilePostList);
@@ -84,12 +78,13 @@ public class ProfileActivity extends AppCompatActivity {
             logged_in_user = extras.getString("username");
         }
 
-        // Hide create post if viewing other profile
+        // Hide edit button if viewing other profile
         if(other_id != 0 && other_id != id){
-            profileCreatePostText.setVisibility(View.GONE);
-            profileCreateText.setVisibility(View.GONE);
-            profilePostButton.setVisibility(View.GONE);
             profileEditButton.setVisibility(View.GONE);
+        } else{
+            // Hide add friend button if viewing own profile, change to
+            // create post button
+            addButton.setImageResource(android.R.drawable.ic_menu_edit);
         }
 
 
@@ -243,50 +238,73 @@ public class ProfileActivity extends AppCompatActivity {
 
     }
 
-    public void onSubmitRequest(View v){
+    public void onAddPress(View v){
+        if(other_id != 0 && id != other_id){
+            // Viewing other profile, add friend
+            // TODO
+            Toast toast = Toast.makeText(getApplicationContext(), "Feature coming soon", Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.show();
+        } else{
+            // Viewing own profile, change button to create
+            // post button, create post button dialog
+            // Create post dialog pop up
+            final Dialog postDialog = new Dialog(ProfileActivity.this);
 
-        if(id != 0){
-            HashMap<String,String>  params = new HashMap<>();
-            params.put("content",profileCreatePostText.getText().toString());
+            // Set dialog text
+            postDialog.setContentView(R.layout.dialog_post);
+            postDialog.setTitle("Submit New Post");
 
-            JsonObjectRequest groupRequest = new JsonObjectRequest(Request.Method.POST, url + "/microposts/"+ Integer.toString(id)+ ".json", new JSONObject(params), new Response.Listener<JSONObject>() {
+            // Find button, text
+            Button post_submit = (Button) postDialog.findViewById(R.id.dialogPostButton);
+            final EditText post_text = (EditText) postDialog.findViewById(R.id.dialogPostBody);
+
+            post_submit.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onResponse(JSONObject response) {
-                    try {
-                        if (response.get("success").toString().equals("true")) {
-                            // Display Successful message
-                            Toast toast = Toast.makeText(getApplicationContext(), "Post post: Post posted", Toast.LENGTH_LONG);
-                            toast.setGravity(Gravity.CENTER, 0, 0);
-                            toast.show();
+                public void onClick(View v) {
+                    HashMap<String,String>  params = new HashMap<>();
+                    params.put("content",   post_text.getText().toString());
 
-                            Notify.notify(ProfileActivity.this, username.getText().toString() + " created a post", 1);
+                    JsonObjectRequest postRequest = new JsonObjectRequest(Request.Method.POST, url + "/microposts/"+ Integer.toString(id)+ ".json", new JSONObject(params), new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            try {
+                                if (response.get("success").toString().equals("true")) {
+                                    // Display Successful message
+                                    Toast toast = Toast.makeText(getApplicationContext(), "Post post: Post posted", Toast.LENGTH_SHORT);
+                                    toast.setGravity(Gravity.CENTER, 0, 0);
+                                    toast.show();
+                                } else {
+                                    // Failure to Post Message
+                                    Toast toast = Toast.makeText(getApplicationContext(), "Error posting, try again later", Toast.LENGTH_SHORT);
+                                    toast.setGravity(Gravity.CENTER, 0, 0);
+                                    toast.show();
+                                }
 
-                            Intent intent = new Intent(ProfileActivity.this, ProfileActivity.class);
-                            intent.putExtra("id", id);
-                            startActivity(intent);
-                        } else {
-                            // Failure to Register User
-                            Toast toast = Toast.makeText(getApplicationContext(), "Error Registering.", Toast.LENGTH_LONG);
-                            toast.setGravity(Gravity.CENTER, 0, 0);
-                            toast.show();
+                            } catch (JSONException e) {
+                                // There was an Error, print it
+                                e.printStackTrace();
+                            }
                         }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            //error!
+                            VolleyLog.e("Error: " + error.getMessage());
+                        }
+                    });
 
-                    } catch (JSONException e) {
-                        // There was an Error, print it
-                        e.printStackTrace();
-                    }
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    //error!
-                    VolleyLog.e("Error: " + error.getMessage());
+                    // Add Request to Queue
+                    Singleton.getInstance(ProfileActivity.this).addToRequestQueue(postRequest);
+
+                    postDialog.dismiss();
                 }
             });
 
-            // Add Request to Queue
-            Singleton.getInstance(this).addToRequestQueue(groupRequest);
+            // Create dialog
+            postDialog.show();
         }
     }
+
 
 }
