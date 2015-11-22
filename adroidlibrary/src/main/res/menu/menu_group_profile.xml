@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="ycp.adroidlibrary.GroupProfileActivity">
+    <item android:id="@+id/action_search"
+        android:icon="@android:drawable/ic_menu_search"
+        android:title="Search"
+        app:showAsAction="ifRoom"/>
+
+    <item android:id="@+id/action_settings" android:title="@string/action_settings"
+        android:orderInCategory="100" app:showAsAction="never" />
+
+    <item android:id="@+id/action_Clubs"
+        android:title="Clubs/Organizations"
+        android:orderInCategory="10"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/action_Account"
+        android:title="Account"
+        android:orderInCategory="11"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/action_Help"
+        android:title="Help"
+        android:orderInCategory="101"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/action_Feedback"
+        android:title="Feedback"
+        android:orderInCategory="102"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/action_post"
+        android:icon="@android:drawable/ic_menu_edit"
+        android:title="Post"
+        app:showAsAction="ifRoom"
+        />
+
+</menu>

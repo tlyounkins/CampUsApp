@@ -30,7 +30,7 @@ public class Dashboard extends AppCompatActivity {
     String username = "";
     Button loginButton;
     TextView welcomeText;
-    String url = "http://192.168.172.219:3000";
+    String url = "http://192.168.172.92:3000";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
