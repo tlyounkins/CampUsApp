@@ -30,7 +30,7 @@ public class Dashboard extends AppCompatActivity {
     String username = "";
     Button loginButton;
     TextView welcomeText;
-    String url = "http://192.168.172.92:3000";
+    String url = "http://192.168.172.194:3000";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +82,15 @@ public class Dashboard extends AppCompatActivity {
         if(item_id == R.id.action_search){
             //start list of all users
             Intent intent = new Intent(Dashboard.this, FriendActivity.class);
+            intent.putExtra("id", id);
+            intent.putExtra("username", username);
+            startActivity(intent);
+            return true;
+        }
+
+        if(item_id == R.id.action_Account){
+            // Start edit activity
+            Intent intent = new Intent(Dashboard.this, EditActivity.class);
             intent.putExtra("id", id);
             intent.putExtra("username", username);
             startActivity(intent);

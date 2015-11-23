@@ -37,7 +37,7 @@ public class GroupProfileActivity extends AppCompatActivity {
     List<String> members = new ArrayList<>();
     ArrayAdapter<String> memberAdapter;
     ListView memberList;
-    String url = "http://192.168.172.92:3000";
+    String url = "http://192.168.172.194:3000";
     String username;
 
     // Posts
@@ -174,7 +174,7 @@ public class GroupProfileActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_group_profile, menu);
+        getMenuInflater().inflate(R.menu.menu_dashboard, menu);
         return true;
     }
 
@@ -203,6 +203,15 @@ public class GroupProfileActivity extends AppCompatActivity {
             return true;
         }
 
+        if(item_id == R.id.action_Account){
+            // Start edit activity
+            Intent intent = new Intent(GroupProfileActivity.this, EditActivity.class);
+            intent.putExtra("id", id);
+            intent.putExtra("username", username);
+            startActivity(intent);
+            return true;
+        }
+
         if(item_id == R.id.action_post){
             // Check if user is logged in
             if(id != 0) {
@@ -220,7 +229,7 @@ public class GroupProfileActivity extends AppCompatActivity {
                 post_submit.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        HashMap<String,String> params = new HashMap<>();
+                        HashMap<String,String>  params = new HashMap<>();
                         params.put("content",   post_text.getText().toString());
 
                         JsonObjectRequest postRequest = new JsonObjectRequest(Request.Method.POST, url + "/group_microposts/"+ Integer.toString(group_id)+ ".json", new JSONObject(params), new Response.Listener<JSONObject>() {
