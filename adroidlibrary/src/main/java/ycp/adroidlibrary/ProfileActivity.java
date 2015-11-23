@@ -155,7 +155,7 @@ public class ProfileActivity extends AppCompatActivity {
                 Singleton.getInstance(this).addToRequestQueue(fieldsRequest);
             }
 
-            //send JSON request for 3 posts
+            //send JSON request for posts
             getPostList();
         }
 
