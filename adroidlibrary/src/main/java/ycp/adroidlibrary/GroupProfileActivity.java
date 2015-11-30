@@ -37,7 +37,7 @@ public class GroupProfileActivity extends AppCompatActivity {
     List<String> members = new ArrayList<>();
     ArrayAdapter<String> memberAdapter;
     ListView memberList;
-    String url = "http://192.168.172.194:3000";
+    String url = "http://192.168.172.116:3000";
     String username;
 
     // Posts
@@ -68,34 +68,36 @@ public class GroupProfileActivity extends AppCompatActivity {
             username = extras.getString("username");
         }
 
-       /** // When an item is clicked, take the user to that profile
-        memberList.setOnClickListener(new OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View v, int position, long id){
-               String name =  memberList.getItemAtPosition(position).toString();
+       // When an item is clicked, take the user to that profile
+        memberList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+                String name = memberList.getItemAtPosition(position).toString();
                 if (name != null) {
                     // Get ID from server
-                    JsonObjectRequest idRequest = new JsonObjectRequest(Request.Method.GET, url+"/users/"+name+".json", null, new Response.Listener<JSONObject>(){
+                    JsonObjectRequest idRequest = new JsonObjectRequest(Request.Method.GET, url + "/users/" + name + ".json", null, new Response.Listener<JSONObject>() {
                         @Override
-                        public void onResponse(JSONObject response){
+                        public void onResponse(JSONObject response) {
                             try {
                                 int userId = Integer.parseInt(response.get("id").toString());
                                 Intent intent = new Intent(GroupProfileActivity.this, ProfileActivity.class);
                                 intent.putExtra("profileId", userId);
                                 startActivity(intent);
 
-                            } catch (JSONException e){
+                            } catch (JSONException e) {
                                 e.printStackTrace();
                             }
                         }
-                    }, new Response.ErrorListener(){
+                    }, new Response.ErrorListener() {
                         @Override
-                        public void onErrorResponse(VolleyError e){
+                        public void onErrorResponse(VolleyError e) {
                             VolleyLog.e("Error: " + e.getMessage());
                         }
                     });
+
+                    Singleton.getInstance(getApplicationContext()).addToRequestQueue(idRequest);
                 }
             }
-        });**/
+        });
 
         // Send JsonRequest to get fields
         JsonObjectRequest fieldsRequest = new JsonObjectRequest(Request.Method.GET, url+"/groups/"+Integer.toString(group_id)+".json", null, new Response.Listener<JSONObject>(){
@@ -278,6 +280,14 @@ public class GroupProfileActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onEventPress(View v){
+        Intent intent = new Intent(GroupProfileActivity.this, EventActivity.class);
+        intent.putExtra("id", id);
+        intent.putExtra("group_id", group_id);
+        intent.putExtra("username", username);
+        startActivity(intent);
     }
 
     public void onApplyPress(View v){

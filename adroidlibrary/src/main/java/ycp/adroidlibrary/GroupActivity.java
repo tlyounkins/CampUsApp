@@ -39,7 +39,7 @@ import java.util.List;
 import java.util.Map;
 
 public class GroupActivity extends AppCompatActivity {
-    String url = "http://192.168.172.194:3000";
+    String url = "http://192.168.172.116:3000";
 
     int user_id;
     String username;

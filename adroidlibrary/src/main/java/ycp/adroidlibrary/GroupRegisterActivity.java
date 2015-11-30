@@ -24,7 +24,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 
 public class GroupRegisterActivity extends AppCompatActivity {
-    String url = "http://192.168.172.194:3000";
+    String url = "http://192.168.172.116:3000";
     EditText name, description;
     int id;
     String username;

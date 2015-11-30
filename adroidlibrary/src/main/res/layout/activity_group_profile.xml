@@ -40,7 +40,7 @@
 
         <ListView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="182dp"
             android:id="@+id/gProfileGroupPosts"
             android:choiceMode="none" />
 
@@ -61,11 +61,25 @@
             android:id="@+id/gMemberView"
             android:choiceMode="singleChoice" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Apply"
-            android:onClick="onApplyPress"
-            android:id="@+id/gProfileApply" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Events"
+                android:onClick="onEventPress"
+                android:id="@+id/gEvents" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Apply"
+                android:onClick="onApplyPress"
+                android:id="@+id/gProfileApply" />
+        </LinearLayout>
+
     </LinearLayout>
 </ScrollView>
