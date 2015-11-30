@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -30,7 +32,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class ProfileActivity extends AppCompatActivity {
-    String url = "http://192.168.172.219:3000";
+    String url = "http://192.168.172.116:3000";
     int id = 0;
     String logged_in_user;
     int other_id = 0;
@@ -153,10 +155,118 @@ public class ProfileActivity extends AppCompatActivity {
                 Singleton.getInstance(this).addToRequestQueue(fieldsRequest);
             }
 
-            //send JSON request for 3 posts
+            //send JSON request for posts
             getPostList();
         }
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_dashboard, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int item_id = item.getItemId();
+
+        if (item_id == R.id.action_Clubs){
+            // Start Group Activity
+            Intent intent = new Intent(ProfileActivity.this, GroupActivity.class);
+            intent.putExtra("id", id);
+            intent.putExtra("username", logged_in_user);
+            startActivity(intent);
+            return true;
+        }
+
+        if(item_id == R.id.action_search){
+            //start list of all users
+            Intent intent = new Intent(ProfileActivity.this, FriendActivity.class);
+            intent.putExtra("id", id);
+            intent.putExtra("username", logged_in_user);
+            startActivity(intent);
+            return true;
+        }
+
+        if(item_id == R.id.action_Account){
+            // Start edit activity
+            Intent intent = new Intent(ProfileActivity.this, EditActivity.class);
+            intent.putExtra("id", id);
+            intent.putExtra("username", logged_in_user);
+            startActivity(intent);
+            return true;
+        }
+
+        if(item_id == R.id.action_post){
+            // Check if user is logged in
+            if(id != 0) {
+                // Create post dialog pop up
+                final Dialog postDialog = new Dialog(ProfileActivity.this);
+
+                // Set dialog text
+                postDialog.setContentView(R.layout.dialog_post);
+                postDialog.setTitle("Submit New Post");
+
+                // Find button, text
+                Button post_submit = (Button) postDialog.findViewById(R.id.dialogPostButton);
+                final EditText post_text = (EditText) postDialog.findViewById(R.id.dialogPostBody);
+
+                post_submit.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        HashMap<String,String>  params = new HashMap<>();
+                        params.put("content",   post_text.getText().toString());
+
+                        JsonObjectRequest postRequest = new JsonObjectRequest(Request.Method.POST, url + "/microposts/"+ Integer.toString(id)+ ".json", new JSONObject(params), new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                try {
+                                    if (response.get("success").toString().equals("true")) {
+                                        // Display Successful message
+                                        Toast toast = Toast.makeText(getApplicationContext(), "Post post: Post posted", Toast.LENGTH_LONG);
+                                        toast.setGravity(Gravity.CENTER, 0, 0);
+                                        toast.show();
+                                    } else {
+                                        // Failure to Register User
+                                        Toast toast = Toast.makeText(getApplicationContext(), "Error Registering.", Toast.LENGTH_LONG);
+                                        toast.setGravity(Gravity.CENTER, 0, 0);
+                                        toast.show();
+                                    }
+
+                                } catch (JSONException e) {
+                                    // There was an Error, print it
+                                    e.printStackTrace();
+                                }
+                            }
+                        }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                //error!
+                                VolleyLog.e("Error: " + error.getMessage());
+                            }
+                        });
+
+                        // Add Request to Queue
+                        Singleton.getInstance(ProfileActivity.this).addToRequestQueue(postRequest);
+
+                        postDialog.dismiss();
+                    }
+                });
+
+                // Create dialog
+                postDialog.show();
+            } else{
+                Toast toast = Toast.makeText(getApplicationContext(), "You must log in to create a post", Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER, 0, 0);
+                toast.show();
+            }
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     public void onDashboardPressProfile(View v){

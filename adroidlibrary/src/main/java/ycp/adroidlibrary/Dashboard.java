@@ -8,8 +8,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.content.Intent;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,12 +19,16 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 
 public class Dashboard extends AppCompatActivity {
@@ -30,7 +36,13 @@ public class Dashboard extends AppCompatActivity {
     String username = "";
     Button loginButton;
     TextView welcomeText;
-    String url = "http://192.168.172.219:3000";
+    TextView postText;
+    String url = "http://192.168.172.116:3000";
+
+    // Posts
+    List<String> posts = new ArrayList<>();
+    ArrayAdapter<String> postAdapter;
+    ListView postList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +51,12 @@ public class Dashboard extends AppCompatActivity {
 
         loginButton = (Button) findViewById(R.id.tempLogin);
         welcomeText = (TextView) findViewById(R.id.welcomeText);
+        postText = (TextView) findViewById(R.id.dashPostText);
+
+        // Post List
+        postList = (ListView) findViewById(R.id.dashPostList);
+        postAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, posts);
+        postList.setAdapter(postAdapter);
 
         // Check for extras
         Bundle extras = getIntent().getExtras();
@@ -53,6 +71,10 @@ public class Dashboard extends AppCompatActivity {
             String hello = "Hello, ";
             loginButton.setText(log);
             welcomeText.setText(hello + username);
+            getPostList();
+        } else{
+            postText.setVisibility(View.INVISIBLE);
+            postList.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -82,6 +104,15 @@ public class Dashboard extends AppCompatActivity {
         if(item_id == R.id.action_search){
             //start list of all users
             Intent intent = new Intent(Dashboard.this, FriendActivity.class);
+            intent.putExtra("id", id);
+            intent.putExtra("username", username);
+            startActivity(intent);
+            return true;
+        }
+
+        if(item_id == R.id.action_Account){
+            // Start edit activity
+            Intent intent = new Intent(Dashboard.this, EditActivity.class);
             intent.putExtra("id", id);
             intent.putExtra("username", username);
             startActivity(intent);
@@ -176,6 +207,35 @@ public class Dashboard extends AppCompatActivity {
             toast.setGravity(Gravity.CENTER, 0, 0);
             toast.show();
         }
+    }
+
+    public void getPostList(){
+            // Get Array of Posts
+            JsonArrayRequest postsRequest = new JsonArrayRequest(url + "/microposts/" + Integer.toString(id) + "/posts.json", new Response.Listener<JSONArray>() {
+                @Override
+                public void onResponse(JSONArray response) {
+
+                    // Set the Text Fields to Acquired Information
+                    for (int i = 0; i < response.length(); i++) {
+                        try {
+                            JSONObject obj = response.getJSONObject(i);
+                            posts.add(obj.get("content").toString());
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    postAdapter.notifyDataSetChanged();
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError e) {
+                    // Error communicating with server, print it
+                    VolleyLog.e("Error: " + e.getMessage());
+                }
+            });
+
+            // Add Request to Queue
+            Singleton.getInstance(this).addToRequestQueue(postsRequest);
     }
 
     public void onDashLoginPress(View v){

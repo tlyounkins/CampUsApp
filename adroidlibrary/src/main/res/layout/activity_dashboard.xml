@@ -1,4 +1,4 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -6,73 +6,106 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="ycp.adroidlibrary.Dashboard"
     android:id="@+id/dash"
-    android:background="#edeef8">
+    android:background="#edeef8"
+    android:orientation="vertical"
+    android:weightSum="1">
 
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/dashButton"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:src="@android:drawable/ic_input_get" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/calendarButton"
-        android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/dashButton"
-        android:layout_toEndOf="@+id/dashButton"
-        android:onClick="onCalendarPress"
-        android:src="@android:drawable/ic_menu_my_calendar" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Log in to get started."
+            android:id="@+id/welcomeText"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
 
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/messageButton"
-        android:src="@android:drawable/sym_action_chat"
-        android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/calendarButton"
-        android:layout_toEndOf="@+id/calendarButton" />
+        <Space
+            android:layout_width="20px"
+            android:layout_height="20px" />
 
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/notificationButton"
-        android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/messageButton"
-        android:layout_toEndOf="@+id/messageButton"
-        android:src="@android:drawable/ic_popup_reminder" />
+        <Button
+            android:layout_width="72dp"
+            android:layout_height="wrap_content"
+            android:text="Login"
+            android:id="@+id/tempLogin"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:onClick="onDashLoginPress"/>
 
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/profileButton"
-        android:onClick="onProfilePress"
-        android:layout_alignParentBottom="true"
-        android:src="@android:drawable/sym_def_app_icon"
-        android:layout_alignTop="@+id/notificationButton"
-        android:layout_toRightOf="@+id/notificationButton"
-        android:layout_toEndOf="@+id/notificationButton" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Login"
-        android:id="@+id/tempLogin"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="81dp"
-        android:onClick="onDashLoginPress"/>
+    </LinearLayout>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Click the button to get started."
-        android:id="@+id/welcomeText"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Your Recent Posts:"
+        android:id="@+id/dashPostText" />
 
-</RelativeLayout>
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="193dp"
+        android:id="@+id/dashPostList"
+        android:layout_weight="0.95"
+        android:choiceMode="none" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/dashButton"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:src="@android:drawable/ic_input_get" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/messageButton"
+            android:src="@android:drawable/sym_action_chat"
+            android:layout_alignParentBottom="true"
+            android:layout_toRightOf="@+id/calendarButton"
+            android:layout_toEndOf="@+id/calendarButton" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/calendarButton"
+            android:layout_alignParentBottom="true"
+            android:layout_toRightOf="@+id/dashButton"
+            android:layout_toEndOf="@+id/dashButton"
+            android:onClick="onCalendarPress"
+            android:src="@android:drawable/ic_menu_my_calendar" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/notificationButton"
+            android:layout_alignParentBottom="true"
+            android:layout_toRightOf="@+id/messageButton"
+            android:layout_toEndOf="@+id/messageButton"
+            android:src="@android:drawable/ic_popup_reminder" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/profileButton"
+            android:onClick="onProfilePress"
+            android:layout_alignParentBottom="true"
+            android:src="@android:drawable/sym_def_app_icon"
+            android:layout_alignTop="@+id/notificationButton"
+            android:layout_toRightOf="@+id/notificationButton"
+            android:layout_toEndOf="@+id/notificationButton" />
+
+    </LinearLayout>
+
+</LinearLayout>
