@@ -37,7 +37,7 @@ public class GroupProfileActivity extends AppCompatActivity {
     List<String> members = new ArrayList<>();
     ArrayAdapter<String> memberAdapter;
     ListView memberList;
-    String url = "http://192.168.172.116:3000";
+    String url = "http://192.168.172.83:3000";
     String username;
 
     // Posts
@@ -48,6 +48,9 @@ public class GroupProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //changing title of Activity
+        setTitle("Group Profile");
         setContentView(R.layout.activity_group_profile);
 
         groupName = (TextView) findViewById(R.id.gProfileGroupName);

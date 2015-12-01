@@ -39,7 +39,7 @@ import java.util.List;
 import java.util.Map;
 
 public class GroupActivity extends AppCompatActivity {
-    String url = "http://192.168.172.116:3000";
+    String url = "http://192.168.172.83:3000";
 
     int user_id;
     String username;
@@ -52,6 +52,10 @@ public class GroupActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //changing title of Activity
+        setTitle("Group List");
+
         setContentView(R.layout.activity_group);
 
         groupList = (ListView) findViewById(R.id.groupList);

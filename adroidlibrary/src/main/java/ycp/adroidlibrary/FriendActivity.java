@@ -31,7 +31,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class FriendActivity extends AppCompatActivity {
-    String url = "http://192.168.172.116:3000";
+    String url = "http://192.168.172.83:3000";
     String username;
     int user_id = 0;
 
@@ -43,6 +43,10 @@ public class FriendActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //changing title of Activity
+        setTitle("Users List");
+
         setContentView(R.layout.activity_friend);
 
         // Post List
