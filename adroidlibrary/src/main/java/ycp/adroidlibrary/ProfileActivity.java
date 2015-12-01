@@ -55,6 +55,9 @@ public class ProfileActivity extends AppCompatActivity {
         //changing title of Activity
         setTitle("Profile");
 
+        TextView postHeader = new TextView(ProfileActivity.this);
+        postHeader.setText("Your Recent Posts");
+
         setContentView(R.layout.activity_profile);
 
         //user description
@@ -75,6 +78,7 @@ public class ProfileActivity extends AppCompatActivity {
         postList = (ListView) findViewById(R.id.profilePostList);
         postAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, posts);
         postList.setAdapter(postAdapter);
+        postList.addHeaderView(postHeader);
 
         // Check for extras
         Bundle extras = getIntent().getExtras();
