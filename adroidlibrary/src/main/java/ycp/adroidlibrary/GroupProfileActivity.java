@@ -32,12 +32,12 @@ import java.util.HashMap;
 import java.util.List;
 
 public class GroupProfileActivity extends AppCompatActivity {
-    int id, group_id;
+    int user_id, group_id;
     TextView groupName, groupDescription;
     List<String> members = new ArrayList<>();
     ArrayAdapter<String> memberAdapter;
     ListView memberList;
-    String url = "http://192.168.172.116:3000";
+    String url = "http://192.168.172.83:3000";
     String username;
 
     // Posts
@@ -48,7 +48,16 @@ public class GroupProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //changing title of Activity
+        setTitle("Group Profile");
         setContentView(R.layout.activity_group_profile);
+
+        TextView memberHeader = new TextView(GroupProfileActivity.this);
+        TextView postHeader = new TextView(GroupProfileActivity.this);
+
+        memberHeader.setText("List of Members");
+        postHeader.setText("Group Posts");
 
         groupName = (TextView) findViewById(R.id.gProfileGroupName);
         groupDescription = (TextView) findViewById(R.id.gProfileGroupDescription);
@@ -60,10 +69,13 @@ public class GroupProfileActivity extends AppCompatActivity {
         postAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, posts);
         postList.setAdapter(postAdapter);
 
+        memberList.addHeaderView(memberHeader);
+        postList.addHeaderView(postHeader);
+
         // Check for extras
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            id = extras.getInt("id");
+            user_id = extras.getInt("id");
             group_id = extras.getInt("group_id");
             username = extras.getString("username");
         }
@@ -73,14 +85,16 @@ public class GroupProfileActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                 String name = memberList.getItemAtPosition(position).toString();
                 if (name != null) {
+                    final Intent intent = new Intent(GroupProfileActivity.this, ProfileActivity.class);
+                    intent.putExtra("id", user_id);
+                    intent.putExtra("username", username);
                     // Get ID from server
-                    JsonObjectRequest idRequest = new JsonObjectRequest(Request.Method.GET, url + "/users/" + name + ".json", null, new Response.Listener<JSONObject>() {
+                    JsonObjectRequest idRequest = new JsonObjectRequest(Request.Method.GET, url + "/users/findId/" + name + ".json", null, new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
                             try {
                                 int userId = Integer.parseInt(response.get("id").toString());
-                                Intent intent = new Intent(GroupProfileActivity.this, ProfileActivity.class);
-                                intent.putExtra("profileId", userId);
+                                intent.putExtra("other_id", userId);
                                 startActivity(intent);
 
                             } catch (JSONException e) {
@@ -190,7 +204,7 @@ public class GroupProfileActivity extends AppCompatActivity {
         if (item_id == R.id.action_Clubs){
             // Start Group Activity
             Intent intent = new Intent(GroupProfileActivity.this, GroupActivity.class);
-            intent.putExtra("id", id);
+            intent.putExtra("id", user_id);
             intent.putExtra("username", username);
             startActivity(intent);
             return true;
@@ -199,7 +213,7 @@ public class GroupProfileActivity extends AppCompatActivity {
         if(item_id == R.id.action_search){
             //start list of all users
             Intent intent = new Intent(GroupProfileActivity.this, FriendActivity.class);
-            intent.putExtra("id", id);
+            intent.putExtra("id", user_id);
             intent.putExtra("username", username);
             startActivity(intent);
             return true;
@@ -208,7 +222,7 @@ public class GroupProfileActivity extends AppCompatActivity {
         if(item_id == R.id.action_Account){
             // Start edit activity
             Intent intent = new Intent(GroupProfileActivity.this, EditActivity.class);
-            intent.putExtra("id", id);
+            intent.putExtra("id", user_id);
             intent.putExtra("username", username);
             startActivity(intent);
             return true;
@@ -216,7 +230,7 @@ public class GroupProfileActivity extends AppCompatActivity {
 
         if(item_id == R.id.action_post){
             // Check if user is logged in
-            if(id != 0) {
+            if(user_id != 0) {
                 // Create post dialog pop up
                 final Dialog postDialog = new Dialog(GroupProfileActivity.this);
 
@@ -284,7 +298,7 @@ public class GroupProfileActivity extends AppCompatActivity {
 
     public void onEventPress(View v){
         Intent intent = new Intent(GroupProfileActivity.this, EventActivity.class);
-        intent.putExtra("id", id);
+        intent.putExtra("id", user_id);
         intent.putExtra("group_id", group_id);
         intent.putExtra("username", username);
         startActivity(intent);
@@ -292,10 +306,10 @@ public class GroupProfileActivity extends AppCompatActivity {
 
     public void onApplyPress(View v){
         // Check to make sure user is logged in
-        if(id != 0){
+        if(user_id != 0){
 
             // Send JsonRequest to get fields
-            JsonObjectRequest fieldsRequest = new JsonObjectRequest(Request.Method.GET, url+"/groups/"+Integer.toString(group_id)+"/join/" + Integer.toString(id)+".json", null, new Response.Listener<JSONObject>(){
+            JsonObjectRequest fieldsRequest = new JsonObjectRequest(Request.Method.GET, url+"/groups/"+Integer.toString(group_id)+"/join/" + Integer.toString(user_id)+".json", null, new Response.Listener<JSONObject>(){
                 @Override
                 public void onResponse(JSONObject response){
                     try {

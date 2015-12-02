@@ -31,7 +31,7 @@ public class EventActivity extends AppCompatActivity {
     int id, group_id;
     String username;
 
-    String url = "http://192.168.172.116:3000";
+    String url = "http://192.168.172.83:3000";
 
     // Events
     List<Map<String, String>> events = new ArrayList<>();
@@ -41,6 +41,9 @@ public class EventActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //changing title of Activity
+        setTitle("Events");
+
         setContentView(R.layout.activity_event);
 
         // Check for extras

@@ -37,7 +37,7 @@ public class Dashboard extends AppCompatActivity {
     Button loginButton;
     TextView welcomeText;
     TextView postText;
-    String url = "http://192.168.172.116:3000";
+    String url = "http://192.168.172.83:3000";
 
     // Posts
     List<String> posts = new ArrayList<>();
@@ -46,6 +46,8 @@ public class Dashboard extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTitle("Dashboard");
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 

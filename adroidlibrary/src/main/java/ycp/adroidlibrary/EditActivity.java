@@ -32,7 +32,7 @@ import java.util.HashMap;
 import Model.User;
 
 public class EditActivity extends AppCompatActivity {
-    String url = "http://192.168.172.116:3000";
+    String url = "http://192.168.172.83:3000";
     int id;
     String logged_in_user;
     EditText hometown, major, bio, gender, firstname, lastname;
@@ -42,6 +42,9 @@ public class EditActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //changing title of Activity
+        setTitle("Profile Editor");
+
         setContentView(R.layout.activity_edit);
 
         // Initialize Texts

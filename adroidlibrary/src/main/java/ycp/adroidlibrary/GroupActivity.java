@@ -39,7 +39,7 @@ import java.util.List;
 import java.util.Map;
 
 public class GroupActivity extends AppCompatActivity {
-    String url = "http://192.168.172.116:3000";
+    String url = "http://192.168.172.83:3000";
 
     int user_id;
     String username;
@@ -52,13 +52,21 @@ public class GroupActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //changing title of Activity
+        setTitle("Group List");
+
         setContentView(R.layout.activity_group);
+
+        TextView groupHeader = new TextView(GroupActivity.this);
+        groupHeader.setText("Available groups");
 
         groupList = (ListView) findViewById(R.id.groupList);
         groupAdapter= new SimpleAdapter(this, groups, android.R.layout.simple_list_item_2,
                 new String[] {"Name", "Description"},
                 new int[] {android.R.id.text1, android.R.id.text2});
         groupList.setAdapter(groupAdapter);
+        groupList.addHeaderView(groupHeader);
 
         // Check for extras
         Bundle extras = getIntent().getExtras();
@@ -70,13 +78,13 @@ public class GroupActivity extends AppCompatActivity {
         groupList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(user_id != 0) {
+                if (user_id != 0) {
                     // Get group id at position, start profile activity
                     Intent intent = new Intent(GroupActivity.this, GroupProfileActivity.class);
                     intent.putExtra("id", user_id);
                     intent.putExtra("group_id", position + 1);
                     startActivity(intent);
-                }else{
+                } else {
                     Toast toast = Toast.makeText(getApplicationContext(), "You must log in to view a group profile", Toast.LENGTH_LONG);
                     toast.setGravity(Gravity.CENTER, 0, 0);
                     toast.show();

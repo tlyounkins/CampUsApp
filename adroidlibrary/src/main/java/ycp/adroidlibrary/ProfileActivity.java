@@ -32,7 +32,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class ProfileActivity extends AppCompatActivity {
-    String url = "http://192.168.172.116:3000";
+    String url = "http://192.168.172.83:3000";
     int id = 0;
     String logged_in_user;
     int other_id = 0;
@@ -51,6 +51,13 @@ public class ProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //changing title of Activity
+        setTitle("Profile");
+
+        TextView postHeader = new TextView(ProfileActivity.this);
+        postHeader.setText("Your Recent Posts");
+
         setContentView(R.layout.activity_profile);
 
         //user description
@@ -71,6 +78,7 @@ public class ProfileActivity extends AppCompatActivity {
         postList = (ListView) findViewById(R.id.profilePostList);
         postAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, posts);
         postList.setAdapter(postAdapter);
+        postList.addHeaderView(postHeader);
 
         // Check for extras
         Bundle extras = getIntent().getExtras();
@@ -288,6 +296,59 @@ public class ProfileActivity extends AppCompatActivity {
         intent.putExtra("username", logged_in_user);
         startActivity(intent);
     }
+
+   /*public void onProfileAddButton(View V) {
+       if (other_id != 0 && other_id != id) {
+           // Get Array of Posts
+           JsonArrayRequest followRequest = new JsonArrayRequest(url + "/followers/" + Integer.toString(id) + ".json", null , new Response.Listener<JSONObject>() {
+               @Override
+               public void onResponse(JSONObject response) {
+                   try {
+                       // Set the Text Fields to Acquired Information
+
+                   } catch (JSONException e) {
+                       // There was an error, print it
+                       e.printStackTrace();
+                   }
+               }
+           }, new Response.ErrorListener() {
+               @Override
+               public void onErrorResponse(VolleyError e) {
+                   // Error communicating with server, print it
+                   VolleyLog.e("Error: " + e.getMessage());
+               }
+           });
+
+           // Add Request to Queue
+           Singleton.getInstance(this).addToRequestQueue(followRequest);
+       } else {
+           JsonArrayRequest followRequest = new JsonArrayRequest(url + "/followers/" + Integer.toString(id) + ".json", null, new Response.Listener<JSONObject>() {
+               @Override
+               public void onResponse(JSONObject response) {
+                   try {
+                       // Set the Text Fields to Acquired Information
+
+                   } catch (JSONException e) {
+                       // There was an error, print it
+                       e.printStackTrace();
+                   }
+               }
+           }, new Response.ErrorListener() {
+               @Override
+               public void onErrorResponse(VolleyError e) {
+                   // Error communicating with server, print it
+                   VolleyLog.e("Error: " + e.getMessage());
+               }
+           });
+
+           // Add Request to Queue
+           Singleton.getInstance(this).addToRequestQueue(followRequest);
+       }
+
+       //send JSON request for posts
+       getPostList();
+   }*/
+
 
     public void getPostList(){
         if(other_id != 0 && other_id != id) {
