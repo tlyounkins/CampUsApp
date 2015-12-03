@@ -194,8 +194,9 @@
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/profileIndoxButton"
-                android:src="@android:drawable/sym_action_chat" />
+                android:id="@+id/profileInboxButton"
+                android:src="@android:drawable/sym_action_chat"
+                android:onClick="onMessagePress"/>
 
             <ImageButton
                 android:layout_width="wrap_content"

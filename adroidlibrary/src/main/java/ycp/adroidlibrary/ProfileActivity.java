@@ -290,6 +290,14 @@ public class ProfileActivity extends AppCompatActivity {
         intent.putExtra("username", logged_in_user);
         startActivity(intent);
     }
+
+    public void onMessagePress(View v){
+        // Change view to Calendar
+        Intent intent = new Intent(ProfileActivity.this, MessageActivity.class);
+        intent.putExtra("id", id);
+        intent.putExtra("username", logged_in_user);
+        startActivity(intent);
+    }
     public void onProfileEditPress(View v){
         Intent intent = new Intent(ProfileActivity.this, EditActivity.class);
         intent.putExtra("id", id);

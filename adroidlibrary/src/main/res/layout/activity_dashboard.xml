@@ -74,7 +74,8 @@
             android:src="@android:drawable/sym_action_chat"
             android:layout_alignParentBottom="true"
             android:layout_toRightOf="@+id/calendarButton"
-            android:layout_toEndOf="@+id/calendarButton" />
+            android:layout_toEndOf="@+id/calendarButton"
+            android:onClick="onMessagePress"/>
 
         <ImageButton
             android:layout_width="wrap_content"
