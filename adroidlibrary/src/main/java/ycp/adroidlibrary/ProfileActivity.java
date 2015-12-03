@@ -32,7 +32,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class ProfileActivity extends AppCompatActivity {
-    String url = "http://192.168.172.83:3000";
+    String url = "http://192.168.173.11:3000";
     int id = 0;
     String logged_in_user;
     int other_id = 0;
@@ -286,6 +286,14 @@ public class ProfileActivity extends AppCompatActivity {
 
     public void onCalenderPressProfile(View v){
         Intent intent = new Intent(ProfileActivity.this,calendarActivity.class);
+        intent.putExtra("id", id);
+        intent.putExtra("username", logged_in_user);
+        startActivity(intent);
+    }
+
+    public void onMessagePress(View v){
+        // Change view to Calendar
+        Intent intent = new Intent(ProfileActivity.this, MessageActivity.class);
         intent.putExtra("id", id);
         intent.putExtra("username", logged_in_user);
         startActivity(intent);

@@ -64,7 +64,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
-    String url = "http://192.168.172.83:3000";
+    String url = "http://192.168.173.11:3000";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

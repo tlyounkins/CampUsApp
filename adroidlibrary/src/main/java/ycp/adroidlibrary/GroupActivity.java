@@ -39,7 +39,7 @@ import java.util.List;
 import java.util.Map;
 
 public class GroupActivity extends AppCompatActivity {
-    String url = "http://192.168.172.83:3000";
+    String url = "http://192.168.173.11:3000";
 
     int user_id;
     String username;
@@ -82,7 +82,7 @@ public class GroupActivity extends AppCompatActivity {
                     // Get group id at position, start profile activity
                     Intent intent = new Intent(GroupActivity.this, GroupProfileActivity.class);
                     intent.putExtra("id", user_id);
-                    intent.putExtra("group_id", position + 1);
+                    intent.putExtra("group_id", position);
                     startActivity(intent);
                 } else {
                     Toast toast = Toast.makeText(getApplicationContext(), "You must log in to view a group profile", Toast.LENGTH_LONG);

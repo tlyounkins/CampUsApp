@@ -30,6 +30,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import Model.Message;
+
 
 public class Dashboard extends AppCompatActivity {
     int id = 0;
@@ -37,7 +39,7 @@ public class Dashboard extends AppCompatActivity {
     Button loginButton;
     TextView welcomeText;
     TextView postText;
-    String url = "http://192.168.172.83:3000";
+    String url = "http://192.168.173.11:3000";
 
     // Posts
     List<String> posts = new ArrayList<>();
@@ -192,6 +194,14 @@ public class Dashboard extends AppCompatActivity {
     public void onCalendarPress(View v){
         // Change view to Calendar
         Intent intent = new Intent(Dashboard.this, calendarActivity.class);
+        intent.putExtra("id", id);
+        intent.putExtra("username", username);
+        startActivity(intent);
+    }
+
+    public void onMessagePress(View v){
+        // Change view to Calendar
+        Intent intent = new Intent(Dashboard.this, MessageActivity.class);
         intent.putExtra("id", id);
         intent.putExtra("username", username);
         startActivity(intent);

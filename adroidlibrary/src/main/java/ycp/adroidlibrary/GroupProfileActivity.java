@@ -37,7 +37,7 @@ public class GroupProfileActivity extends AppCompatActivity {
     List<String> members = new ArrayList<>();
     ArrayAdapter<String> memberAdapter;
     ListView memberList;
-    String url = "http://192.168.172.83:3000";
+    String url = "http://192.168.173.11:3000";
     String username;
 
     // Posts

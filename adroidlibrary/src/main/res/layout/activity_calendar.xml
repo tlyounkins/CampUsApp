@@ -49,7 +49,8 @@
         android:src="@android:drawable/sym_action_chat"
         android:layout_alignParentBottom="true"
         android:layout_toRightOf="@+id/reminderButtonCalendar"
-        android:layout_toEndOf="@+id/reminderButtonCalendar" />
+        android:layout_toEndOf="@+id/reminderButtonCalendar"
+        android:onClick="onMessagePress"/>
 
     <ImageButton
         android:layout_width="wrap_content"
