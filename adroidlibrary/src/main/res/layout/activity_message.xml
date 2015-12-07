@@ -47,7 +47,7 @@
             android:layout_toRightOf="@+id/imageButton"
             android:layout_toEndOf="@+id/imageButton"
             android:onClick="onCalendarPress"
-            android:src="@android:drawable/ic_menu_my_calendar" />
+            android:src="@android:drawable/ic_menu_my_calendar"/>
 
         <ImageButton
             android:layout_width="wrap_content"
