@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -21,33 +20,42 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Calendar;
 import java.util.HashMap;
 
-public class calendarActivity extends AppCompatActivity {
+public class MessageActivity extends AppCompatActivity {
     int id = 0;
     String username;
-    String url = "http://campus-app.herokuapp.com";
-
-
+    String url = "http://192.168.173.11:3000";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTitle("Messages");
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_calendar);
-
-        // Check for extras
-        Bundle extras = getIntent().getExtras();
-        if (extras != null){
-            id = extras.getInt("id");
-            username = extras.getString("username");
-        }
+        setContentView(R.layout.activity_message);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_dashboard, menu);
-        return true;
+
+    public void onDashboardPress(View v){
+        // Change view to Profile
+        Intent intent = new Intent(MessageActivity.this, Dashboard.class);
+        intent.putExtra("id", id);
+        intent.putExtra("username", username);
+        startActivity(intent);
+    }
+
+    //calender
+    public void onCalendarPress(View v){
+        // Change view to Calendar
+        Intent intent = new Intent(MessageActivity.this, calendarActivity.class);
+        intent.putExtra("id", id);
+        intent.putExtra("username", username);
+        startActivity(intent);
+    }
+    public void onProfilePress(View v){
+            // Change view to Profile
+            Intent intent = new Intent(MessageActivity.this, ProfileActivity.class);
+            intent.putExtra("id", id);
+            intent.putExtra("username", username);
+            startActivity(intent);
     }
 
     @Override
@@ -59,7 +67,7 @@ public class calendarActivity extends AppCompatActivity {
 
         if (item_id == R.id.action_Clubs){
             // Start Group Activity
-            Intent intent = new Intent(calendarActivity.this, GroupActivity.class);
+            Intent intent = new Intent(MessageActivity.this, GroupActivity.class);
             intent.putExtra("id", id);
             intent.putExtra("username", username);
             startActivity(intent);
@@ -68,7 +76,7 @@ public class calendarActivity extends AppCompatActivity {
 
         if(item_id == R.id.action_search){
             //start list of all users
-            Intent intent = new Intent(calendarActivity.this, FriendActivity.class);
+            Intent intent = new Intent(MessageActivity.this, FriendActivity.class);
             intent.putExtra("id", id);
             intent.putExtra("username", username);
             startActivity(intent);
@@ -77,7 +85,7 @@ public class calendarActivity extends AppCompatActivity {
 
         if(item_id == R.id.action_Account){
             // Start edit activity
-            Intent intent = new Intent(calendarActivity.this, EditActivity.class);
+            Intent intent = new Intent(MessageActivity.this, EditActivity.class);
             intent.putExtra("id", id);
             intent.putExtra("username", username);
             startActivity(intent);
@@ -88,7 +96,7 @@ public class calendarActivity extends AppCompatActivity {
             // Check if user is logged in
             if(id != 0) {
                 // Create post dialog pop up
-                final Dialog postDialog = new Dialog(calendarActivity.this);
+                final Dialog postDialog = new Dialog(MessageActivity.this);
 
                 // Set dialog text
                 postDialog.setContentView(R.layout.dialog_post);
@@ -134,7 +142,7 @@ public class calendarActivity extends AppCompatActivity {
                         });
 
                         // Add Request to Queue
-                        Singleton.getInstance(calendarActivity.this).addToRequestQueue(postRequest);
+                        Singleton.getInstance(MessageActivity.this).addToRequestQueue(postRequest);
 
                         postDialog.dismiss();
                     }
@@ -152,27 +160,4 @@ public class calendarActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void onMessagePress(View v){
-        // Change view to Calendar
-        Intent intent = new Intent(calendarActivity.this, MessageActivity.class);
-        intent.putExtra("id", id);
-        intent.putExtra("username", username);
-        startActivity(intent);
-    }
-
-    public void onDashboardPress(View v){
-        // Change view to Dashboard
-        Intent intent = new Intent(calendarActivity.this, Dashboard.class);
-        intent.putExtra("id", id);
-        intent.putExtra("username", username);
-        startActivity(intent);
-    }
-
-    public void onProfilePressCalendar(View v){
-        // Change view to Profile
-        Intent intent = new Intent(calendarActivity.this, ProfileActivity.class);
-        intent.putExtra("id", id);
-        intent.putExtra("username", username);
-        startActivity(intent);
-    }
 }
