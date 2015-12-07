@@ -31,7 +31,7 @@ public class EventActivity extends AppCompatActivity {
     int id, group_id;
     String username;
 
-    String url = "http://192.168.173.11:3000";
+    String url = "http://campus-app.herokuapp.com";
 
     // Events
     List<Map<String, String>> events = new ArrayList<>();

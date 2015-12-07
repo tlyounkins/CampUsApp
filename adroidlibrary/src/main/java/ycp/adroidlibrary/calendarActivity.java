@@ -27,7 +27,7 @@ import java.util.HashMap;
 public class calendarActivity extends AppCompatActivity {
     int id = 0;
     String username;
-    String url = "http://192.168.173.11:3000";
+    String url = "http://campus-app.herokuapp.com";
 
 
     @Override

@@ -147,6 +147,20 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/registerMajor" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="School"
+                android:id="@+id/registerSchoolText" />
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/registerSchool"
+                android:spinnerMode="dropdown"
+                android:entries="@array/schools"/>
+
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

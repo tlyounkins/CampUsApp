@@ -9,28 +9,67 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import Model.Message;
 
 public class MessageActivity extends AppCompatActivity {
     int id = 0;
     String username;
-    String url = "http://192.168.173.11:3000";
+    String url = "http://campus-app.herokuapp.com";
+
+    // Groups
+    List<Map<String, String>> messages = new ArrayList<>();
+    SimpleAdapter messageAdapter;
+    ListView messageList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         setTitle("Messages");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message);
+
+        //creates message header
+        TextView messageHeader = new TextView(MessageActivity.this);
+        messageHeader.setText("Messages");
+
+        //creates message list and adds them to the list
+        messageList = (ListView) findViewById(R.id.messageList);
+        messageAdapter= new SimpleAdapter(this, messages, android.R.layout.simple_list_item_2,
+                new String[] {"Sender", "Body"},
+                new int[] {android.R.id.text1, android.R.id.text2});
+        messageList.setAdapter(messageAdapter);
+        messageList.addHeaderView(messageHeader);
+
+        // Check for extras
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            id = extras.getInt("id");
+            username = extras.getString("username");
+        }
+
+        //function call
+        getMessageList();
     }
 
 
@@ -158,6 +197,98 @@ public class MessageActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void getMessageList(){
+        // Get list of all groups
+        JsonArrayRequest fieldsRequest1 = new JsonArrayRequest(url+"/private_messages/"+Integer.toString(id)+".json", new Response.Listener<JSONArray>(){
+            @Override
+            public void onResponse(JSONArray response){
+                // Set the Text Fields to Acquired Information
+                for (int i = 0; i < response.length(); i++){
+                    try{
+                        JSONObject obj = response.getJSONObject(i);
+                        Map<String, String> datum = new HashMap<>(2);
+                        datum.put("Sender", obj.get("sender_id").toString());
+                        datum.put("Body", obj.get("content").toString());
+                        messages.add(datum);
+                    } catch(JSONException e){
+                        e.printStackTrace();
+                    }
+                }
+                messageAdapter.notifyDataSetChanged();
+            }
+        },new Response.ErrorListener(){
+            @Override
+            public void onErrorResponse(VolleyError e){
+                // Error communicating with server, print it
+                VolleyLog.e("Error: " + e.getMessage());
+            }
+        });
+
+        // Add Request to Queue
+        Singleton.getInstance(this).addToRequestQueue(fieldsRequest1);
+
+    }
+
+    public void onSendMessagePress(View v){
+        // Create post dialog pop up
+        final Dialog messageDialog = new Dialog(MessageActivity.this);
+
+        // Set dialog text
+        messageDialog.setContentView(R.layout.dialog_message);
+        messageDialog.setTitle("Send New Message");
+
+        // Find button, text
+        Button message_submit = (Button) messageDialog.findViewById(R.id.dMessageSendButton);
+        final EditText message_text = (EditText) messageDialog.findViewById(R.id.dMessageBody);
+        final EditText recipient_text = (EditText) messageDialog.findViewById(R.id.dMessageRecipient);
+
+        message_submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                HashMap<String,String>  params = new HashMap<>();
+                params.put("content",   message_text.getText().toString());
+                params.put("recipient", recipient_text.getText().toString());
+
+                JsonObjectRequest messageRequest = new JsonObjectRequest(Request.Method.POST, url + "/private_messages/"+ Integer.toString(id)+ ".json", new JSONObject(params), new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            if (response.get("success").toString().equals("true")) {
+                                // Display Successful message
+                                Toast toast = Toast.makeText(getApplicationContext(), "Message Sent", Toast.LENGTH_LONG);
+                                toast.setGravity(Gravity.CENTER, 0, 0);
+                                toast.show();
+                            } else {
+                                // Failure to Register User
+                                Toast toast = Toast.makeText(getApplicationContext(), "Error Sending Message.", Toast.LENGTH_LONG);
+                                toast.setGravity(Gravity.CENTER, 0, 0);
+                                toast.show();
+                            }
+
+                        } catch (JSONException e) {
+                            // There was an Error, print it
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //error!
+                        VolleyLog.e("Error: " + error.getMessage());
+                    }
+                });
+
+                // Add Request to Queue
+                Singleton.getInstance(MessageActivity.this).addToRequestQueue(messageRequest);
+
+                messageDialog.dismiss();
+            }
+        });
+
+        // Create dialog
+        messageDialog.show();
     }
 
 }
