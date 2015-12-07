@@ -9,28 +9,66 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import Model.Message;
 
 public class MessageActivity extends AppCompatActivity {
     int id = 0;
     String username;
     String url = "http://192.168.173.11:3000";
+
+    // Groups
+    List<Map<String, String>> messages = new ArrayList<>();
+    SimpleAdapter messageAdapter;
+    ListView messageList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         setTitle("Messages");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message);
+
+        //creates message header
+        TextView messageHeader = new TextView(MessageActivity.this);
+        messageHeader.setText("Messages");
+
+        //creates message list and adds them to the list
+        messageList = (ListView) findViewById(R.id.messageList);
+        messageAdapter= new SimpleAdapter(this, messages, android.R.layout.simple_list_item_2,
+                new String[] {"Sender", "Body"},
+                new int[] {android.R.id.text1, android.R.id.text2});
+        messageList.setAdapter(messageAdapter);
+        messageList.addHeaderView(messageHeader);
+
+        // Check for extras
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            id = extras.getInt("id");
+            username = extras.getString("username");
+        }
+
+        //function call
     }
 
 
@@ -158,6 +196,38 @@ public class MessageActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void getMessageList(){
+        // Get list of all groups
+        JsonArrayRequest fieldsRequest1 = new JsonArrayRequest(url+"/groups/getAll.json", new Response.Listener<JSONArray>(){
+            @Override
+            public void onResponse(JSONArray response){
+                // Set the Text Fields to Acquired Information
+                for (int i = 0; i < response.length(); i++){
+                    try{
+                        JSONObject obj = response.getJSONObject(i);
+                        Map<String, String> datum = new HashMap<>(2);
+                        datum.put("Name", obj.get("groupname").toString());
+                        datum.put("Description", obj.get("description").toString());
+                        messages.add(datum);
+                    } catch(JSONException e){
+                        e.printStackTrace();
+                    }
+                }
+                messageAdapter.notifyDataSetChanged();
+            }
+        },new Response.ErrorListener(){
+            @Override
+            public void onErrorResponse(VolleyError e){
+                // Error communicating with server, print it
+                VolleyLog.e("Error: " + e.getMessage());
+            }
+        });
+
+        // Add Request to Queue
+        Singleton.getInstance(this).addToRequestQueue(fieldsRequest1);
+
     }
 
 }
