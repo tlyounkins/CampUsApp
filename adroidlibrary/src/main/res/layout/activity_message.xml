@@ -26,6 +26,7 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
+            android:onClick="onDashboardPress"
             android:src="@android:drawable/ic_input_get" />
 
         <ImageButton
