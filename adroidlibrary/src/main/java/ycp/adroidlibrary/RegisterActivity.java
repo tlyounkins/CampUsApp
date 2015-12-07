@@ -7,6 +7,8 @@ import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Response;
@@ -21,7 +23,7 @@ import java.util.HashMap;
 
 public class RegisterActivity extends AppCompatActivity {
     int id;
-    String url = "http://192.168.173.11:3000";
+    String url = "http://campus-app.herokuapp.com";
     EditText pass;
     EditText email;
     EditText confirm;
@@ -32,6 +34,8 @@ public class RegisterActivity extends AppCompatActivity {
     EditText major;
     EditText hometown;
     EditText gender;
+    TextView schoolText;
+    Spinner school;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +56,8 @@ public class RegisterActivity extends AppCompatActivity {
         major = (EditText) findViewById(R.id.registerMajor);
         hometown = (EditText) findViewById(R.id.registerHometown);
         gender = (EditText) findViewById(R.id.registerGender);
+        school = (Spinner) findViewById(R.id.registerSchool);
+        schoolText = (TextView) findViewById(R.id.registerSchoolText);
     }
 
     public void onRegisterClick(View v){
@@ -75,6 +81,13 @@ public class RegisterActivity extends AppCompatActivity {
         if(!email.getText().toString().contains("@")){
             email.setError("Please enter a valid email address");
             focusView = findViewById(R.id.registerEmail);
+            cancel = true;
+        }
+
+        // Check School has been selected
+        if(school.getItemAtPosition(school.getSelectedItemPosition()).toString().equals("Select A School")){
+            schoolText.setError("Please select a school");
+            focusView = findViewById(R.id.registerSchool);
             cancel = true;
         }
 
@@ -123,6 +136,7 @@ public class RegisterActivity extends AppCompatActivity {
             params.put("major", major.getText().toString());
             params.put("hometown", hometown.getText().toString());
             params.put("gender", gender.getText().toString());
+            params.put("school", school.getItemAtPosition(school.getSelectedItemPosition()).toString());
 
             // Send JSON request to server to add to database
             JsonObjectRequest passRequest = new JsonObjectRequest(url + "/users/new.json", new JSONObject(params), new Response.Listener<JSONObject>() {
