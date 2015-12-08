@@ -23,7 +23,8 @@ import java.util.HashMap;
 
 public class RegisterActivity extends AppCompatActivity {
     int id;
-    String url = "http://campus-app.herokuapp.com";
+    //String url = "http://campus-app.herokuapp.com";
+    String url = "http://192.168.172.72:3000";
     EditText pass;
     EditText email;
     EditText confirm;

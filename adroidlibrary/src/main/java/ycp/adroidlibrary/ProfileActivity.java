@@ -32,7 +32,8 @@ import java.util.HashMap;
 import java.util.List;
 
 public class ProfileActivity extends AppCompatActivity {
-    String url = "http://campus-app.herokuapp.com";
+    //String url = "http://campus-app.herokuapp.com";
+    String url = "http://192.168.172.72:3000";
     int id = 0;
     String logged_in_user;
     int other_id = 0;

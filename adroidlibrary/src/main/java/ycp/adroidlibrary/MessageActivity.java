@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -33,13 +35,15 @@ import java.util.Map;
 import Model.Message;
 
 public class MessageActivity extends AppCompatActivity {
-    int id = 0;
+    int user_id = 0;
     String username;
-    String url = "http://campus-app.herokuapp.com";
+    //String url = "http://campus-app.herokuapp.com";
+    String url = "http://192.168.172.72:3000";
 
-    // Groups
-    List<Map<String, String>> messages = new ArrayList<>();
-    SimpleAdapter messageAdapter;
+
+    // Senders
+    List<String> senders = new ArrayList<>();
+    ArrayAdapter messageAdapter;
     ListView messageList;
 
     @Override
@@ -55,28 +59,38 @@ public class MessageActivity extends AppCompatActivity {
 
         //creates message list and adds them to the list
         messageList = (ListView) findViewById(R.id.messageList);
-        messageAdapter= new SimpleAdapter(this, messages, android.R.layout.simple_list_item_2,
-                new String[] {"Sender", "Body"},
-                new int[] {android.R.id.text1, android.R.id.text2});
+        messageAdapter= new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, senders);
         messageList.setAdapter(messageAdapter);
         messageList.addHeaderView(messageHeader);
 
         // Check for extras
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            id = extras.getInt("id");
+            user_id = extras.getInt("id");
             username = extras.getString("username");
         }
 
         //function call
         getMessageList();
+
+        messageList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            // Get group id at position, start profile activity
+                Intent intent = new Intent(MessageActivity.this, ConversationActivity.class);
+                intent.putExtra("id", user_id);
+                intent.putExtra("username", username);
+                intent.putExtra("sender_username", messageList.getItemAtPosition(position).toString());
+                startActivity(intent);
+            }
+        });
     }
 
 
     public void onDashboardPress(View v){
         // Change view to Profile
         Intent intent = new Intent(MessageActivity.this, Dashboard.class);
-        intent.putExtra("id", id);
+        intent.putExtra("id", user_id);
         intent.putExtra("username", username);
         startActivity(intent);
     }
@@ -85,14 +99,14 @@ public class MessageActivity extends AppCompatActivity {
     public void onCalendarPress(View v){
         // Change view to Calendar
         Intent intent = new Intent(MessageActivity.this, calendarActivity.class);
-        intent.putExtra("id", id);
+        intent.putExtra("id", user_id);
         intent.putExtra("username", username);
         startActivity(intent);
     }
     public void onProfilePress(View v){
             // Change view to Profile
             Intent intent = new Intent(MessageActivity.this, ProfileActivity.class);
-            intent.putExtra("id", id);
+            intent.putExtra("id", user_id);
             intent.putExtra("username", username);
             startActivity(intent);
     }
@@ -107,7 +121,7 @@ public class MessageActivity extends AppCompatActivity {
         if (item_id == R.id.action_Clubs){
             // Start Group Activity
             Intent intent = new Intent(MessageActivity.this, GroupActivity.class);
-            intent.putExtra("id", id);
+            intent.putExtra("id", user_id);
             intent.putExtra("username", username);
             startActivity(intent);
             return true;
@@ -116,7 +130,7 @@ public class MessageActivity extends AppCompatActivity {
         if(item_id == R.id.action_search){
             //start list of all users
             Intent intent = new Intent(MessageActivity.this, FriendActivity.class);
-            intent.putExtra("id", id);
+            intent.putExtra("id", user_id);
             intent.putExtra("username", username);
             startActivity(intent);
             return true;
@@ -125,7 +139,7 @@ public class MessageActivity extends AppCompatActivity {
         if(item_id == R.id.action_Account){
             // Start edit activity
             Intent intent = new Intent(MessageActivity.this, EditActivity.class);
-            intent.putExtra("id", id);
+            intent.putExtra("id", user_id);
             intent.putExtra("username", username);
             startActivity(intent);
             return true;
@@ -133,7 +147,7 @@ public class MessageActivity extends AppCompatActivity {
 
         if(item_id == R.id.action_post){
             // Check if user is logged in
-            if(id != 0) {
+            if(user_id != 0) {
                 // Create post dialog pop up
                 final Dialog postDialog = new Dialog(MessageActivity.this);
 
@@ -151,7 +165,7 @@ public class MessageActivity extends AppCompatActivity {
                         HashMap<String,String> params = new HashMap<>();
                         params.put("content",   post_text.getText().toString());
 
-                        JsonObjectRequest postRequest = new JsonObjectRequest(Request.Method.POST, url + "/microposts/"+ Integer.toString(id)+ ".json", new JSONObject(params), new Response.Listener<JSONObject>() {
+                        JsonObjectRequest postRequest = new JsonObjectRequest(Request.Method.POST, url + "/microposts/"+ Integer.toString(user_id)+ ".json", new JSONObject(params), new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject response) {
                                 try {
@@ -201,17 +215,13 @@ public class MessageActivity extends AppCompatActivity {
 
     private void getMessageList(){
         // Get list of all groups
-        JsonArrayRequest fieldsRequest1 = new JsonArrayRequest(url+"/private_messages/"+Integer.toString(id)+".json", new Response.Listener<JSONArray>(){
+        JsonArrayRequest fieldsRequest1 = new JsonArrayRequest(url+"/private_messages/"+Integer.toString(user_id)+"/senders.json", new Response.Listener<JSONArray>(){
             @Override
             public void onResponse(JSONArray response){
                 // Set the Text Fields to Acquired Information
                 for (int i = 0; i < response.length(); i++){
                     try{
-                        JSONObject obj = response.getJSONObject(i);
-                        Map<String, String> datum = new HashMap<>(2);
-                        datum.put("Sender", obj.get("sender_id").toString());
-                        datum.put("Body", obj.get("content").toString());
-                        messages.add(datum);
+                        senders.add(response.getString(i));
                     } catch(JSONException e){
                         e.printStackTrace();
                     }
@@ -248,10 +258,10 @@ public class MessageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 HashMap<String,String>  params = new HashMap<>();
-                params.put("content",   message_text.getText().toString());
+                params.put("body",   message_text.getText().toString());
                 params.put("recipient", recipient_text.getText().toString());
 
-                JsonObjectRequest messageRequest = new JsonObjectRequest(Request.Method.POST, url + "/private_messages/"+ Integer.toString(id)+ ".json", new JSONObject(params), new Response.Listener<JSONObject>() {
+                JsonObjectRequest messageRequest = new JsonObjectRequest(Request.Method.POST, url + "/private_messages/"+ Integer.toString(user_id)+ ".json", new JSONObject(params), new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {

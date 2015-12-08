@@ -39,7 +39,8 @@ import java.util.List;
 import java.util.Map;
 
 public class GroupActivity extends AppCompatActivity {
-    String url = "http://campus-app.herokuapp.com";
+    //String url = "http://campus-app.herokuapp.com";
+    String url = "http://192.168.172.72:3000";
 
     int user_id;
     String username;
