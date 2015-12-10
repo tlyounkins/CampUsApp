@@ -23,27 +23,20 @@ import java.util.HashMap;
 
 public class RegisterActivity extends AppCompatActivity {
     int id;
-    //String url = "http://campus-app.herokuapp.com";
-    String url = "http://192.168.172.72:3000";
+    String url = "http://campus-app.herokuapp.com";
+    //String url = "http://192.168.172.72:3000";
     EditText pass;
     EditText email;
     EditText confirm;
     EditText username;
     EditText firstname;
     EditText lastname;
-    EditText bio;
-    EditText major;
-    EditText hometown;
-    EditText gender;
     TextView schoolText;
     Spinner school;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        //changing title of Activity
-        setTitle("Profile Registration");
 
         setContentView(R.layout.activity_register);
 
@@ -53,10 +46,6 @@ public class RegisterActivity extends AppCompatActivity {
         username = (EditText) findViewById(R.id.registerUserName);
         firstname = (EditText) findViewById(R.id.registerFirstName);
         lastname = (EditText) findViewById(R.id.registerLastName);
-        bio = (EditText) findViewById(R.id.registerBio);
-        major = (EditText) findViewById(R.id.registerMajor);
-        hometown = (EditText) findViewById(R.id.registerHometown);
-        gender = (EditText) findViewById(R.id.registerGender);
         school = (Spinner) findViewById(R.id.registerSchool);
         schoolText = (TextView) findViewById(R.id.registerSchoolText);
     }
@@ -133,10 +122,6 @@ public class RegisterActivity extends AppCompatActivity {
             params.put("password_confirmation", confirm.getText().toString());
             params.put("firstname", firstname.getText().toString());
             params.put("lastname", lastname.getText().toString());
-            params.put("bio", bio.getText().toString());
-            params.put("major", major.getText().toString());
-            params.put("hometown", hometown.getText().toString());
-            params.put("gender", gender.getText().toString());
             params.put("school", school.getItemAtPosition(school.getSelectedItemPosition()).toString());
 
             // Send JSON request to server to add to database

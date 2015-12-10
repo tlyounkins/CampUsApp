@@ -31,8 +31,8 @@ import java.util.HashMap;
 import java.util.List;
 
 public class FriendActivity extends AppCompatActivity {
-    //String url = "http://campus-app.herokuapp.com";
-    String url = "http://192.168.172.72:3000";
+    String url = "http://campus-app.herokuapp.com";
+    //String url = "http://192.168.172.72:3000";
     String username;
     int user_id = 0;
 

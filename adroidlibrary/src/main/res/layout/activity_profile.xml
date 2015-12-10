@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     android:orientation="vertical"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="ycp.adroidlibrary.ProfileActivity"
     android:background="#edeef8"
-    android:weightSum="1">
+    android:weightSum="1"
+    android:paddingLeft="0dp"
+    android:paddingTop="0dp">
 
     <LinearLayout
         android:orientation="horizontal"
@@ -164,53 +163,37 @@
         android:layout_weight="0.94" />
 
     <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:weightSum="1">
+        android:layout_alignParentBottom="true"
+        style="@android:style/ButtonBar">
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="57dp"
-            android:weightSum="1">
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/profileInboxButton"
+            android:src="@drawable/ic_message_black"
+            android:onClick="onMessagePress"
+            style="@android:style/Holo.Light.SegmentedButton"
+            android:layout_weight="1"/>
 
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@android:drawable/ic_input_get"
-                android:id="@+id/profileDashboardButton"
-                android:onClick="onDashboardPressProfile"
-                />
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_home_black"
+            android:id="@+id/profileDashboardButton"
+            android:onClick="onDashboardPressProfile"
+            style="@android:style/Holo.Light.SegmentedButton"
+            android:layout_weight="1" />
 
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/profileCalenderButton"
-                android:src="@android:drawable/ic_menu_my_calendar"
-                android:onClick="onCalenderPressProfile"
-                />
-
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/profileInboxButton"
-                android:src="@android:drawable/sym_action_chat"
-                android:onClick="onMessagePress"/>
-
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/profileNotificationButton"
-                android:src="@android:drawable/ic_popup_reminder" />
-
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/profileProfileButton"
-                android:src="@android:mipmap/sym_def_app_icon" />
-
-        </LinearLayout>
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/profileProfileButton"
+            android:src="@drawable/ic_person_black"
+            style="@android:style/Holo.Light.SegmentedButton"
+            android:layout_weight="1"/>
 
     </LinearLayout>
 

@@ -95,6 +95,7 @@ public class GroupProfileActivity extends AppCompatActivity {
                         public void onResponse(JSONObject response) {
                             try {
                                 int userId = Integer.parseInt(response.get("id").toString());
+                                intent.putExtra("id", user_id);
                                 intent.putExtra("other_id", userId);
                                 intent.putExtra("username", username);
                                 startActivity(intent);
