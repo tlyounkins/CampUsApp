@@ -30,8 +30,8 @@ import java.util.Map;
 public class EventActivity extends AppCompatActivity {
     int id, group_id;
     String username, school;
-    //String url = "http://campus-app.herokuapp.com";
-    String url = "http://192.168.172.105:3000";
+    String url = "http://campus-app.herokuapp.com";
+    //String url = "http://192.168.172.105:3000";
 
     // Events
     List<Map<String, String>> events = new ArrayList<>();

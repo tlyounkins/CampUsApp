@@ -32,8 +32,8 @@ import java.util.HashMap;
 import Model.User;
 
 public class EditActivity extends AppCompatActivity {
-    //String url = "http://campus-app.herokuapp.com";
-    String url = "http://192.168.172.105:3000";
+    String url = "http://campus-app.herokuapp.com";
+    //String url = "http://192.168.172.105:3000";
     int id;
     String logged_in_user, school;
     EditText hometown, major, bio, gender, firstname, lastname;

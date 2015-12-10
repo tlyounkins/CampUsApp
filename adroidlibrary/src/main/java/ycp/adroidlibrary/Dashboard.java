@@ -39,8 +39,8 @@ public class Dashboard extends AppCompatActivity {
     Button loginButton;
     TextView welcomeText;
     TextView postText;
-    //String url = "http://campus-app.herokuapp.com";
-    String url = "http://192.168.172.105:3000";
+    String url = "http://campus-app.herokuapp.com";
+    //String url = "http://192.168.172.105:3000";
     // Posts
     List<String> posts = new ArrayList<>();
     ArrayAdapter<String> postAdapter;
