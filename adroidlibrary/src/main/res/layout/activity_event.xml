@@ -9,17 +9,20 @@
     android:orientation="vertical"
     android:weightSum="1">
 
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="401dp"
+        android:id="@+id/eEventList"
+        android:layout_gravity="center_horizontal"
+        android:choiceMode="singleChoice"
+        android:layout_weight="0.78" />
+
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="New Event"
         android:onClick="onEventCreatePress"
-        android:id="@+id/eNewButton" />
-
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/eEventList"
-        android:layout_gravity="center_horizontal"
-        android:choiceMode="singleChoice" />
+        android:id="@+id/eNewButton"
+        style="@android:style/Holo.Light.SegmentedButton"
+        android:textStyle="bold" />
 </LinearLayout>

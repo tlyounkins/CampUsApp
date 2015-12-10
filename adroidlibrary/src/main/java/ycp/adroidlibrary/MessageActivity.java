@@ -86,7 +86,7 @@ public class MessageActivity extends AppCompatActivity {
         });
     }
 
-
+    //Function that goes to the Dashboard Activity
     public void onDashboardPress(View v){
         // Change view to Profile
         Intent intent = new Intent(MessageActivity.this, Dashboard.class);
@@ -95,14 +95,7 @@ public class MessageActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    //calender
-    public void onCalendarPress(View v){
-        // Change view to Calendar
-        Intent intent = new Intent(MessageActivity.this, calendarActivity.class);
-        intent.putExtra("id", user_id);
-        intent.putExtra("username", username);
-        startActivity(intent);
-    }
+    //Function that goes to the Profile Activity
     public void onProfilePress(View v){
             // Change view to Profile
             Intent intent = new Intent(MessageActivity.this, ProfileActivity.class);
@@ -111,6 +104,7 @@ public class MessageActivity extends AppCompatActivity {
             startActivity(intent);
     }
 
+    //Function that goes to the Group/Friend/Edit Activity or Posts a status update
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -213,6 +207,7 @@ public class MessageActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    //Gets a message thread
     private void getMessageList(){
         // Get list of all groups
         JsonArrayRequest fieldsRequest1 = new JsonArrayRequest(url+"/private_messages/"+Integer.toString(user_id)+"/senders.json", new Response.Listener<JSONArray>(){
@@ -241,6 +236,7 @@ public class MessageActivity extends AppCompatActivity {
 
     }
 
+    //Function that handles a message being sent
     public void onSendMessagePress(View v){
         // Create post dialog pop up
         final Dialog messageDialog = new Dialog(MessageActivity.this);

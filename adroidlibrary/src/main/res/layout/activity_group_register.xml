@@ -34,9 +34,11 @@
         android:id="@+id/gregisterDescription" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Register Group"
         android:id="@+id/gresgisterCreateButton"
-        android:onClick="onGroupRegisterPress"/>
+        android:onClick="onGroupRegisterPress"
+        style="@android:style/Holo.Light.SegmentedButton"
+        android:textStyle="bold" />
 </LinearLayout>

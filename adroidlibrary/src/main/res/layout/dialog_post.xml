@@ -16,8 +16,10 @@
         android:id="@+id/dialogPostBody" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Submit Post"
-        android:id="@+id/dialogPostButton" />
+        android:id="@+id/dialogPostButton"
+        style="@android:style/Holo.Light.SegmentedButton"
+        android:textStyle="bold" />
 </LinearLayout>
