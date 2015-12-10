@@ -67,19 +67,24 @@
             android:layout_height="match_parent">
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Events"
                 android:onClick="onEventPress"
-                android:id="@+id/gEvents" />
+                android:id="@+id/gEvents"
+                style="@android:style/Holo.Light.SegmentedButton"
+                android:textStyle="bold" />
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Apply"
-                android:onClick="onApplyPress"
-                android:id="@+id/gProfileApply" />
         </LinearLayout>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Apply"
+            android:onClick="onApplyPress"
+            android:id="@+id/gProfileApply"
+            android:textStyle="bold"
+            style="@android:style/Holo.Light.SegmentedButton" />
 
     </LinearLayout>
 </ScrollView>

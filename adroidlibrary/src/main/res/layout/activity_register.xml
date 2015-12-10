@@ -121,7 +121,8 @@
                 android:text="Register"
                 android:id="@+id/registerDoneButton"
                 android:onClick="onRegisterClick"
-                style="@android:style/Holo.SegmentedButton" />
+                style="@android:style/Holo.SegmentedButton"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
