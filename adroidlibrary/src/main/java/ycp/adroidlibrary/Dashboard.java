@@ -35,12 +35,12 @@ import Model.Message;
 
 public class Dashboard extends AppCompatActivity {
     int id = 0;
-    String username = "";
+    String username, school;
     Button loginButton;
     TextView welcomeText;
     TextView postText;
-    String url = "http://campus-app.herokuapp.com";
-    //String url = "http://192.168.172.72:3000";
+    //String url = "http://campus-app.herokuapp.com";
+    String url = "http://192.168.172.105:3000";
     // Posts
     List<String> posts = new ArrayList<>();
     ArrayAdapter<String> postAdapter;
@@ -67,6 +67,7 @@ public class Dashboard extends AppCompatActivity {
         if (extras != null){
             id = extras.getInt("id");
             username = extras.getString("username");
+            school = extras.getString("school");
         }
 
         // If user is logged in, change button to log out/display name
@@ -101,6 +102,7 @@ public class Dashboard extends AppCompatActivity {
             Intent intent = new Intent(Dashboard.this, GroupActivity.class);
             intent.putExtra("id", id);
             intent.putExtra("username", username);
+            intent.putExtra("school", school);
             startActivity(intent);
             return true;
         }
@@ -110,6 +112,7 @@ public class Dashboard extends AppCompatActivity {
             Intent intent = new Intent(Dashboard.this, FriendActivity.class);
             intent.putExtra("id", id);
             intent.putExtra("username", username);
+            intent.putExtra("school", school);
             startActivity(intent);
             return true;
         }
@@ -119,6 +122,7 @@ public class Dashboard extends AppCompatActivity {
             Intent intent = new Intent(Dashboard.this, EditActivity.class);
             intent.putExtra("id", id);
             intent.putExtra("username", username);
+            intent.putExtra("school", school);
             startActivity(intent);
             return true;
         }
@@ -196,6 +200,7 @@ public class Dashboard extends AppCompatActivity {
         Intent intent = new Intent(Dashboard.this, MessageActivity.class);
         intent.putExtra("id", id);
         intent.putExtra("username", username);
+        intent.putExtra("school", school);
         startActivity(intent);
     }
 
@@ -205,6 +210,7 @@ public class Dashboard extends AppCompatActivity {
             Intent intent = new Intent(Dashboard.this, ProfileActivity.class);
             intent.putExtra("id", id);
             intent.putExtra("username", username);
+            intent.putExtra("school", school);
             startActivity(intent);
         } else{
             Toast toast = Toast.makeText(getApplicationContext(), "You must log in to view a profile", Toast.LENGTH_LONG);
@@ -282,6 +288,7 @@ public class Dashboard extends AppCompatActivity {
                             Intent intent = new Intent(Dashboard.this, Dashboard.class);
                             intent.putExtra("id", id);
                             intent.putExtra("username", username);
+                            intent.putExtra("school", school);
                             startActivity(intent);
                             finish();
                         }

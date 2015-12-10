@@ -24,11 +24,11 @@ import org.json.JSONObject;
 import java.util.HashMap;
 
 public class GroupRegisterActivity extends AppCompatActivity {
-    String url = "http://campus-app.herokuapp.com";
-    //String url = "http://192.168.172.72:3000";
+    //String url = "http://campus-app.herokuapp.com";
+    String url = "http://192.168.172.105:3000";
     EditText name, description;
     int id;
-    String username;
+    String username, school;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +47,7 @@ public class GroupRegisterActivity extends AppCompatActivity {
         if (extras != null){
             id = extras.getInt("id");
             username = extras.getString("username");
+            school = extras.getString("school");
         }
     }
 
@@ -69,6 +70,7 @@ public class GroupRegisterActivity extends AppCompatActivity {
             Intent intent = new Intent(GroupRegisterActivity.this, GroupActivity.class);
             intent.putExtra("id", id);
             intent.putExtra("username", username);
+            intent.putExtra("school", school);
             startActivity(intent);
             return true;
         }
@@ -78,6 +80,7 @@ public class GroupRegisterActivity extends AppCompatActivity {
             Intent intent = new Intent(GroupRegisterActivity.this, FriendActivity.class);
             intent.putExtra("id", id);
             intent.putExtra("username", username);
+            intent.putExtra("school", school);
             startActivity(intent);
             return true;
         }
@@ -87,6 +90,7 @@ public class GroupRegisterActivity extends AppCompatActivity {
             Intent intent = new Intent(GroupRegisterActivity.this, EditActivity.class);
             intent.putExtra("id", id);
             intent.putExtra("username", username);
+            intent.putExtra("school", school);
             startActivity(intent);
             return true;
         }
@@ -165,6 +169,7 @@ public class GroupRegisterActivity extends AppCompatActivity {
         HashMap<String, String> params = new HashMap<>();
         params.put("groupname", name.getText().toString());
         params.put("description", description.getText().toString());
+        params.put("school", school);
 
         // Send Parameters to Server
         // Send JSON request to server to add to database
@@ -173,19 +178,32 @@ public class GroupRegisterActivity extends AppCompatActivity {
             public void onResponse(JSONObject response) {
                 try {
                     if (response.get("success").toString().equals("true")) {
+                        JsonObjectRequest joinRequest = new JsonObjectRequest(Request.Method.GET, url+"/groups/"+response.get("group_id").toString()+"/join/" + Integer.toString(id)+".json", null, new Response.Listener<JSONObject>(){
+                            @Override
+                            public void onResponse(JSONObject response){
+                                    Intent intent = new Intent(GroupRegisterActivity.this, Dashboard.class);
+                                    intent.putExtra("id", id);
+                                    intent.putExtra("username", username);
+                                    intent.putExtra("school", school);
+                                    startActivity(intent);
+                                    finish();
+                            }
+                        },new Response.ErrorListener(){
+                            @Override
+                            public void onErrorResponse(VolleyError e){
+                                // Error communicating with server, print it
+                                VolleyLog.e("Error: " + e.getMessage());
+                            }
+                        });
+
+                        // Add Request to Queue
+                        Singleton.getInstance(GroupRegisterActivity.this).addToRequestQueue(joinRequest);
                         // Display Successful message
                         Toast toast = Toast.makeText(getApplicationContext(), "Successful Registration.", Toast.LENGTH_LONG);
                         toast.setGravity(Gravity.CENTER, 0, 0);
                         toast.show();
 
                         Notify.notify(GroupRegisterActivity.this, "Group" + name.getText().toString() + " created.", 1);
-
-                        // Bring user back to Dashboard
-                        Intent intent = new Intent(GroupRegisterActivity.this, Dashboard.class);
-                        intent.putExtra("id", id);
-                        intent.putExtra("username", username);
-                        startActivity(intent);
-                        finish();
                     } else {
                         // Failure to Register User
                         Toast toast = Toast.makeText(getApplicationContext(), "Error Registering.", Toast.LENGTH_LONG);

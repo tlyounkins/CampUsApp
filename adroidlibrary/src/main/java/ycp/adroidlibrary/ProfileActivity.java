@@ -32,10 +32,10 @@ import java.util.HashMap;
 import java.util.List;
 
 public class ProfileActivity extends AppCompatActivity {
-    String url = "http://campus-app.herokuapp.com";
-    //String url = "http://192.168.172.72:3000";
+    //String url = "http://campus-app.herokuapp.com";
+    String url = "http://192.168.172.105:3000";
     int id = 0;
-    String logged_in_user;
+    String logged_in_user, school;
     int other_id = 0;
 
     //user text views
@@ -87,6 +87,7 @@ public class ProfileActivity extends AppCompatActivity {
             id = extras.getInt("id");
             other_id = extras.getInt("other_id");
             logged_in_user = extras.getString("username");
+            school = extras.getString("school");
         }
 
         // Hide edit button if viewing other profile
@@ -188,6 +189,7 @@ public class ProfileActivity extends AppCompatActivity {
             Intent intent = new Intent(ProfileActivity.this, GroupActivity.class);
             intent.putExtra("id", id);
             intent.putExtra("username", logged_in_user);
+            intent.putExtra("school", school);
             startActivity(intent);
             return true;
         }
@@ -197,6 +199,7 @@ public class ProfileActivity extends AppCompatActivity {
             Intent intent = new Intent(ProfileActivity.this, FriendActivity.class);
             intent.putExtra("id", id);
             intent.putExtra("username", logged_in_user);
+            intent.putExtra("school", school);
             startActivity(intent);
             return true;
         }
@@ -206,6 +209,7 @@ public class ProfileActivity extends AppCompatActivity {
             Intent intent = new Intent(ProfileActivity.this, EditActivity.class);
             intent.putExtra("id", id);
             intent.putExtra("username", logged_in_user);
+            intent.putExtra("school", school);
             startActivity(intent);
             return true;
         }
@@ -282,6 +286,7 @@ public class ProfileActivity extends AppCompatActivity {
         Intent intent = new Intent(ProfileActivity.this,Dashboard.class);
         intent.putExtra("id", id);
         intent.putExtra("username", logged_in_user);
+        intent.putExtra("school", school);
         startActivity(intent);
     }
 
@@ -289,6 +294,7 @@ public class ProfileActivity extends AppCompatActivity {
         Intent intent = new Intent(ProfileActivity.this,calendarActivity.class);
         intent.putExtra("id", id);
         intent.putExtra("username", logged_in_user);
+        intent.putExtra("school", school);
         startActivity(intent);
     }
 
@@ -297,12 +303,14 @@ public class ProfileActivity extends AppCompatActivity {
         Intent intent = new Intent(ProfileActivity.this, MessageActivity.class);
         intent.putExtra("id", id);
         intent.putExtra("username", logged_in_user);
+        intent.putExtra("school", school);
         startActivity(intent);
     }
     public void onProfileEditPress(View v){
         Intent intent = new Intent(ProfileActivity.this, EditActivity.class);
         intent.putExtra("id", id);
         intent.putExtra("username", logged_in_user);
+        intent.putExtra("school", school);
         startActivity(intent);
     }
 
