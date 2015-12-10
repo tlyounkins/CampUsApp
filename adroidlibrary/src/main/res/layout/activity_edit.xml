@@ -106,11 +106,13 @@
                     android:id="@+id/editGender" />
 
         <Button
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Save Changes"
                     android:id="@+id/editConfirmButton"
-                    android:onClick="onConfirmPress"/>
+                    android:onClick="onConfirmPress"
+            style="@android:style/Holo.Light.SegmentedButton"
+            android:textStyle="bold" />
     </LinearLayout>
 
 </LinearLayout>
