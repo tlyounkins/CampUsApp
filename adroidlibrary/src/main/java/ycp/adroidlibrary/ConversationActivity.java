@@ -13,6 +13,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,7 +22,7 @@ import java.util.List;
 public class ConversationActivity extends AppCompatActivity {
 
     int id;
-    String username, sender_username;
+    String username, sender_username, school;
     //String url = "http://campus-app.herokuapp.com";
     String url = "http://192.168.172.105:3000";
     // Messages
@@ -49,6 +50,7 @@ public class ConversationActivity extends AppCompatActivity {
             id = extras.getInt("id");
             username = extras.getString("username");
             sender_username = extras.getString("sender_username");
+            school = extras.getString("school");
         }
 
         messageHeader.setText("Conversation with " + sender_username);
@@ -66,7 +68,8 @@ public class ConversationActivity extends AppCompatActivity {
                 // Set the Text Fields to Acquired Information
                 for (int i = 0; i < response.length(); i++){
                     try{
-                        messages.add(response.getString(i));
+                        JSONObject obj = response.getJSONObject(i);
+                        messages.add(obj.get("body").toString());
                     } catch(JSONException e){
                         e.printStackTrace();
                     }
