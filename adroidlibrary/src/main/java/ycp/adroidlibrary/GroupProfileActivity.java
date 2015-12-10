@@ -37,7 +37,8 @@ public class GroupProfileActivity extends AppCompatActivity {
     List<String> members = new ArrayList<>();
     ArrayAdapter<String> memberAdapter;
     ListView memberList;
-    String url = "http://campus-app.herokuapp.com";
+    //String url = "http://campus-app.herokuapp.com";
+    String url = "http://192.168.172.72:3000";
     String username;
 
     // Posts
@@ -94,7 +95,9 @@ public class GroupProfileActivity extends AppCompatActivity {
                         public void onResponse(JSONObject response) {
                             try {
                                 int userId = Integer.parseInt(response.get("id").toString());
+                                intent.putExtra("id", user_id);
                                 intent.putExtra("other_id", userId);
+                                intent.putExtra("username", username);
                                 startActivity(intent);
 
                             } catch (JSONException e) {

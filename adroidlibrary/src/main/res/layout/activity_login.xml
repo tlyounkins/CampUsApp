@@ -6,9 +6,25 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="ycp.adroidlibrary.LoginActivity"
-    android:background="#edeef8">
+    android:background="#edeef8"
+    >
 
     <!-- Login progress -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Welcome to"
+        android:id="@+id/loginWelcomeText" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Campus"
+        android:id="@+id/loginCampusText"
+        android:textSize="42dp" />
+
     <ProgressBar android:id="@+id/login_progress" style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:layout_marginBottom="8dp" android:visibility="gone" />
@@ -42,13 +58,13 @@
 
             </android.support.design.widget.TextInputLayout>
 
-            <Button android:id="@+id/email_sign_in_button" style="?android:textAppearanceSmall"
+            <Button android:id="@+id/email_sign_in_button" style="@android:style/Holo.Light.SegmentedButton"
                 android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:layout_marginTop="16dp" android:text="Sign In"
                 android:textStyle="bold" />
 
             <Button
-                style="?android:textAppearanceSmall"
+                style="@android:style/Holo.Light.SegmentedButton"
                 android:id="@+id/email_register_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -8,7 +8,8 @@
     tools:context="ycp.adroidlibrary.RegisterActivity"
     android:scrollIndicators="top|bottom"
     android:fillViewport="true"
-    android:background="#edeef8">
+    android:background="#edeef8"
+    >
 
         <LinearLayout
             android:orientation="vertical"
@@ -19,7 +20,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="User Name (Required)"
+                android:text="User Name"
                 android:id="@+id/registerUserText" />
 
             <EditText
@@ -27,13 +28,14 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
                 android:ems="10"
-                android:id="@+id/registerUserName" />
+                android:id="@+id/registerUserName"
+                style="@android:style/TextAppearance.Holo" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Email (Required)"
+                android:text="Email"
                 android:id="@+id/registerEmailText" />
 
             <EditText
@@ -48,7 +50,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Password (Required)"
+                android:text="Password"
                 android:id="@+id/registerPasswordText" />
 
             <EditText
@@ -63,7 +65,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Confrim Password (Required)"
+                android:text="Confrim Password"
                 android:id="@+id/registerConfirmText" />
 
             <EditText
@@ -103,54 +105,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Bio"
-                android:id="@+id/registerBioText" />
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/registerBio"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Hometown"
-                android:id="@+id/registerHometownText" />
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/registerHometown" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Gender"
-                android:id="@+id/registerGenderText" />
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/registerGender" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Major"
-                android:id="@+id/registerMajorText" />
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/registerMajor" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="School"
                 android:id="@+id/registerSchoolText" />
 
@@ -166,7 +120,8 @@
                 android:layout_height="wrap_content"
                 android:text="Register"
                 android:id="@+id/registerDoneButton"
-                android:onClick="onRegisterClick" />
+                android:onClick="onRegisterClick"
+                style="@android:style/Holo.SegmentedButton" />
 
         </LinearLayout>
 

@@ -40,7 +40,7 @@ public class Dashboard extends AppCompatActivity {
     TextView welcomeText;
     TextView postText;
     String url = "http://campus-app.herokuapp.com";
-
+    //String url = "http://192.168.172.72:3000";
     // Posts
     List<String> posts = new ArrayList<>();
     ArrayAdapter<String> postAdapter;
@@ -191,14 +191,6 @@ public class Dashboard extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void onCalendarPress(View v){
-        // Change view to Calendar
-        Intent intent = new Intent(Dashboard.this, calendarActivity.class);
-        intent.putExtra("id", id);
-        intent.putExtra("username", username);
-        startActivity(intent);
-    }
-
     public void onMessagePress(View v){
         // Change view to Calendar
         Intent intent = new Intent(Dashboard.this, MessageActivity.class);
@@ -274,8 +266,8 @@ public class Dashboard extends AppCompatActivity {
                             toast.setGravity(Gravity.CENTER, 0, 0);
                             toast.show();
 
-                            // Restart Activity
-                            Intent intent = new Intent(Dashboard.this, Dashboard.class);
+                            // Take user to login screen
+                            Intent intent = new Intent(Dashboard.this,LoginActivity.class);
                             startActivity(intent);
                             finish();
                         }

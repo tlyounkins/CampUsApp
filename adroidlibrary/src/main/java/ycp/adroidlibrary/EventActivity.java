@@ -30,7 +30,7 @@ import java.util.Map;
 public class EventActivity extends AppCompatActivity {
     int id, group_id;
     String username;
-
+    //String url = "http:////192.168.172.72:3000";
     String url = "http://campus-app.herokuapp.com";
 
     // Events

@@ -25,6 +25,7 @@ import java.util.HashMap;
 
 public class GroupRegisterActivity extends AppCompatActivity {
     String url = "http://campus-app.herokuapp.com";
+    //String url = "http://192.168.172.72:3000";
     EditText name, description;
     int id;
     String username;
