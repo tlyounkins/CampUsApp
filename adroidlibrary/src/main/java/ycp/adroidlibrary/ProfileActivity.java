@@ -47,7 +47,7 @@ public class ProfileActivity extends AppCompatActivity {
     ListView postList;
 
     //profile text views
-    ImageButton profileEditButton, addButton;
+    ImageButton profileEditButton, addButton, messageButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +72,7 @@ public class ProfileActivity extends AppCompatActivity {
         bio = (TextView) findViewById(R.id.profileBio);
         profileEditButton = (ImageButton) findViewById(R.id.profileEditButton);
         addButton = (ImageButton) findViewById(R.id.profileAddButton);
+        messageButton = (ImageButton) findViewById(R.id.profileMessageButton);
 
         age.setVisibility(View.INVISIBLE);
 
@@ -97,6 +98,7 @@ public class ProfileActivity extends AppCompatActivity {
             // Hide add friend button if viewing own profile, change to
             // create post button
             addButton.setImageResource(android.R.drawable.ic_menu_edit);
+            messageButton.setVisibility(View.GONE);
         }
 
 
