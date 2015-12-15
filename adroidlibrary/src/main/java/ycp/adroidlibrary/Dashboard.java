@@ -144,7 +144,7 @@ public class Dashboard extends AppCompatActivity {
                 post_submit.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        HashMap<String,String>  params = new HashMap<>();
+                    final HashMap<String,String>  params = new HashMap<>();
                         params.put("content",   post_text.getText().toString());
 
                         JsonObjectRequest postRequest = new JsonObjectRequest(Request.Method.POST, url + "/microposts/"+ Integer.toString(id)+ ".json", new JSONObject(params), new Response.Listener<JSONObject>() {
@@ -156,6 +156,8 @@ public class Dashboard extends AppCompatActivity {
                                         Toast toast = Toast.makeText(getApplicationContext(), "Post post: Post posted", Toast.LENGTH_LONG);
                                         toast.setGravity(Gravity.CENTER, 0, 0);
                                         toast.show();
+                                        postAdapter.add(params.get("content"));
+                                        postAdapter.notifyDataSetChanged();
                                     } else {
                                         // Failure to Register User
                                         Toast toast = Toast.makeText(getApplicationContext(), "Error Registering.", Toast.LENGTH_LONG);

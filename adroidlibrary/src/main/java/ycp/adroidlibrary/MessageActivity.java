@@ -260,7 +260,7 @@ public class MessageActivity extends AppCompatActivity {
         message_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                HashMap<String,String>  params = new HashMap<>();
+                final HashMap<String,String>  params = new HashMap<>();
                 params.put("body",   message_text.getText().toString());
                 params.put("recipient", recipient_text.getText().toString());
 
@@ -273,6 +273,7 @@ public class MessageActivity extends AppCompatActivity {
                                 Toast toast = Toast.makeText(getApplicationContext(), "Message Sent", Toast.LENGTH_LONG);
                                 toast.setGravity(Gravity.CENTER, 0, 0);
                                 toast.show();
+
                             } else {
                                 // Failure to Register User
                                 Toast toast = Toast.makeText(getApplicationContext(), "Error Sending Message.", Toast.LENGTH_LONG);
