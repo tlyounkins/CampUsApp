@@ -27,6 +27,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -36,10 +37,9 @@ import Model.Message;
 
 public class MessageActivity extends AppCompatActivity {
     int user_id = 0;
-    String username;
-    //String url = "http://campus-app.herokuapp.com";
-    String url = "http://192.168.172.72:3000";
-
+    String username, school;
+    String url = "http://campus-app.herokuapp.com";
+    //String url = "http://192.168.172.105:3000";
 
     // Senders
     List<String> senders = new ArrayList<>();
@@ -68,6 +68,7 @@ public class MessageActivity extends AppCompatActivity {
         if (extras != null) {
             user_id = extras.getInt("id");
             username = extras.getString("username");
+            school = extras.getString("school");
         }
 
         //function call
@@ -81,6 +82,7 @@ public class MessageActivity extends AppCompatActivity {
                 intent.putExtra("id", user_id);
                 intent.putExtra("username", username);
                 intent.putExtra("sender_username", messageList.getItemAtPosition(position).toString());
+                intent.putExtra("school", school);
                 startActivity(intent);
             }
         });
@@ -92,6 +94,7 @@ public class MessageActivity extends AppCompatActivity {
         Intent intent = new Intent(MessageActivity.this, Dashboard.class);
         intent.putExtra("id", user_id);
         intent.putExtra("username", username);
+        intent.putExtra("school", school);
         startActivity(intent);
     }
 
@@ -101,6 +104,7 @@ public class MessageActivity extends AppCompatActivity {
             Intent intent = new Intent(MessageActivity.this, ProfileActivity.class);
             intent.putExtra("id", user_id);
             intent.putExtra("username", username);
+        intent.putExtra("school", school);
             startActivity(intent);
     }
 
@@ -117,6 +121,7 @@ public class MessageActivity extends AppCompatActivity {
             Intent intent = new Intent(MessageActivity.this, GroupActivity.class);
             intent.putExtra("id", user_id);
             intent.putExtra("username", username);
+            intent.putExtra("school", school);
             startActivity(intent);
             return true;
         }
@@ -126,6 +131,7 @@ public class MessageActivity extends AppCompatActivity {
             Intent intent = new Intent(MessageActivity.this, FriendActivity.class);
             intent.putExtra("id", user_id);
             intent.putExtra("username", username);
+            intent.putExtra("school", school);
             startActivity(intent);
             return true;
         }
@@ -135,6 +141,7 @@ public class MessageActivity extends AppCompatActivity {
             Intent intent = new Intent(MessageActivity.this, EditActivity.class);
             intent.putExtra("id", user_id);
             intent.putExtra("username", username);
+            intent.putExtra("school", school);
             startActivity(intent);
             return true;
         }
@@ -253,7 +260,7 @@ public class MessageActivity extends AppCompatActivity {
         message_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                HashMap<String,String>  params = new HashMap<>();
+                final HashMap<String,String>  params = new HashMap<>();
                 params.put("body",   message_text.getText().toString());
                 params.put("recipient", recipient_text.getText().toString());
 
@@ -266,6 +273,7 @@ public class MessageActivity extends AppCompatActivity {
                                 Toast toast = Toast.makeText(getApplicationContext(), "Message Sent", Toast.LENGTH_LONG);
                                 toast.setGravity(Gravity.CENTER, 0, 0);
                                 toast.show();
+
                             } else {
                                 // Failure to Register User
                                 Toast toast = Toast.makeText(getApplicationContext(), "Error Sending Message.", Toast.LENGTH_LONG);

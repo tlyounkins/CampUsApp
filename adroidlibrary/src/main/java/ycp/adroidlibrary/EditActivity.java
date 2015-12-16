@@ -32,10 +32,10 @@ import java.util.HashMap;
 import Model.User;
 
 public class EditActivity extends AppCompatActivity {
-    //String url = "http://192.168.172.72:3000";
     String url = "http://campus-app.herokuapp.com";
+    //String url = "http://192.168.172.105:3000";
     int id;
-    String logged_in_user;
+    String logged_in_user, school;
     EditText hometown, major, bio, gender, firstname, lastname;
     View editView, progressView;
     TextView username;
@@ -64,6 +64,7 @@ public class EditActivity extends AppCompatActivity {
         if (extras != null){
             id = extras.getInt("id");
             logged_in_user = extras.getString("username");
+            school = extras.getString("school");
         }
 
         // Show a progress spinner
@@ -119,6 +120,7 @@ public class EditActivity extends AppCompatActivity {
             Intent intent = new Intent(EditActivity.this, GroupActivity.class);
             intent.putExtra("id", id);
             intent.putExtra("username", logged_in_user);
+            intent.putExtra("school", school);
             startActivity(intent);
             return true;
         }
@@ -128,6 +130,7 @@ public class EditActivity extends AppCompatActivity {
             Intent intent = new Intent(EditActivity.this, FriendActivity.class);
             intent.putExtra("id", id);
             intent.putExtra("username", logged_in_user);
+            intent.putExtra("school", school);
             startActivity(intent);
             return true;
         }
@@ -137,6 +140,7 @@ public class EditActivity extends AppCompatActivity {
             Intent intent = new Intent(EditActivity.this, EditActivity.class);
             intent.putExtra("id", id);
             intent.putExtra("username", logged_in_user);
+            intent.putExtra("school", school);
             startActivity(intent);
             return true;
         }
@@ -237,6 +241,7 @@ public class EditActivity extends AppCompatActivity {
                         Intent intent = new Intent(EditActivity.this, ProfileActivity.class);
                         intent.putExtra("id", id);
                         intent.putExtra("username", logged_in_user);
+                        intent.putExtra("school", school);
                         startActivity(intent);
                         finish();
                     } else {

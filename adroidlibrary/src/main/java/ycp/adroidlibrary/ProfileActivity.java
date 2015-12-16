@@ -33,9 +33,9 @@ import java.util.List;
 
 public class ProfileActivity extends AppCompatActivity {
     String url = "http://campus-app.herokuapp.com";
-    //String url = "http://192.168.172.72:3000";
+    //String url = "http://192.168.172.105:3000";
     int id = 0;
-    String logged_in_user;
+    String logged_in_user, school;
     int other_id = 0;
 
     //user text views
@@ -47,7 +47,7 @@ public class ProfileActivity extends AppCompatActivity {
     ListView postList;
 
     //profile text views
-    ImageButton profileEditButton, addButton;
+    ImageButton profileEditButton, addButton, messageButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +72,7 @@ public class ProfileActivity extends AppCompatActivity {
         bio = (TextView) findViewById(R.id.profileBio);
         profileEditButton = (ImageButton) findViewById(R.id.profileEditButton);
         addButton = (ImageButton) findViewById(R.id.profileAddButton);
+        messageButton = (ImageButton) findViewById(R.id.profileMessageButton);
 
         age.setVisibility(View.INVISIBLE);
 
@@ -87,6 +88,7 @@ public class ProfileActivity extends AppCompatActivity {
             id = extras.getInt("id");
             other_id = extras.getInt("other_id");
             logged_in_user = extras.getString("username");
+            school = extras.getString("school");
         }
 
         // Hide edit button if viewing other profile
@@ -96,6 +98,7 @@ public class ProfileActivity extends AppCompatActivity {
             // Hide add friend button if viewing own profile, change to
             // create post button
             addButton.setImageResource(android.R.drawable.ic_menu_edit);
+            messageButton.setVisibility(View.GONE);
         }
 
 
@@ -188,6 +191,7 @@ public class ProfileActivity extends AppCompatActivity {
             Intent intent = new Intent(ProfileActivity.this, GroupActivity.class);
             intent.putExtra("id", id);
             intent.putExtra("username", logged_in_user);
+            intent.putExtra("school", school);
             startActivity(intent);
             return true;
         }
@@ -197,6 +201,7 @@ public class ProfileActivity extends AppCompatActivity {
             Intent intent = new Intent(ProfileActivity.this, FriendActivity.class);
             intent.putExtra("id", id);
             intent.putExtra("username", logged_in_user);
+            intent.putExtra("school", school);
             startActivity(intent);
             return true;
         }
@@ -206,6 +211,7 @@ public class ProfileActivity extends AppCompatActivity {
             Intent intent = new Intent(ProfileActivity.this, EditActivity.class);
             intent.putExtra("id", id);
             intent.putExtra("username", logged_in_user);
+            intent.putExtra("school", school);
             startActivity(intent);
             return true;
         }
@@ -282,6 +288,7 @@ public class ProfileActivity extends AppCompatActivity {
         Intent intent = new Intent(ProfileActivity.this,Dashboard.class);
         intent.putExtra("id", id);
         intent.putExtra("username", logged_in_user);
+        intent.putExtra("school", school);
         startActivity(intent);
     }
 
@@ -289,6 +296,7 @@ public class ProfileActivity extends AppCompatActivity {
         Intent intent = new Intent(ProfileActivity.this,calendarActivity.class);
         intent.putExtra("id", id);
         intent.putExtra("username", logged_in_user);
+        intent.putExtra("school", school);
         startActivity(intent);
     }
 
@@ -297,12 +305,14 @@ public class ProfileActivity extends AppCompatActivity {
         Intent intent = new Intent(ProfileActivity.this, MessageActivity.class);
         intent.putExtra("id", id);
         intent.putExtra("username", logged_in_user);
+        intent.putExtra("school", school);
         startActivity(intent);
     }
     public void onProfileEditPress(View v){
         Intent intent = new Intent(ProfileActivity.this, EditActivity.class);
         intent.putExtra("id", id);
         intent.putExtra("username", logged_in_user);
+        intent.putExtra("school", school);
         startActivity(intent);
     }
 
@@ -442,7 +452,7 @@ public class ProfileActivity extends AppCompatActivity {
             post_submit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    HashMap<String,String>  params = new HashMap<>();
+                   final HashMap<String,String>  params = new HashMap<>();
                     params.put("content",   post_text.getText().toString());
 
                     JsonObjectRequest postRequest = new JsonObjectRequest(Request.Method.POST, url + "/microposts/"+ Integer.toString(id)+ ".json", new JSONObject(params), new Response.Listener<JSONObject>() {
@@ -454,6 +464,9 @@ public class ProfileActivity extends AppCompatActivity {
                                     Toast toast = Toast.makeText(getApplicationContext(), "Post post: Post posted", Toast.LENGTH_SHORT);
                                     toast.setGravity(Gravity.CENTER, 0, 0);
                                     toast.show();
+
+                                    postAdapter.add(params.get("content"));
+                                    postAdapter.notifyDataSetChanged();
                                 } else {
                                     // Failure to Post Message
                                     Toast toast = Toast.makeText(getApplicationContext(), "Error posting, try again later", Toast.LENGTH_SHORT);
@@ -484,6 +497,66 @@ public class ProfileActivity extends AppCompatActivity {
             // Create dialog
             postDialog.show();
         }
+    }
+
+    public void onProfileMessagePress(View v){
+        // Create post dialog pop up
+        final Dialog messageDialog = new Dialog(ProfileActivity.this);
+
+        // Set dialog text
+        messageDialog.setContentView(R.layout.dialog_message);
+        messageDialog.setTitle("Send New Message");
+
+        // Find button, text
+        Button message_submit = (Button) messageDialog.findViewById(R.id.dMessageSendButton);
+        final EditText message_text = (EditText) messageDialog.findViewById(R.id.dMessageBody);
+        final EditText recipient_text = (EditText) messageDialog.findViewById(R.id.dMessageRecipient);
+
+        message_submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                HashMap<String,String>  params = new HashMap<>();
+                params.put("body",   message_text.getText().toString());
+                params.put("recipient", recipient_text.getText().toString());
+
+                JsonObjectRequest messageRequest = new JsonObjectRequest(Request.Method.POST, url + "/private_messages/"+ Integer.toString(id) + ".json", new JSONObject(params), new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            if (response.get("success").toString().equals("true")) {
+                                // Display Successful message
+                                Toast toast = Toast.makeText(getApplicationContext(), "Message Sent", Toast.LENGTH_LONG);
+                                toast.setGravity(Gravity.CENTER, 0, 0);
+                                toast.show();
+                            } else {
+                                // Failure to Register User
+                                Toast toast = Toast.makeText(getApplicationContext(), "Error Sending Message.", Toast.LENGTH_LONG);
+                                toast.setGravity(Gravity.CENTER, 0, 0);
+                                toast.show();
+                            }
+
+                        } catch (JSONException e) {
+                            // There was an Error, print it
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //error!
+                        VolleyLog.e("Error: " + error.getMessage());
+                    }
+                });
+
+                // Add Request to Queue
+                Singleton.getInstance(ProfileActivity.this).addToRequestQueue(messageRequest);
+
+                messageDialog.dismiss();
+            }
+        });
+
+        // Create dialog
+        messageDialog.show();
     }
 
 

@@ -29,9 +29,9 @@ import java.util.Map;
 
 public class EventActivity extends AppCompatActivity {
     int id, group_id;
-    String username;
-    //String url = "http:////192.168.172.72:3000";
+    String username, school;
     String url = "http://campus-app.herokuapp.com";
+    //String url = "http://192.168.172.105:3000";
 
     // Events
     List<Map<String, String>> events = new ArrayList<>();
@@ -52,6 +52,7 @@ public class EventActivity extends AppCompatActivity {
             id = extras.getInt("id");
             group_id = extras.getInt("group_id");
             username = extras.getString("username");
+            school = extras.getString("school");
         }
 
         eventList = (ListView) findViewById(R.id.eEventList);

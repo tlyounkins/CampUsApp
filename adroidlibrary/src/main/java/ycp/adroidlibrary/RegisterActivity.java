@@ -24,7 +24,7 @@ import java.util.HashMap;
 public class RegisterActivity extends AppCompatActivity {
     int id;
     String url = "http://campus-app.herokuapp.com";
-    //String url = "http://192.168.172.72:3000";
+    //String url = "http://192.168.172.105:3000";
     EditText pass;
     EditText email;
     EditText confirm;
@@ -137,7 +137,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                             Notify.notify(RegisterActivity.this, "User " + username.getText().toString() + " created.", 1);
                             // Bring user back to Dashboard
-                            Intent intent = new Intent(RegisterActivity.this, Dashboard.class);
+                            Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                             startActivity(intent);
                             finish();
                         } else {

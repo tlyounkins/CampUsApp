@@ -32,8 +32,8 @@ import java.util.List;
 
 public class FriendActivity extends AppCompatActivity {
     String url = "http://campus-app.herokuapp.com";
-    //String url = "http://192.168.172.72:3000";
-    String username;
+    //String url = "http://192.168.172.105:3000";
+    String username, school;
     int user_id = 0;
 
     // Posts
@@ -60,17 +60,38 @@ public class FriendActivity extends AppCompatActivity {
         if (extras != null) {
             user_id = extras.getInt("id");
             username = extras.getString("username");
+            school = extras.getString("school");
         }
         userList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if(user_id != 0) {
                     // Get group id at position, start profile activity
-                    Intent intent = new Intent(FriendActivity.this, ProfileActivity.class);
-                    intent.putExtra("id", user_id);
-                    intent.putExtra("other_id", position + 1);
-                    intent.putExtra("username", username);
-                    startActivity(intent);
+                    // Get ID from server
+                    JsonObjectRequest idRequest = new JsonObjectRequest(Request.Method.GET, url + "/users/findId/" + userList.getItemAtPosition(position).toString() + ".json", null, new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            try {
+                                int userId = Integer.parseInt(response.get("id").toString());
+                                Intent intent = new Intent(FriendActivity.this, ProfileActivity.class);
+                                intent.putExtra("id", user_id);
+                                intent.putExtra("other_id", userId);
+                                intent.putExtra("username", username);
+                                intent.putExtra("school", school);
+                                startActivity(intent);
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError e) {
+                            VolleyLog.e("Error: " + e.getMessage());
+                        }
+                    });
+
+                    Singleton.getInstance(getApplicationContext()).addToRequestQueue(idRequest);
                 }else{
                     Toast toast = Toast.makeText(getApplicationContext(), "You must log in to view a profile", Toast.LENGTH_LONG);
                     toast.setGravity(Gravity.CENTER, 0, 0);
@@ -100,6 +121,7 @@ public class FriendActivity extends AppCompatActivity {
             Intent intent = new Intent(FriendActivity.this, GroupActivity.class);
             intent.putExtra("id", user_id);
             intent.putExtra("username", username);
+            intent.putExtra("school", school);
             startActivity(intent);
             return true;
         }
@@ -109,6 +131,7 @@ public class FriendActivity extends AppCompatActivity {
             Intent intent = new Intent(FriendActivity.this, FriendActivity.class);
             intent.putExtra("id", user_id);
             intent.putExtra("username", username);
+            intent.putExtra("school", school);
             startActivity(intent);
             return true;
         }
@@ -118,6 +141,7 @@ public class FriendActivity extends AppCompatActivity {
             Intent intent = new Intent(FriendActivity.this, EditActivity.class);
             intent.putExtra("id", user_id);
             intent.putExtra("username", username);
+            intent.putExtra("school", school);
             startActivity(intent);
             return true;
         }
@@ -200,7 +224,9 @@ public class FriendActivity extends AppCompatActivity {
                 for (int i = 0; i < response.length(); i++){
                     try{
                         JSONObject obj = response.getJSONObject(i);
-                        users.add(obj.get("username").toString());
+                        if(school.equals(obj.get("school").toString())) {
+                            users.add(obj.get("username").toString());
+                        }
                     } catch(JSONException e){
                         e.printStackTrace();
                     }

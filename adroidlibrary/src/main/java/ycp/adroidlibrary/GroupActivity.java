@@ -32,6 +32,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,10 +41,10 @@ import java.util.Map;
 
 public class GroupActivity extends AppCompatActivity {
     String url = "http://campus-app.herokuapp.com";
-    //String url = "http://192.168.172.72:3000";
+    //String url = "http://192.168.172.105:3000";
 
     int user_id;
-    String username;
+    String username, school;
 
     // Groups
     List<Map<String, String>>groups = new ArrayList<>();
@@ -74,17 +75,41 @@ public class GroupActivity extends AppCompatActivity {
         if (extras != null) {
             user_id = extras.getInt("id");
             username = extras.getString("username");
+            school = extras.getString("school");
         }
 
         groupList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (user_id != 0) {
-                    // Get group id at position, start profile activity
-                    Intent intent = new Intent(GroupActivity.this, GroupProfileActivity.class);
-                    intent.putExtra("id", user_id);
-                    intent.putExtra("group_id", position);
-                    startActivity(intent);
+                    // Get ID from server
+                    Map<String, String> obj =  groups.get(position-1);
+                    obj.put("Name", obj.get("Name").replaceAll(" ","_"));
+                    JsonObjectRequest idRequest = new JsonObjectRequest(Request.Method.GET, url + "/groups/findId/" + obj.get("Name") + ".json", null, new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            try {
+                                int group_id = Integer.parseInt(response.get("id").toString());
+                                // Get group id at position, start profile activity
+                                Intent intent = new Intent(GroupActivity.this, GroupProfileActivity.class);
+                                intent.putExtra("id", user_id);
+                                intent.putExtra("school", school);
+                                intent.putExtra("username", username);
+                                intent.putExtra("group_id", group_id);
+                                startActivity(intent);
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError e) {
+                            VolleyLog.e("Error: " + e.getMessage());
+                        }
+                    });
+
+                    Singleton.getInstance(getApplicationContext()).addToRequestQueue(idRequest);
                 } else {
                     Toast toast = Toast.makeText(getApplicationContext(), "You must log in to view a group profile", Toast.LENGTH_LONG);
                     toast.setGravity(Gravity.CENTER, 0, 0);
@@ -116,6 +141,7 @@ public class GroupActivity extends AppCompatActivity {
             Intent intent = new Intent(GroupActivity.this, GroupActivity.class);
             intent.putExtra("id", user_id);
             intent.putExtra("username", username);
+            intent.putExtra("school", school);
             startActivity(intent);
             return true;
         }
@@ -125,6 +151,7 @@ public class GroupActivity extends AppCompatActivity {
             Intent intent = new Intent(GroupActivity.this, FriendActivity.class);
             intent.putExtra("id", user_id);
             intent.putExtra("username", username);
+            intent.putExtra("school", school);
             startActivity(intent);
             return true;
         }
@@ -134,6 +161,7 @@ public class GroupActivity extends AppCompatActivity {
             Intent intent = new Intent(GroupActivity.this, EditActivity.class);
             intent.putExtra("id", user_id);
             intent.putExtra("username", username);
+            intent.putExtra("school", school);
             startActivity(intent);
             return true;
         }
@@ -211,12 +239,15 @@ public class GroupActivity extends AppCompatActivity {
             Intent intent = new Intent(GroupActivity.this, GroupRegisterActivity.class);
             intent.putExtra("id", user_id);
             intent.putExtra("username", username);
+            intent.putExtra("school", school);
             startActivity(intent);
         } else{
             Toast toast = Toast.makeText(getApplicationContext(), "You must log in to create a group", Toast.LENGTH_LONG);
             toast.setGravity(Gravity.CENTER, 0, 0);
             toast.show();
         }
+        //may have to change
+        groupAdapter.notifyDataSetChanged();
     }
 
 
@@ -230,9 +261,11 @@ public class GroupActivity extends AppCompatActivity {
                     try{
                         JSONObject obj = response.getJSONObject(i);
                         Map<String, String> datum = new HashMap<>(2);
-                        datum.put("Name", obj.get("groupname").toString());
-                        datum.put("Description", obj.get("description").toString());
-                        groups.add(datum);
+                        if(school.equals(obj.get("school").toString())) {
+                            datum.put("Name", obj.get("groupname").toString());
+                            datum.put("Description", obj.get("description").toString());
+                            groups.add(datum);
+                        }
                     } catch(JSONException e){
                         e.printStackTrace();
                     }

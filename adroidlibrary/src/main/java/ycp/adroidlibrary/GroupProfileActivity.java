@@ -37,9 +37,9 @@ public class GroupProfileActivity extends AppCompatActivity {
     List<String> members = new ArrayList<>();
     ArrayAdapter<String> memberAdapter;
     ListView memberList;
-    //String url = "http://campus-app.herokuapp.com";
-    String url = "http://192.168.172.72:3000";
-    String username;
+    String url = "http://campus-app.herokuapp.com";
+    //String url = "http://192.168.172.105:3000";
+    String username, school;
 
     // Posts
     List<String> posts = new ArrayList<>();
@@ -79,6 +79,7 @@ public class GroupProfileActivity extends AppCompatActivity {
             user_id = extras.getInt("id");
             group_id = extras.getInt("group_id");
             username = extras.getString("username");
+            school = extras.getString("school");
         }
 
        // When an item is clicked, take the user to that profile
@@ -89,6 +90,7 @@ public class GroupProfileActivity extends AppCompatActivity {
                     final Intent intent = new Intent(GroupProfileActivity.this, ProfileActivity.class);
                     intent.putExtra("id", user_id);
                     intent.putExtra("username", username);
+                    intent.putExtra("school", school);
                     // Get ID from server
                     JsonObjectRequest idRequest = new JsonObjectRequest(Request.Method.GET, url + "/users/findId/" + name + ".json", null, new Response.Listener<JSONObject>() {
                         @Override
@@ -98,6 +100,7 @@ public class GroupProfileActivity extends AppCompatActivity {
                                 intent.putExtra("id", user_id);
                                 intent.putExtra("other_id", userId);
                                 intent.putExtra("username", username);
+                                intent.putExtra("school", school);
                                 startActivity(intent);
 
                             } catch (JSONException e) {
@@ -209,6 +212,7 @@ public class GroupProfileActivity extends AppCompatActivity {
             Intent intent = new Intent(GroupProfileActivity.this, GroupActivity.class);
             intent.putExtra("id", user_id);
             intent.putExtra("username", username);
+            intent.putExtra("school", school);
             startActivity(intent);
             return true;
         }
@@ -218,6 +222,7 @@ public class GroupProfileActivity extends AppCompatActivity {
             Intent intent = new Intent(GroupProfileActivity.this, FriendActivity.class);
             intent.putExtra("id", user_id);
             intent.putExtra("username", username);
+            intent.putExtra("school", school);
             startActivity(intent);
             return true;
         }
@@ -227,6 +232,7 @@ public class GroupProfileActivity extends AppCompatActivity {
             Intent intent = new Intent(GroupProfileActivity.this, EditActivity.class);
             intent.putExtra("id", user_id);
             intent.putExtra("username", username);
+            intent.putExtra("school", school);
             startActivity(intent);
             return true;
         }
@@ -248,7 +254,7 @@ public class GroupProfileActivity extends AppCompatActivity {
                 post_submit.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        HashMap<String,String>  params = new HashMap<>();
+                       final HashMap<String,String>  params = new HashMap<>();
                         params.put("content",   post_text.getText().toString());
 
                         JsonObjectRequest postRequest = new JsonObjectRequest(Request.Method.POST, url + "/group_microposts/"+ Integer.toString(group_id)+ ".json", new JSONObject(params), new Response.Listener<JSONObject>() {
@@ -260,6 +266,9 @@ public class GroupProfileActivity extends AppCompatActivity {
                                         Toast toast = Toast.makeText(getApplicationContext(), "Post post: Post posted", Toast.LENGTH_LONG);
                                         toast.setGravity(Gravity.CENTER, 0, 0);
                                         toast.show();
+
+                                        postAdapter.add(params.get("content"));
+                                        postAdapter.notifyDataSetChanged();
                                     } else {
                                         // Failure to Register User
                                         Toast toast = Toast.makeText(getApplicationContext(), "Error Posting.", Toast.LENGTH_LONG);
@@ -304,6 +313,7 @@ public class GroupProfileActivity extends AppCompatActivity {
         intent.putExtra("id", user_id);
         intent.putExtra("group_id", group_id);
         intent.putExtra("username", username);
+        intent.putExtra("school", school);
         startActivity(intent);
     }
 
@@ -312,7 +322,7 @@ public class GroupProfileActivity extends AppCompatActivity {
         if(user_id != 0){
 
             // Send JsonRequest to get fields
-            JsonObjectRequest fieldsRequest = new JsonObjectRequest(Request.Method.GET, url+"/groups/"+Integer.toString(group_id)+"/join/" + Integer.toString(user_id)+".json", null, new Response.Listener<JSONObject>(){
+            JsonObjectRequest joinRequest = new JsonObjectRequest(Request.Method.GET, url+"/groups/"+Integer.toString(group_id)+"/join/" + Integer.toString(user_id)+".json", null, new Response.Listener<JSONObject>(){
                 @Override
                 public void onResponse(JSONObject response){
                     try {
@@ -341,7 +351,7 @@ public class GroupProfileActivity extends AppCompatActivity {
             });
 
             // Add Request to Queue
-            Singleton.getInstance(this).addToRequestQueue(fieldsRequest);
+            Singleton.getInstance(this).addToRequestQueue(joinRequest);
         } else{
             // Display Error Message
             Toast toast = Toast.makeText(getApplicationContext(), "You must be logged in to join a group", Toast.LENGTH_LONG);
