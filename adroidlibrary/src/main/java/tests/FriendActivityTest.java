@@ -9,7 +9,7 @@ import ycp.adroidlibrary.R;
 /**
  * Created by Juan on 12/18/2015.
  */
-public class FriendActivityTest  extends ActivityInstrumentationTestCase2<FriendActivity> {
+public class FriendActivityTest extends ActivityInstrumentationTestCase2<FriendActivity> {
     private FriendActivity friendActivity;
 
     public FriendActivityTest(){super(FriendActivity.class);}

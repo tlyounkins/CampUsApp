@@ -9,8 +9,7 @@ import ycp.adroidlibrary.R;
  * Created by Tyler on 12/18/15.
  */
 public class GroupActivityTest extends ActivityInstrumentationTestCase2<GroupActivity> {
-   // private GroupActivity groupActivity;
-   // private Button createButton;
+    private GroupActivity groupActivity;
 
     public GroupActivityTest(){super(GroupActivity.class);}
 
@@ -18,13 +17,11 @@ public class GroupActivityTest extends ActivityInstrumentationTestCase2<GroupAct
     protected void setUp() throws Exception{
         super.setUp();
 
-        //groupActivity = getActivity();
-        //createButton = (Button) groupActivity.findViewById(R.id.groupCreateButton);
+        groupActivity = getActivity();
     }
 
     public void testPreconditions(){
-       // assertNotNull("user_id is not null", groupActivity);
-       // assertNotNull("Group name is not null", createButton);
+        assertNotNull("user_id is not null", groupActivity);
     }
 
 //    public void testOnCreate() throws Exception {
