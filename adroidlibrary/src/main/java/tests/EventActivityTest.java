@@ -12,9 +12,8 @@ import ycp.adroidlibrary.R;
  */
 public class EventActivityTest extends ActivityInstrumentationTestCase2<EventActivity> {
     private EventActivity eventActivity;
-    private Button confirmButton;
-    private EditText firstName;
-    private EditText lastName;
+    private Button saveButton;
+
 
     public EventActivityTest(){super(EventActivity.class);}
 
@@ -23,14 +22,11 @@ public class EventActivityTest extends ActivityInstrumentationTestCase2<EventAct
         super.setUp();
 
         eventActivity = getActivity();
-        confirmButton = (Button) eventActivity.findViewById(R.id.editConfirmButton);
-        firstName = (EditText) eventActivity.findViewById(R.id.editFirst);
-        lastName= (EditText) eventActivity.findViewById(R.id.editLast);
+        saveButton = (Button) eventActivity.findViewById(R.id.eNewButton);
     }
 
     public void testPreconditions(){
         assertNotNull("Edit is not null", eventActivity);
-        assertNotNull("Edit first name is not null", firstName);
-        assertNotNull("Edit last name is not null", lastName);
+        assertNotNull("Edit first name is not null", saveButton);
     }
 }
