@@ -8,7 +8,6 @@ import android.widget.TextView;
 import ycp.adroidlibrary.Dashboard;
 import ycp.adroidlibrary.EditActivity;
 import ycp.adroidlibrary.R;
-
 /**
  * Created by Juan on 12/18/2015.
  */
