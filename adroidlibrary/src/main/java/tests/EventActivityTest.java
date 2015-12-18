@@ -2,8 +2,6 @@ package tests;
 
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.Button;
-import android.widget.EditText;
-import ycp.adroidlibrary.EditActivity;
 import ycp.adroidlibrary.EventActivity;
 import ycp.adroidlibrary.R;
 
