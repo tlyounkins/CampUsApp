@@ -20,7 +20,7 @@ public class EventActivityTest extends ActivityInstrumentationTestCase2<EventAct
         super.setUp();
 
         eventActivity = getActivity();
-        saveButton = (Button) eventActivity.findViewById(R.id.eNewButton);
+        saveButton = (Button) eventActivity.findViewById(R.id.email_sign_in_button);
     }
 
     public void testPreconditions(){
