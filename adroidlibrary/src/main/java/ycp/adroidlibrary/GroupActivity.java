@@ -246,6 +246,8 @@ public class GroupActivity extends AppCompatActivity {
             toast.setGravity(Gravity.CENTER, 0, 0);
             toast.show();
         }
+        //may have to change
+        groupAdapter.notifyDataSetChanged();
     }
 
 
