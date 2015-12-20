@@ -12,4 +12,5 @@
         android:layout_height="wrap_content"
         android:id="@+id/friendList"
         android:choiceMode="singleChoice" />
+
 </RelativeLayout>

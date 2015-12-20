@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -50,10 +51,15 @@ public class FriendActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_friend);
 
+        TextView userHeader = new TextView(FriendActivity.this);
+        userHeader.setText("Users at your school");
+
+
         // Post List
         userList = (ListView) findViewById(R.id.friendList);
         userAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, users);
         userList.setAdapter(userAdapter);
+        userList.addHeaderView(userHeader);
 
         // Check for extras
         Bundle extras = getIntent().getExtras();

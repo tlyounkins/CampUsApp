@@ -37,6 +37,7 @@ public class GroupProfileActivity extends AppCompatActivity {
     List<String> members = new ArrayList<>();
     ArrayAdapter<String> memberAdapter;
     ListView memberList;
+    Button apply_button, post_button;
     String url = "http://campus-app.herokuapp.com";
     //String url = "http://192.168.172.105:3000";
     String username, school;
@@ -59,6 +60,10 @@ public class GroupProfileActivity extends AppCompatActivity {
 
         memberHeader.setText("List of Members");
         postHeader.setText("Group Posts");
+
+        apply_button = (Button) findViewById(R.id.gProfileApply);
+        post_button = (Button) findViewById(R.id.gProfilePostButton);
+        post_button.setVisibility(View.GONE);
 
         groupName = (TextView) findViewById(R.id.gProfileGroupName);
         groupDescription = (TextView) findViewById(R.id.gProfileGroupDescription);
@@ -152,6 +157,10 @@ public class GroupProfileActivity extends AppCompatActivity {
                     try {
                         JSONObject obj = response.getJSONObject(i);
                         members.add(obj.get("username").toString());
+                        if(obj.get("username").toString().equals(username)){
+                            apply_button.setVisibility(View.GONE);
+                            post_button.setVisibility(View.VISIBLE);
+                        }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -257,7 +266,7 @@ public class GroupProfileActivity extends AppCompatActivity {
                         HashMap<String,String>  params = new HashMap<>();
                         params.put("content",   post_text.getText().toString());
 
-                        JsonObjectRequest postRequest = new JsonObjectRequest(Request.Method.POST, url + "/group_microposts/"+ Integer.toString(group_id)+ ".json", new JSONObject(params), new Response.Listener<JSONObject>() {
+                        JsonObjectRequest postRequest = new JsonObjectRequest(Request.Method.POST, url + "/microposts/"+ Integer.toString(user_id)+ ".json", new JSONObject(params), new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject response) {
                                 try {
@@ -314,6 +323,64 @@ public class GroupProfileActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void onGroupPostPress(View v){
+        // Create post dialog pop up
+        final Dialog postDialog = new Dialog(GroupProfileActivity.this);
+
+        // Set dialog text
+        postDialog.setContentView(R.layout.dialog_post);
+        postDialog.setTitle("Submit New Group Post");
+
+        // Find button, text
+        Button post_submit = (Button) postDialog.findViewById(R.id.dialogPostButton);
+        final EditText post_text = (EditText) postDialog.findViewById(R.id.dialogPostBody);
+
+        post_submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                HashMap<String,String>  params = new HashMap<>();
+                params.put("content",   post_text.getText().toString());
+
+                JsonObjectRequest postRequest = new JsonObjectRequest(Request.Method.POST, url + "/group_microposts/"+ Integer.toString(group_id)+ ".json", new JSONObject(params), new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            if (response.get("success").toString().equals("true")) {
+                                // Display Successful message
+                                Toast toast = Toast.makeText(getApplicationContext(), "Post post: Post posted", Toast.LENGTH_LONG);
+                                toast.setGravity(Gravity.CENTER, 0, 0);
+                                toast.show();
+                            } else {
+                                // Failure to Register User
+                                Toast toast = Toast.makeText(getApplicationContext(), "Error Posting.", Toast.LENGTH_LONG);
+                                toast.setGravity(Gravity.CENTER, 0, 0);
+                                toast.show();
+                            }
+
+                        } catch (JSONException e) {
+                            // There was an Error, print it
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //error!
+                        VolleyLog.e("Error: " + error.getMessage());
+                    }
+                });
+
+                // Add Request to Queue
+                Singleton.getInstance(GroupProfileActivity.this).addToRequestQueue(postRequest);
+
+                postDialog.dismiss();
+            }
+        });
+
+        // Create dialog
+        postDialog.show();
+    }
+
     public void onApplyPress(View v){
         // Check to make sure user is logged in
         if(user_id != 0){
@@ -328,6 +395,9 @@ public class GroupProfileActivity extends AppCompatActivity {
                             Toast toast = Toast.makeText(getApplicationContext(), "Successfully Joined Group", Toast.LENGTH_LONG);
                             toast.setGravity(Gravity.CENTER, 0, 0);
                             toast.show();
+
+                            apply_button.setVisibility(View.GONE);
+                            post_button.setVisibility(View.VISIBLE);
                         } else{
                             // Display Error Message
                             Toast toast = Toast.makeText(getApplicationContext(), "Error Joining Group", Toast.LENGTH_LONG);

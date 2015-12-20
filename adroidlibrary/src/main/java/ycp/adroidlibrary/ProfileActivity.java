@@ -508,6 +508,7 @@ public class ProfileActivity extends AppCompatActivity {
         Button message_submit = (Button) messageDialog.findViewById(R.id.dMessageSendButton);
         final EditText message_text = (EditText) messageDialog.findViewById(R.id.dMessageBody);
         final EditText recipient_text = (EditText) messageDialog.findViewById(R.id.dMessageRecipient);
+        recipient_text.setText(username.getText());
 
         message_submit.setOnClickListener(new View.OnClickListener() {
             @Override
