@@ -39,7 +39,7 @@ public class GroupProfileActivity extends AppCompatActivity {
     ListView memberList;
     Button apply_button, post_button;
     String url = "http://campus-app.herokuapp.com";
-    //String url = "http://192.168.172.105:3000";
+    //String url = "http://192.168.172.23:3000";
     String username, school;
 
     // Posts
@@ -275,9 +275,6 @@ public class GroupProfileActivity extends AppCompatActivity {
                                         Toast toast = Toast.makeText(getApplicationContext(), "Post post: Post posted", Toast.LENGTH_LONG);
                                         toast.setGravity(Gravity.CENTER, 0, 0);
                                         toast.show();
-
-                                        postAdapter.add(params.get("content"));
-                                        postAdapter.notifyDataSetChanged();
                                     } else {
                                         // Failure to Register User
                                         Toast toast = Toast.makeText(getApplicationContext(), "Error Posting.", Toast.LENGTH_LONG);
@@ -342,7 +339,7 @@ public class GroupProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 final HashMap<String,String>  params = new HashMap<>();
-                params.put("content",   post_text.getText().toString());
+                params.put("content", post_text.getText().toString());
 
                 JsonObjectRequest postRequest = new JsonObjectRequest(Request.Method.POST, url + "/group_microposts/"+ Integer.toString(group_id)+ ".json", new JSONObject(params), new Response.Listener<JSONObject>() {
                     @Override
@@ -353,7 +350,7 @@ public class GroupProfileActivity extends AppCompatActivity {
                                 Toast toast = Toast.makeText(getApplicationContext(), "Post post: Post posted", Toast.LENGTH_LONG);
                                 toast.setGravity(Gravity.CENTER, 0, 0);
                                 toast.show();
-                                postAdapter.add(params.get("content"));
+                                posts.add(params.get("content"));
                                 postAdapter.notifyDataSetChanged();
                             } else {
                                 // Failure to Register User
@@ -395,7 +392,7 @@ public class GroupProfileActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(JSONObject response){
                     try {
-                        if (response.get("Success").toString().equals("true")){
+                        if (response.get("success").toString().equals("true")){
                             // Display Success Message
                             Toast toast = Toast.makeText(getApplicationContext(), "Successfully Joined Group", Toast.LENGTH_LONG);
                             toast.setGravity(Gravity.CENTER, 0, 0);

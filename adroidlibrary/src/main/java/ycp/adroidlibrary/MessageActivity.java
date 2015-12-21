@@ -39,7 +39,7 @@ public class MessageActivity extends AppCompatActivity {
     int user_id = 0;
     String username, school;
     String url = "http://campus-app.herokuapp.com";
-    //String url = "http://192.168.172.105:3000";
+    //String url = "http://192.168.172.23:3000";
 
     // Senders
     List<String> senders = new ArrayList<>();

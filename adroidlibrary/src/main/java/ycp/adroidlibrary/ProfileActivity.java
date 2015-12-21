@@ -33,7 +33,7 @@ import java.util.List;
 
 public class ProfileActivity extends AppCompatActivity {
     String url = "http://campus-app.herokuapp.com";
-    //String url = "http://192.168.172.105:3000";
+    //String url = "http://192.168.172.23:3000";
     int id = 0;
     String logged_in_user, school;
     int other_id = 0;
@@ -115,10 +115,26 @@ public class ProfileActivity extends AppCompatActivity {
                             firstname.setText(response.get("firstname").toString());
                             lastname.setText(response.get("lastname").toString());
                             age.setText(response.get("age").toString());
-                            gender.setText(response.get("gender").toString());
-                            major.setText(response.get("major").toString());
-                            hometown.setText(response.get("hometown").toString());
-                            bio.setText(response.get("bio").toString());
+                            if(response.get("gender").toString().equals("null")){
+                                gender.setText("");
+                            } else{
+                                gender.setText(response.get("gender").toString());
+                            }
+                            if(response.get("major").toString().equals("null")){
+                                major.setText("");
+                            } else{
+                                major.setText(response.get("major").toString());
+                            }
+                            if(response.get("hometown").toString().equals("null")){
+                                hometown.setText("");
+                            } else {
+                                hometown.setText(response.get("hometown").toString());
+                            }
+                            if(response.get("bio").toString().equals("null")){
+                                bio.setText("");
+                            } else {
+                                bio.setText(response.get("bio").toString());
+                            }
                         } catch (JSONException e) {
                             // There was an error, print it
                             e.printStackTrace();
@@ -146,10 +162,26 @@ public class ProfileActivity extends AppCompatActivity {
                             firstname.setText(response.get("firstname").toString());
                             lastname.setText(response.get("lastname").toString());
                             age.setText(response.get("age").toString());
-                            gender.setText(response.get("gender").toString());
-                            major.setText(response.get("major").toString());
-                            hometown.setText(response.get("hometown").toString());
-                            bio.setText(response.get("bio").toString());
+                            if(response.get("gender").toString().equals("null")){
+                                gender.setText("");
+                            } else{
+                                gender.setText(response.get("gender").toString());
+                            }
+                            if(response.get("major").toString().equals("null")){
+                                major.setText("");
+                            } else{
+                                major.setText(response.get("major").toString());
+                            }
+                            if(response.get("hometown").toString().equals("null")){
+                                hometown.setText("");
+                            } else {
+                                hometown.setText(response.get("hometown").toString());
+                            }
+                            if(response.get("bio").toString().equals("null")){
+                                bio.setText("");
+                            } else {
+                                bio.setText(response.get("bio").toString());
+                            }
                         } catch (JSONException e) {
                             // There was an error, print it
                             e.printStackTrace();

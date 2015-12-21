@@ -33,7 +33,7 @@ import java.util.List;
 
 public class FriendActivity extends AppCompatActivity {
     String url = "http://campus-app.herokuapp.com";
-    //String url = "http://192.168.172.105:3000";
+    //String url = "http://192.168.172.23:3000";
     String username, school;
     int user_id = 0;
 

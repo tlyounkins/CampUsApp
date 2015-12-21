@@ -31,8 +31,8 @@ public class ConversationActivity extends AppCompatActivity {
 
     int id;
     String username, sender_username, school;
-    String url = "http://campus-app.herokuapp.com";
-    //String url = "http://192.168.172.105:3000";
+    //String url = "http://campus-app.herokuapp.com";
+    String url = "http://192.168.172.23:3000";
     // Messages
     List<String> messages = new ArrayList<>();
     ArrayAdapter messageAdapter;
@@ -127,7 +127,7 @@ public class ConversationActivity extends AppCompatActivity {
                                 Toast toast = Toast.makeText(getApplicationContext(), "Message Sent", Toast.LENGTH_LONG);
                                 toast.setGravity(Gravity.CENTER, 0, 0);
                                 toast.show();
-                                messageAdapter.add(params.get("body") );
+                                messages.add(params.get("body"));
                                 messageAdapter.notifyDataSetChanged();
                             } else {
                                 // Failure to Register User

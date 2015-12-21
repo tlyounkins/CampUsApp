@@ -33,7 +33,7 @@ import Model.User;
 
 public class EditActivity extends AppCompatActivity {
     String url = "http://campus-app.herokuapp.com";
-    //String url = "http://192.168.172.105:3000";
+    //String url = "http://192.168.172.23:3000";
     int id;
     String logged_in_user, school;
     EditText hometown, major, bio, gender, firstname, lastname;
@@ -77,12 +77,28 @@ public class EditActivity extends AppCompatActivity {
                 try {
                     // Set the Text Fields to Acquired Information
                     username.setText(response.get("username").toString());
-                    hometown.setText(response.get("hometown").toString());
-                    major.setText(response.get("major").toString());
-                    bio.setText(response.get("bio").toString());
-                    gender.setText(response.get("gender").toString());
                     firstname.setText(response.get("firstname").toString());
                     lastname.setText(response.get("lastname").toString());
+                    if(response.get("gender").toString().equals("null")){
+                        gender.setText("");
+                    } else{
+                        gender.setText(response.get("gender").toString());
+                    }
+                    if(response.get("major").toString().equals("null")){
+                        major.setText("");
+                    } else{
+                        major.setText(response.get("major").toString());
+                    }
+                    if(response.get("hometown").toString().equals("null")){
+                        hometown.setText("");
+                    } else {
+                        hometown.setText(response.get("hometown").toString());
+                    }
+                    if(response.get("bio").toString().equals("null")){
+                        bio.setText("");
+                    } else {
+                        bio.setText(response.get("bio").toString());
+                    }
                     showProgress(false);
                 } catch (JSONException e){
                     // There was an error, print it

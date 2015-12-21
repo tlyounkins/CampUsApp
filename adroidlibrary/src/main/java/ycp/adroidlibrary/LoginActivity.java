@@ -67,8 +67,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private View mProgressView;
     private View mLoginFormView;
     String url = "http://campus-app.herokuapp.com";
-    //String url = "http://192.168.172.105:3000";
-
+    //String url = "http://192.168.172.23:3000";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
