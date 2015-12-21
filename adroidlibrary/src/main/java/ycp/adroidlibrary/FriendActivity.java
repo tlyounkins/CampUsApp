@@ -178,7 +178,7 @@ public class FriendActivity extends AppCompatActivity {
                                 try {
                                     if (response.get("success").toString().equals("true")) {
                                         // Display Successful message
-                                        Toast toast = Toast.makeText(getApplicationContext(), "Post post: Post posted", Toast.LENGTH_LONG);
+                                        Toast toast = Toast.makeText(getApplicationContext(), "Post Successful", Toast.LENGTH_LONG);
                                         toast.setGravity(Gravity.CENTER, 0, 0);
                                         toast.show();
                                     } else {

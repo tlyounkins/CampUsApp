@@ -31,8 +31,8 @@ public class ConversationActivity extends AppCompatActivity {
 
     int id;
     String username, sender_username, school;
-    //String url = "http://campus-app.herokuapp.com";
-    String url = "http://192.168.172.23:3000";
+    String url = "http://campus-app.herokuapp.com";
+    //String url = "http://192.168.172.23:3000";
     // Messages
     List<String> messages = new ArrayList<>();
     ArrayAdapter messageAdapter;
